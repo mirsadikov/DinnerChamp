@@ -1,6 +1,6 @@
 import { Restaurant } from '../config/sequelize.js';
 import generateToken from '../utils/tokenGenerator.js';
-import { removeS3, uploadS3 } from '../utils/imgUploader.js';
+import { removeS3, uploadS3 } from '../utils/imgStorage.js';
 
 export async function registerRestaurant(req, res, next) {
   try {
@@ -148,35 +148,26 @@ export async function setRestaurantImage(req, res, next) {
       where: { id: req.restaurant.id },
       attributes: { exclude: ['password'] },
     });
+    const { image } = req.files;
 
-    if (!restaurant) {
-      res.status(404);
-      throw new Error('Restaurant not found!');
+    if (!image) {
+      res.status(400);
+      throw new Error('No file provided!');
     }
 
-    uploadS3.single('file')(req, res, async function (err) {
-      if (err) {
-        res.status(400);
-        next(err);
-        return;
-      }
+    const img = await uploadS3(image);
 
-      if (!req.file) {
-        res.status(400);
-        next(new Error('No file provided!'));
-        return;
-      }
+    if (!img.key) {
+      res.status(500);
+      throw new Error(img.error);
+    }
 
-      if (restaurant.img) {
-        removeS3(restaurant.img);
-      }
+    if (restaurant.img) removeS3(restaurant.img);
 
-      restaurant.img = req.file.key;
-      const updatedRestaurant = await restaurant.save();
-      updatedRestaurant.password = undefined;
+    restaurant.img = img.key;
+    await restaurant.save();
 
-      res.status(200).json(updatedRestaurant);
-    });
+    res.status(200).json(restaurant);
   } catch (error) {
     next(error);
   }
@@ -189,11 +180,6 @@ export async function removeRestaurantImage(req, res, next) {
       attributes: { exclude: ['password'] },
     });
 
-    if (!restaurant) {
-      res.status(404);
-      throw new Error('Restaurant not found!');
-    }
-
     if (!restaurant.img) {
       res.status(200).json(restaurant);
       return;
@@ -201,11 +187,9 @@ export async function removeRestaurantImage(req, res, next) {
 
     removeS3(restaurant.img);
     restaurant.img = null;
+    await restaurant.save();
 
-    const updatedRestaurant = await restaurant.save();
-    updatedRestaurant.password = undefined;
-
-    res.status(200).json(updatedRestaurant);
+    res.status(200).json(restaurant);
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import passport from 'passport';
 import { Strategy as JwtStrategy } from 'passport-jwt';
+import fileUpload from 'express-fileupload';
 // config
 import './config/env.js';
 import { jwtCallback, jwtOptions } from './config/passport.js';
@@ -21,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger);
+app.use(fileUpload()); 
 app.use(passport.initialize());
 passport.use(new JwtStrategy(jwtOptions, jwtCallback));
 
