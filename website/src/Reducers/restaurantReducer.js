@@ -1,4 +1,4 @@
-import { RESTAURANT_LOGIN_FAIL, RESTAURANT_LOGIN_REQUEST, RESTAURANT_LOGIN_SUCCESS } from '../constants.js';
+import { RESTAURANT_LOGIN_FAIL, RESTAURANT_LOGIN_REQUEST, RESTAURANT_LOGIN_SUCCESS, RESTAURANT_LOGOUT } from '../constants.js';
 
 export const restaurantLoginReducer = (state = {}, action) => {
   switch (action.type) {
@@ -8,6 +8,8 @@ export const restaurantLoginReducer = (state = {}, action) => {
       return { loading: false, info: action.payload };
     case RESTAURANT_LOGIN_FAIL:
       return { loading: false, error: action.payload };
+    case RESTAURANT_LOGOUT:
+      return {};
     default:
       return state;
   }

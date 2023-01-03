@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RESTAURANT_LOGIN_FAIL, RESTAURANT_LOGIN_REQUEST, RESTAURANT_LOGIN_SUCCESS } from '../constants.js';
+import { RESTAURANT_LOGIN_FAIL, RESTAURANT_LOGIN_REQUEST, RESTAURANT_LOGIN_SUCCESS, RESTAURANT_LOGOUT } from '../constants.js';
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -27,4 +27,9 @@ export const login = (email, password) => async (dispatch) => {
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('restaurantInfo');
+  dispatch({ type: RESTAURANT_LOGOUT });
 };

@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../Actions/restaurantActions';
 
-export default function AuthScreen() {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,7 +15,7 @@ export default function AuthScreen() {
 
   useEffect(() => {
     if (info) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [info, navigate]);
 
@@ -27,7 +26,6 @@ export default function AuthScreen() {
 
   return (
     <div>
-      <Link to="/">Go to Home Screen</Link>
       <h1>Login</h1>
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
