@@ -12,10 +12,10 @@ export default function HomeScreen() {
             DinnerChamp is a platform that helps you to grow your business online. <br /> Restaurants, cafes, and others are happy with us.
           </p>
           <div className="hero__buttons">
-            <Link to="/register" className="hero__button hero__button--register">
+            <Link to="/register" className="hero__button button button--primary">
               Start Journey
             </Link>
-            <a href="#about" className="hero__button hero__button--login">
+            <a href="#about" className="hero__button button button--secondary">
               Learn more
             </a>
           </div>

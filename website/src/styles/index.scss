@@ -1,10 +1,10 @@
-@import './variables.scss', './typography.scss', './layout.scss';
+@import './variables.scss', './typography.scss', './layout.scss', './utilities.scss';
 
 // Components
 @import './Components/Header.scss', './Components/Mini.scss';
 
 // Pages
-@import './Pages/Home.scss';
+@import './Pages/Home.scss', './Pages/Auth.scss';
 
 * {
   margin: 0px;

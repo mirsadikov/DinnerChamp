@@ -1,0 +1,11 @@
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.hover-right {
+  transition: transform 0.2s;
+  &:hover {
+    transform: translateX(0.3rem);
+  }
+}
