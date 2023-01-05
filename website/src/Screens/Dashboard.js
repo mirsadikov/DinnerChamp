@@ -5,11 +5,12 @@ import { CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { getRestaurant } from '../Actions/restaurantActions';
 import { img_endpoint } from '../config';
-import ProfileImageUpdateModal from '../Components/ProfileImageUpdateModal';
+import { ProfileDetailsUpdateModal, ProfileImageUpdateModal } from '../Components/ProfileUpdateModals';
 import defaultImg from '../Images/default-img.png';
 
 export default function Dashboard() {
   const [openImgModal, setOpenImgModal] = useState(false);
+  const [openDetailsModal, setOpenDetailsModal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,9 +36,9 @@ export default function Dashboard() {
             {detailsError && <h3>{detailsError}</h3>}
             {details && (
               <>
-                <div className="profile__img-container">
+                <div className="profile__img-container" onClick={() => setOpenImgModal(true)}>
                   <img src={details?.img ? img_endpoint + details?.img : defaultImg} className="profile__image" alt="profile" />
-                  <div onClick={() => setOpenImgModal(true)} className="profile__img-edit">
+                  <div className="profile__img-edit">
                     <EditIcon />
                   </div>
                 </div>
@@ -65,13 +66,21 @@ export default function Dashboard() {
                     </p>
                   )}
                 </div>
+
+                <button className="profile__edit-btn button button--small" onClick={() => setOpenDetailsModal(true)}>
+                  Edit
+                </button>
               </>
             )}
           </div>
         </div>
       </div>
-
-      <ProfileImageUpdateModal open={openImgModal} setOpen={setOpenImgModal} img={details?.img && img_endpoint + details?.img} />
+      {details && (
+        <>
+          <ProfileImageUpdateModal open={openImgModal} setOpen={setOpenImgModal} img={details?.img && img_endpoint + details?.img} />
+          <ProfileDetailsUpdateModal open={openDetailsModal} setOpen={setOpenDetailsModal} details={details} />
+        </>
+      )}
     </div>
   );
 }

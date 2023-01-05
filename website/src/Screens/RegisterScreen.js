@@ -44,18 +44,18 @@ export default function LoginScreen() {
           </Link>
         </div>
         <div className="auth__column">
-          <form className="auth__form" onSubmit={handleRegister}>
+          <form className="auth__form form" onSubmit={handleRegister}>
             {error && (
               <Alert className="auth__alert" severity="error">
                 {error}
               </Alert>
             )}
-            <div className="auth__form-group">
-              <label className="auth__form-label" htmlFor="name">
+            <div className="auth__form-group form__group">
+              <label className="auth__form-label form__label" htmlFor="name">
                 Business Name
               </label>
               <input
-                className="auth__form-control"
+                className="auth__form-control form__control"
                 type="text"
                 id="name"
                 placeholder="Enter name"
@@ -63,12 +63,12 @@ export default function LoginScreen() {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="auth__form-group">
-              <label className="auth__form-label" htmlFor="email">
+            <div className="auth__form-group form__group">
+              <label className="auth__form-label form__label" htmlFor="email">
                 Email Address
               </label>
               <input
-                className="auth__form-control"
+                className="auth__form-control form__control"
                 type="email"
                 id="email"
                 placeholder="Enter email"
@@ -76,12 +76,12 @@ export default function LoginScreen() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="auth__form-group">
-              <label className="auth__form-label" htmlFor="password">
+            <div className="auth__form-group form__group">
+              <label className="auth__form-label form__label" htmlFor="password">
                 Password
               </label>
               <input
-                className="auth__form-control"
+                className="auth__form-control form__control"
                 type="password"
                 id="password"
                 placeholder="Enter password"
@@ -89,12 +89,12 @@ export default function LoginScreen() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="auth__form-group">
-              <label className="auth__form-label" htmlFor="confirmPassword">
+            <div className="auth__form-group form__group">
+              <label className="auth__form-label form__label" htmlFor="confirmPassword">
                 Confirm Password
               </label>
               <input
-                className="auth__form-control"
+                className="auth__form-control form__control"
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm password"
@@ -102,7 +102,7 @@ export default function LoginScreen() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div className="auth__form-group">
+            <div className="auth__form-group form__group">
               <LoadingButton loading={loading} type="submit" className="button button--primary">
                 Sign Up
               </LoadingButton>

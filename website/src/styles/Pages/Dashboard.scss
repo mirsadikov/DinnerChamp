@@ -24,6 +24,7 @@
 
   &__profile {
     grid-column: 1 / span 2;
+    min-width: 25rem;
   }
 
   .profile {
@@ -47,28 +48,25 @@
       position: absolute;
       top: 0;
       right: 0;
-      height: 100%;
-      width: 100%;
+      height: 3rem;
+      width: 3rem;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
-      opacity: 0;
-      visibility: hidden;
+      background-color: $color-primary-light;
 
       svg {
-        height: 5rem;
-        width: 5rem;
+        height: 2rem;
+        width: 2rem;
         fill: $color-white;
       }
     }
 
     &__img-container:hover .profile__img-edit {
-      opacity: 1;
-      visibility: visible;
-      background-color: #00000065;
+      background-color: $color-primary;
     }
 
     &__name {
@@ -85,6 +83,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+    }
+
+    &__edit-btn {
+      display: block;
+      margin: 0 auto;
+      margin-top: 2rem;
     }
   }
 
@@ -105,10 +109,16 @@
       }
 
       &__form-btn {
-        padding: 1rem 2rem;
         span {
           color: $color-white;
         }
+      }
+
+      &__form-input--textarea {
+        width: 30rem;
+        height: 15rem;
+        font-family: $font-text;
+        resize: none;
       }
     }
   }

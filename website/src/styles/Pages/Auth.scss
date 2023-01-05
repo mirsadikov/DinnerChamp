@@ -40,8 +40,6 @@
 
   &__form-group {
     margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
 
     &:first-child {
       margin-top: 3rem;
@@ -57,24 +55,6 @@
       span {
         color: $color-white;
       }
-    }
-  }
-
-  &__form-label {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
-
-  &__form-control {
-    padding: 1.5rem 2rem;
-    font-size: 1.6rem;
-    border: 1px solid $color-primary;
-    border-radius: 0.8rem;
-    outline: none;
-    transition: all 0.2s;
-
-    &:focus {
-      border: 1px solid $color-secondary;
     }
   }
 }

@@ -19,7 +19,12 @@ a.button {
   font-weight: 500;
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s, transform 0.1s;
+  outline: none;
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -46,5 +51,10 @@ a.button {
       border: 1px solid $color-secondary;
       background-color: $color-primary-light;
     }
+  }
+
+  &--small {
+    padding: 0.8rem 2.4rem;
+    font-size: 1.4rem;
   }
 }

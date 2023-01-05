@@ -14,6 +14,10 @@ import {
   UPDATE_RESTAURANT_IMAGE_FAIL,
   RESTAURANT_UPDATE,
   UPDATE_IMAGE_RESET,
+  UPDATE_RESTAURANT_REQUEST,
+  UPDATE_RESTAURANT_SUCCESS,
+  UPDATE_RESTAURANT_FAIL,
+  UPDATE_RESTAURANT_RESET,
 } from '../constants.js';
 
 export const restaurantLoginReducer = (state = {}, action) => {
@@ -72,6 +76,23 @@ export const updateRestaurantImageReducer = (state = {}, action) => {
     case UPDATE_RESTAURANT_IMAGE_FAIL:
       return { loading: false, error: action.payload };
     case UPDATE_IMAGE_RESET:
+      return {};
+    case RESTAURANT_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const updateRestaurantDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_RESTAURANT_REQUEST:
+      return { loading: true };
+    case UPDATE_RESTAURANT_SUCCESS:
+      return { loading: false, success: true };
+    case UPDATE_RESTAURANT_FAIL:
+      return { loading: false, error: action.payload };
+    case UPDATE_RESTAURANT_RESET:
       return {};
     case RESTAURANT_LOGOUT:
       return {};

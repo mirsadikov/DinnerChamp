@@ -14,6 +14,9 @@ import {
   UPDATE_RESTAURANT_IMAGE_SUCCESS,
   UPDATE_RESTAURANT_IMAGE_FAIL,
   RESTAURANT_UPDATE,
+  UPDATE_RESTAURANT_REQUEST,
+  UPDATE_RESTAURANT_SUCCESS,
+  UPDATE_RESTAURANT_FAIL,
 } from '../constants.js';
 
 export const login = (email, password) => async (dispatch) => {
@@ -146,6 +149,40 @@ export const updateRestaurantImage = (newImage) => async (dispatch, getState) =>
   } catch (error) {
     dispatch({
       type: UPDATE_RESTAURANT_IMAGE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const updateRestaurantDetails = (details) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UPDATE_RESTAURANT_REQUEST,
+    });
+    const {
+      restaurant: { info },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: info.token,
+      },
+    };
+
+    const { data } = await axios.put(`/api/restaurant/${info.id}`, details, config);
+
+    dispatch({
+      type: UPDATE_RESTAURANT_SUCCESS,
+    });
+
+    dispatch({
+      type: RESTAURANT_UPDATE,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_RESTAURANT_FAIL,
       payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
