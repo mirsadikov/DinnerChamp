@@ -15,8 +15,9 @@ export default function LoginScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.restaurantRegister);
-  const { loading, error, info } = user;
+  const registeredUser = useSelector((state) => state.restaurantRegister);
+  const { info } = useSelector((state) => state.restaurant);
+  const { loading, error } = registeredUser;
 
   useEffect(() => {
     if (info) {

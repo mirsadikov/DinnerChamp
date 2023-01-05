@@ -1,0 +1,115 @@
+.dashboard {
+  padding-top: 3rem;
+
+  &__title {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 2rem;
+  }
+
+  &__card {
+    border: 1px solid $color-primary-light;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 #00000015;
+  }
+
+  &__profile {
+    grid-column: 1 / span 2;
+  }
+
+  .profile {
+    &__img-container {
+      position: relative;
+      height: 15rem;
+      width: 15rem;
+      margin: 0 auto;
+      border-radius: 50%;
+    }
+
+    &__image {
+      height: 100%;
+      width: 100%;
+      border-radius: inherit;
+      display: block;
+      object-fit: cover;
+    }
+
+    &__img-edit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      opacity: 0;
+      visibility: hidden;
+
+      svg {
+        height: 5rem;
+        width: 5rem;
+        fill: $color-white;
+      }
+    }
+
+    &__img-container:hover .profile__img-edit {
+      opacity: 1;
+      visibility: visible;
+      background-color: #00000065;
+    }
+
+    &__name {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    &__details {
+      p {
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  &__profile-modal {
+    .modal {
+      &__profile-image {
+        height: 25rem;
+        width: 25rem;
+        border-radius: 1rem;
+        object-fit: cover;
+        border: 1px solid $color-primary-light;
+        margin-bottom: 2rem;
+      }
+
+      &__form-btns {
+        display: flex;
+        gap: 1rem;
+      }
+
+      &__form-btn {
+        padding: 1rem 2rem;
+        span {
+          color: $color-white;
+        }
+      }
+    }
+  }
+}

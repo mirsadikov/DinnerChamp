@@ -1,0 +1,44 @@
+.modal {
+  background-color: $color-white;
+  outline: none;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid $color-text-gray;
+  border-radius: 1rem;
+  overflow: scroll;
+  padding: 2rem;
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  &__alert {
+    margin-bottom: 1rem;
+  }
+
+  &__form-input {
+    margin-bottom: 2rem;
+  }
+
+  & &__form-btn {
+    padding: 1rem 2rem;
+    span {
+      color: $color-white;
+    }
+
+    &--cancel {
+      background-color: $color-text-gray;
+      color: $color-white;
+    }
+
+    &--delete {
+      background-color: $color-red;
+      color: $color-white;
+    }
+  }
+}

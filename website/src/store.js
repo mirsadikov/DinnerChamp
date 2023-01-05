@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { restaurantLoginReducer, restaurantRegisterReducer } from './Reducers/restaurantReducer';
+import { getRestaurantReducer, restaurantLoginReducer, restaurantRegisterReducer, updateRestaurantImageReducer } from './Reducers/restaurantReducer';
 
 const restaurantInfoFromStorage = localStorage.getItem('restaurantInfo') ? JSON.parse(localStorage.getItem('restaurantInfo')) : null;
 
@@ -11,6 +11,8 @@ const store = configureStore({
   reducer: {
     restaurant: restaurantLoginReducer,
     restaurantRegister: restaurantRegisterReducer,
+    details: getRestaurantReducer,
+    updateImage: updateRestaurantImageReducer,
   },
   preloadedState: initialState,
 });

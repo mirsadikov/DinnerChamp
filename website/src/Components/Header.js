@@ -41,9 +41,9 @@ export default function Header() {
                   <NavLink to="/dashboard">Dashboard</NavLink>
                 </li>
                 <li>
-                  <a href="#logout" onClick={logoutHandler} to="/auth?logout">
+                  <NavLink to="/" onClick={logoutHandler}>
                     Logout
-                  </a>
+                  </NavLink>
                 </li>
               </>
             ) : (

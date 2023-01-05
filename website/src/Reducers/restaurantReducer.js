@@ -1,4 +1,7 @@
 import {
+  GET_RESTAURANT_FAIL,
+  GET_RESTAURANT_REQUEST,
+  GET_RESTAURANT_SUCCESS,
   RESTAURANT_LOGIN_FAIL,
   RESTAURANT_LOGIN_REQUEST,
   RESTAURANT_LOGIN_SUCCESS,
@@ -6,6 +9,11 @@ import {
   RESTAURANT_REGISTER_FAIL,
   RESTAURANT_REGISTER_REQUEST,
   RESTAURANT_REGISTER_SUCCESS,
+  UPDATE_RESTAURANT_IMAGE_REQUEST,
+  UPDATE_RESTAURANT_IMAGE_SUCCESS,
+  UPDATE_RESTAURANT_IMAGE_FAIL,
+  RESTAURANT_UPDATE,
+  UPDATE_IMAGE_RESET,
 } from '../constants.js';
 
 export const restaurantLoginReducer = (state = {}, action) => {
@@ -16,6 +24,8 @@ export const restaurantLoginReducer = (state = {}, action) => {
       return { loading: false, info: action.payload };
     case RESTAURANT_LOGIN_FAIL:
       return { loading: false, error: action.payload };
+    case RESTAURANT_UPDATE:
+      return { ...state, info: { ...action.payload, token: state.info.token } };
     case RESTAURANT_LOGOUT:
       return {};
     default:
@@ -31,6 +41,38 @@ export const restaurantRegisterReducer = (state = {}, action) => {
       return { loading: false, info: action.payload };
     case RESTAURANT_REGISTER_FAIL:
       return { loading: false, error: action.payload };
+    case RESTAURANT_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getRestaurantReducer = (state = {}, action) => {
+  switch (action.type) {
+    case GET_RESTAURANT_REQUEST:
+      return { loading: true };
+    case GET_RESTAURANT_SUCCESS:
+      return { loading: false, info: action.payload };
+    case GET_RESTAURANT_FAIL:
+      return { loading: false, error: action.payload };
+    case RESTAURANT_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const updateRestaurantImageReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_RESTAURANT_IMAGE_REQUEST:
+      return { loading: true };
+    case UPDATE_RESTAURANT_IMAGE_SUCCESS:
+      return { loading: false, success: true };
+    case UPDATE_RESTAURANT_IMAGE_FAIL:
+      return { loading: false, error: action.payload };
+    case UPDATE_IMAGE_RESET:
+      return {};
     case RESTAURANT_LOGOUT:
       return {};
     default:
