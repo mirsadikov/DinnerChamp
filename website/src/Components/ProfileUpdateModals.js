@@ -85,7 +85,7 @@ export function ProfileImageUpdateModal({ open, setOpen, img }) {
               </LoadingButton>
 
               <button
-                disabled={!(img || newImg) || deleteImg}
+                disabled={!(img || newImg) || deleteImg || loading}
                 className="modal__form-btn modal__form-btn--delete button button--small"
                 onClick={handleDeleteImg}
               >

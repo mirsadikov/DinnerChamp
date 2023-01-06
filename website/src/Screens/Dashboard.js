@@ -22,8 +22,10 @@ export default function Dashboard() {
   useEffect(() => {
     if (!info) {
       navigate('/login');
+      return;
+    } else {
+      dispatch(getRestaurant(info.id));
     }
-    dispatch(getRestaurant(info.id));
   }, [info, navigate, dispatch]);
 
   return (

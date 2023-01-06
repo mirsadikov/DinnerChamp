@@ -6,10 +6,12 @@ import Dashboard from './Screens/Dashboard';
 import RegisterScreen from './Screens/RegisterScreen';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
+import AuthVerify from './Components/AuthVerify';
 
 function App() {
   return (
     <>
+      <AuthVerify />
       <ThemeProvider theme={theme}>
         <Header />
         <Routes>

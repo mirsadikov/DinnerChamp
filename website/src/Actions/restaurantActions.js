@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../axiosConfig';
 import {
   RESTAURANT_LOGIN_FAIL,
   RESTAURANT_LOGIN_REQUEST,
