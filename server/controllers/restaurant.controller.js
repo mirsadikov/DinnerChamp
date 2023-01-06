@@ -124,10 +124,15 @@ export async function updateRestaurant(req, res, next) {
     if (restaurant) {
       const { name, email, phone, description } = req.body;
 
-      if (name) restaurant.name = name;
-      if (email) restaurant.email = email;
-      if (phone) restaurant.phone = phone;
-      if (description) restaurant.description = description;
+      if (!name || !email) {
+        res.status(400);
+        throw new Error('Name and email are required!');
+      }
+
+      restaurant.name = name || restaurant.name;
+      restaurant.email = email || restaurant.email;
+      restaurant.phone = phone === '' ? null : phone || restaurant.phone;
+      restaurant.description = description === '' ? null : description || restaurant.description;
 
       const updatedRestaurant = await restaurant.save();
       updatedRestaurant.password = undefined;
