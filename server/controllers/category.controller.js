@@ -27,11 +27,14 @@ export async function getAllCategories(req, res, next) {
   }
 }
 
-export async function getCategory(req, res) {
+export async function getCategoryWithDishes(req, res, next) {
   try {
     const category = await Category.findOne({
       where: { id: req.params.categoryId, restaurantId: req.params.restaurantId },
+      include: 'dishes',
     });
+
+    if (!category) return res.status(404).json({ message: 'Category not found' });
 
     res.status(200).json(category);
   } catch (error) {
