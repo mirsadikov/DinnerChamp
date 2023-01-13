@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/login" element={<LoginScreen />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/register" element={<RegisterScreen />} />
         </Routes>
       </ThemeProvider>
