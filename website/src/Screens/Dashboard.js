@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import Categories from '../Components/Categories';
 import Dishes from '../Components/Dishes';
@@ -7,15 +7,13 @@ import ProfileCard from '../Components/ProfileCard';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const restaurant = useSelector((state) => state.restaurant);
-  const { info } = restaurant;
+  const { info } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!info) {
       navigate('/login');
     }
-  }, [info, navigate, dispatch]);
+  }, [info, navigate]);
 
   return (
     <div className="dashboard">

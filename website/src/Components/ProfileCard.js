@@ -17,8 +17,8 @@ export default function ProfileCard({ info }) {
   const { info: details, loading: detailsLoading, error: detailsError } = profile;
 
   useEffect(() => {
-    dispatch(getRestaurant(info.id));
-  }, [dispatch, info]);
+    if (!details && info) dispatch(getRestaurant(info.id));
+  }, [dispatch, info, details]);
 
   return (
     <>

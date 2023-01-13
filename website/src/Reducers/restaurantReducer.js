@@ -28,8 +28,6 @@ export const restaurantLoginReducer = (state = {}, action) => {
       return { loading: false, info: action.payload };
     case RESTAURANT_LOGIN_FAIL:
       return { loading: false, error: action.payload };
-    case RESTAURANT_UPDATE:
-      return { ...state, info: { ...action.payload, token: state.info.token } };
     case RESTAURANT_LOGOUT:
       return {};
     default:
@@ -42,7 +40,7 @@ export const restaurantRegisterReducer = (state = {}, action) => {
     case RESTAURANT_REGISTER_REQUEST:
       return { loading: true };
     case RESTAURANT_REGISTER_SUCCESS:
-      return { loading: false, info: action.payload };
+      return { loading: false, success: action.payload };
     case RESTAURANT_REGISTER_FAIL:
       return { loading: false, error: action.payload };
     case RESTAURANT_LOGOUT:
@@ -60,6 +58,8 @@ export const getRestaurantReducer = (state = {}, action) => {
       return { loading: false, info: action.payload };
     case GET_RESTAURANT_FAIL:
       return { loading: false, error: action.payload };
+    case RESTAURANT_UPDATE:
+      return { ...state, info: action.payload };
     case RESTAURANT_LOGOUT:
       return {};
     default:

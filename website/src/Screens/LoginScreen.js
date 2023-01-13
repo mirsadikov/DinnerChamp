@@ -13,8 +13,7 @@ export default function LoginScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.restaurant);
-  const { loading, error, info } = user;
+  const { loading, error, info } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (info) {

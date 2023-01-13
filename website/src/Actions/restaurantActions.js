@@ -31,24 +31,27 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/api/restaurant/login', { email, password }, config);
+    const {
+      data: { id, token },
+    } = await axios.post('/api/restaurant/login', { email, password }, config);
 
     dispatch({
       type: RESTAURANT_LOGIN_SUCCESS,
-      payload: data,
+      payload: { id, token },
     });
 
-    localStorage.setItem('restaurantInfo', JSON.stringify(data));
+    localStorage.setItem('auth', JSON.stringify({ id, token }));
   } catch (error) {
     dispatch({
       type: RESTAURANT_LOGIN_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem('restaurantInfo');
+  localStorage.removeItem('auth');
   dispatch({ type: RESTAURANT_LOGOUT });
 };
 
@@ -64,23 +67,26 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/api/restaurant/register', { name, email, password }, config);
+    const {
+      data: { id, token },
+    } = await axios.post('/api/restaurant/register', { name, email, password }, config);
 
     dispatch({
       type: RESTAURANT_REGISTER_SUCCESS,
-      payload: data,
+      payload: true,
     });
 
     dispatch({
       type: RESTAURANT_LOGIN_SUCCESS,
-      payload: data,
+      payload: { id, token },
     });
 
-    localStorage.setItem('restaurantInfo', JSON.stringify(data));
+    localStorage.setItem('auth', JSON.stringify({ id, token }));
   } catch (error) {
     dispatch({
       type: RESTAURANT_REGISTER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
@@ -106,7 +112,8 @@ export const getRestaurant = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_RESTAURANT_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
@@ -116,9 +123,7 @@ export const updateRestaurantImage = (newImage) => async (dispatch, getState) =>
     dispatch({
       type: UPDATE_RESTAURANT_IMAGE_REQUEST,
     });
-    const {
-      restaurant: { info },
-    } = getState();
+    const { info } = getState().auth;
 
     const config = {
       headers: {
@@ -149,7 +154,8 @@ export const updateRestaurantImage = (newImage) => async (dispatch, getState) =>
   } catch (error) {
     dispatch({
       type: UPDATE_RESTAURANT_IMAGE_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };
@@ -159,9 +165,8 @@ export const updateRestaurantDetails = (details) => async (dispatch, getState) =
     dispatch({
       type: UPDATE_RESTAURANT_REQUEST,
     });
-    const {
-      restaurant: { info },
-    } = getState();
+
+    const { info } = getState().auth;
 
     const config = {
       headers: {
@@ -183,7 +188,8 @@ export const updateRestaurantDetails = (details) => async (dispatch, getState) =
   } catch (error) {
     dispatch({
       type: UPDATE_RESTAURANT_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };

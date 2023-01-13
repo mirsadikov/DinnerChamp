@@ -7,15 +7,15 @@ import {
   updateRestaurantImageReducer,
 } from './Reducers/restaurantReducer';
 
-const restaurantInfoFromStorage = localStorage.getItem('restaurantInfo') ? JSON.parse(localStorage.getItem('restaurantInfo')) : null;
+const authFromStorage = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : null;
 
 const initialState = {
-  restaurant: { info: restaurantInfoFromStorage },
+  auth: { info: authFromStorage },
 };
 
 const store = configureStore({
   reducer: {
-    restaurant: restaurantLoginReducer,
+    auth: restaurantLoginReducer,
     restaurantRegister: restaurantRegisterReducer,
     details: getRestaurantReducer,
     updateImage: updateRestaurantImageReducer,

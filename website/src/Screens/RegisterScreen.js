@@ -16,7 +16,7 @@ export default function LoginScreen() {
   const dispatch = useDispatch();
 
   const registeredUser = useSelector((state) => state.restaurantRegister);
-  const { info } = useSelector((state) => state.restaurant);
+  const { info } = useSelector((state) => state.auth);
   const { loading, error } = registeredUser;
 
   useEffect(() => {

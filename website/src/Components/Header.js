@@ -7,8 +7,7 @@ export default function Header() {
   const [sticky, setSticky] = useState(false);
 
   const dispatch = useDispatch();
-  const resturant = useSelector((state) => state.restaurant);
-  const { info } = resturant;
+  const { info } = useSelector((state) => state.auth);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

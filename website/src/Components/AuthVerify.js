@@ -15,14 +15,14 @@ const parseJwt = (token) => {
 const AuthVerify = () => {
   let location = useLocation();
   const dispatch = useDispatch();
-  const { info } = useSelector((state) => state.restaurant);
+  const { info } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (info) {
       const decodedJwt = parseJwt(info.token);
 
       if (decodedJwt?.exp * 1000 < Date.now()) {
-        localStorage.removeItem('restaurantInfo');
+        localStorage.removeItem('auth');
         dispatch({ type: RESTAURANT_LOGOUT });
       }
     }
