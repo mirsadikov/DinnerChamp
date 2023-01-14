@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { categoriesReducer } from './Reducers/categoryReducer';
 import {
   getRestaurantReducer,
   restaurantLoginReducer,
@@ -7,7 +8,9 @@ import {
   updateRestaurantImageReducer,
 } from './Reducers/restaurantReducer';
 
-const authFromStorage = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : null;
+const authFromStorage = localStorage.getItem('auth')
+  ? JSON.parse(localStorage.getItem('auth'))
+  : null;
 
 const initialState = {
   auth: { info: authFromStorage },
@@ -20,6 +23,7 @@ const store = configureStore({
     details: getRestaurantReducer,
     updateImage: updateRestaurantImageReducer,
     updateDetails: updateRestaurantDetailsReducer,
+    categories: categoriesReducer,
   },
   preloadedState: initialState,
 });
