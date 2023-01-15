@@ -11,6 +11,7 @@ import { LoadingButton } from '@mui/lab';
 import { Alert } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { CircularProgress } from '@mui/material';
 
 export default function Categories() {
   const [name, setName] = useState('');
@@ -18,7 +19,9 @@ export default function Categories() {
   const [editId, setEditId] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
   const dispatch = useDispatch();
-  const { categories, addLoading, addSuccess, error } = useSelector((state) => state.categories);
+  const { categories, loading, addLoading, addSuccess, error } = useSelector(
+    (state) => state.categories,
+  );
   useEffect(() => {
     if (!categories) dispatch(getCategories());
   }, [dispatch, categories]);
@@ -70,6 +73,7 @@ export default function Categories() {
         </Alert>
       )}
       <div className="categories__list">
+        {loading && <CircularProgress className="categories__loading center-self" color="primary" size={50} />}
         {categories &&
           [...categories]
             .sort((a, b) => a.id - b.id)

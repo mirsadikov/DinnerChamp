@@ -11,7 +11,7 @@
 
   &__container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 30rem 1fr;
     grid-gap: 2rem;
   }
 
@@ -31,7 +31,6 @@
 
 
   &__main {
-    grid-column: 1 / span 2;
     min-width: 25rem;
     display: flex;
     flex-direction: column;
@@ -39,7 +38,6 @@
   }
 
   &__block {
-    grid-column: 3 / span 5;
     min-width: 25rem;
   }
 

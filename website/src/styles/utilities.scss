@@ -3,6 +3,11 @@
   align-items: center;
 }
 
+.center-self {
+  margin: auto;
+  display: block !important;
+}
+
 .hover-right {
   transition: transform 0.2s;
   &:hover {

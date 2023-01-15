@@ -1,0 +1,68 @@
+.dishes {
+  .MuiDataGrid-root {
+    border: 1px solid transparent;
+
+    .MuiDataGrid-columnHeaders {
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #e0e0e0;
+      user-select: none;
+    }
+
+    .MuiDataGrid-main {
+      margin-top: 2rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+    }
+
+    .MuiDataGrid-footerContainer {
+      border-top: none;
+    }
+
+    .MuiDataGrid-cell:focus,
+    .MuiDataGrid-cell:focus-within,
+    .MuiDataGrid-columnHeader:focus,
+    .MuiDataGrid-columnHeader:focus-within {
+      outline: none;
+    }
+  }
+
+  &__no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+
+  &__actions {
+    gap: 0.5rem;
+    display: flex;
+  }
+
+  &__action-btn {
+    cursor: pointer;
+    height: 3rem;
+    width: 3rem;
+    font-size: 1rem;
+    border-radius: 20%;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    &--edit {
+      color: $color-secondary;
+    }
+
+    &--delete {
+      color: $color-primary;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import {
   DELETE_CATEGORY_SUCCESS,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
+  RESTAURANT_LOGOUT,
   UPDATE_CATEGORY_REQUEST,
   UPDATE_CATEGORY_SUCCESS,
 } from '../constants';
@@ -44,6 +45,8 @@ export const categoriesReducer = (state = {}, action) => {
         updateLoading: false,
         updateSuccess: true,
       };
+    case RESTAURANT_LOGOUT:
+      return {};
     default:
       return state;
   }
