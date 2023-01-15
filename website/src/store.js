@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { categoriesReducer } from './Reducers/categoryReducer';
-import { dishesReducer } from './Reducers/dishReducer';
+import { dishesReducer, dishFormReducer } from './Reducers/dishReducer';
 import {
   getRestaurantReducer,
   restaurantLoginReducer,
@@ -26,6 +26,7 @@ const store = configureStore({
     updateDetails: updateRestaurantDetailsReducer,
     categories: categoriesReducer,
     dishes: dishesReducer,
+    dishForm: dishFormReducer,
   },
   preloadedState: initialState,
 });

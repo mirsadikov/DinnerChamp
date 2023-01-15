@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import Categories from '../Components/Categories';
 import Dishes from '../Components/Dishes';
+import DishForm from '../Components/DishForm';
 import ProfileCard from '../Components/ProfileCard';
 
 export default function Dashboard() {
@@ -32,6 +33,7 @@ export default function Dashboard() {
           <Routes>
             <Route path="/dishes" element={<Dishes />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/dishes/form" element={<DishForm />} />
           </Routes>
         </div>
       </div>

@@ -12,6 +12,7 @@
       margin-top: 2rem;
       border: 1px solid #e0e0e0;
       border-radius: 5px;
+      box-shadow: 0 4px 8px 0 #00000005;
     }
 
     .MuiDataGrid-footerContainer {
@@ -26,6 +27,16 @@
     }
   }
 
+  &__table {
+    position: relative;
+  }
+
+  &__loading {
+    position: absolute !important;
+    z-index: 1 !important;
+    border-radius: 5px;
+  }
+
   &__no-data {
     display: flex;
     justify-content: center;
@@ -34,6 +45,11 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: $color-secondary;
+  }
+
+  &__controls {
+    display: flex;
+    gap: 1rem;
   }
 
   &__actions {
@@ -63,6 +79,56 @@
 
     &--delete {
       color: $color-primary;
+    }
+  }
+}
+
+.dishform {
+  &__header {
+    justify-content: flex-start !important;
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0 !important;
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__form {
+    max-width: 70rem;
+    margin: 4rem auto;
+  }
+
+  &__input {
+    background-color: #fafafa;
+    border: 1px solid $color-primary-90;
+
+    &--textarea {
+      min-height: 10rem;
+    }
+  }
+
+  &__form-group:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+
+  &__submit {
+    svg {
+      color: $color-white;
     }
   }
 }

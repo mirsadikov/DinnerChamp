@@ -44,7 +44,8 @@ export default function Categories() {
 
   const handleDelete = (id) => {
     return () => {
-      dispatch(deleteCategory(id));
+      if (window.confirm('Are you sure you want to delete this category?'))
+        dispatch(deleteCategory(id));
     };
   };
 
@@ -73,7 +74,9 @@ export default function Categories() {
         </Alert>
       )}
       <div className="categories__list">
-        {loading && <CircularProgress className="categories__loading center-self" color="primary" size={50} />}
+        {loading && (
+          <CircularProgress className="categories__loading center-self" color="primary" size={50} />
+        )}
         {categories &&
           [...categories]
             .sort((a, b) => a.id - b.id)

@@ -35,7 +35,7 @@ export async function getAllDishesOnSale(req, res, next) {
 
 export async function createDish(req, res, next) {
   try {
-    const { name, price, description, categoryId } = req.body;
+    const { name, price, description, categoryId, onSale } = req.body;
 
     // Check if the restaurant is authorized to create a dish
     if (req.restaurant.id != req.params.restaurantId) {
@@ -82,6 +82,7 @@ export async function createDish(req, res, next) {
       restaurantId: req.restaurant.id,
       image: req.body.image,
       categoryId,
+      onSale,
     });
 
     res.status(201).json(dish);

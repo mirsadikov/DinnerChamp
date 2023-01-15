@@ -2,6 +2,22 @@
   &__group {
     display: flex;
     flex-direction: column;
+
+    &--row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__group-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3rem;
   }
 
   &__label {
@@ -10,6 +26,7 @@
   }
 
   &__control {
+    font-family: $font-text;
     padding: 1.5rem 2rem;
     font-size: 1.6rem;
     border: 1px solid $color-primary;

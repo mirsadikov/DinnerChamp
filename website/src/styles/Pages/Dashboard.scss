@@ -1,5 +1,6 @@
 .dashboard {
   padding-top: 3rem;
+  padding-bottom: 5rem;
 
   &__title {
     font-size: 2.8rem;
@@ -7,6 +8,13 @@
     letter-spacing: -1px;
     font-weight: 600;
     color: $color-secondary;
+  }
+
+  &__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
   }
 
   &__container {
@@ -38,7 +46,7 @@
   }
 
   &__block {
-    min-width: 25rem;
+    min-width: 25rem;    
   }
 
   a.active {
