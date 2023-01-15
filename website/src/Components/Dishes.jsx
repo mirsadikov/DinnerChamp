@@ -6,7 +6,7 @@ import { Alert, Backdrop, CircularProgress } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import Switch from '@mui/material/Switch';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import defaultImg from '../Images/default-img.png';
 
 export default function Dishes() {
@@ -97,7 +97,10 @@ export default function Dishes() {
       // ],
       renderCell: (params) => (
         <div className="dishes__actions">
-          <button className="dishes__action-btn dishes__action-btn--edit">
+          <button
+            className="dishes__action-btn dishes__action-btn--edit"
+            onClick={editHandler(params.id)}
+          >
             <EditIcon />
           </button>
           <button
@@ -113,6 +116,7 @@ export default function Dishes() {
 
   const { dishes, loading, error } = useSelector((state) => state.dishes);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!dishes) {
@@ -128,6 +132,12 @@ export default function Dishes() {
 
   const handleRefresh = () => {
     dispatch(getAllDishes());
+  };
+
+  const editHandler = (id) => {
+    return () => {
+      navigate('/dashboard/dishes/form/', { state: { dish: dishes.find((x) => x.id === id) } });
+    };
   };
 
   return (

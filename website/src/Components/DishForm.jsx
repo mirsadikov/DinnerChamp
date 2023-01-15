@@ -1,23 +1,31 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Alert, Switch } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../Actions/categoryActions';
-import { createDish } from '../Actions/dishActions';
+import { createDish, updateDish } from '../Actions/dishActions';
 import { LoadingButton } from '@mui/lab';
 import { DISH_FORM_RESET } from '../constants';
+import Checkbox from '@mui/material/Checkbox';
 
 export default function DishForm() {
+  const [editId, setEditId] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('-1');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
+  const [newImagePreview, setNewImagePreview] = useState('');
+  const [deleteOldImage, setDeleteOldImage] = useState(false);
   const [onSale, setOnSale] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const imageInputRef = useRef();
+
   const { categories } = useSelector((state) => state.categories);
   const { loading, error, success } = useSelector((state) => state.dishForm);
 
@@ -30,6 +38,23 @@ export default function DishForm() {
       dispatch({ type: DISH_FORM_RESET });
     };
   }, [categories, dispatch]);
+
+  useEffect(() => {
+    // get state from history
+    if (location.state) {
+      const { dish } = location.state;
+      setEditId(dish.id);
+      setName(dish.name);
+      setPrice(dish.price);
+      setCategory(dish.category?.id.toString() || '-1');
+      setDescription(dish.description || '');
+      setOnSale(dish.onSale);
+
+      if (dish.image) {
+        setImagePreview(process.env.REACT_APP_IMG_ENDPOINT + dish.image);
+      }
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (success) {
@@ -47,14 +72,31 @@ export default function DishForm() {
     if (category !== '-1') formData.append('categoryId', category);
     if (description) formData.append('description', description);
     if (image) formData.append('image', image);
+    if (editId && deleteOldImage) formData.append('removeImage', deleteOldImage);
     formData.append('onSale', onSale);
 
-    dispatch(
-      createDish(
-        formData,
-        categories.find((c) => c.id.toString() === category),
-      ),
-    );
+    if (editId) {
+      dispatch(updateDish(editId, formData));
+    } else {
+      dispatch(
+        createDish(
+          formData,
+          categories.find((c) => c.id.toString() === category),
+        ),
+      );
+    }
+  }
+
+  function newFileHandler(e) {
+    // only accept image files
+    if (!e.target.files[0].type.startsWith('image/')) {
+      alert('Please select an image file');
+      e.target.value = '';
+      return;
+    }
+
+    setImage(e.target.files[0]);
+    setNewImagePreview(URL.createObjectURL(e.target.files[0]));
   }
 
   return (
@@ -66,7 +108,7 @@ export default function DishForm() {
         >
           <ArrowBackIosNewIcon />
         </Link>
-        <h2 className="dashboard__card-title">Create new dish</h2>
+        <h2 className="dashboard__card-title">{editId ? 'Edit Dish' : 'Create new dish'}</h2>
       </div>
 
       {error && (
@@ -147,7 +189,7 @@ export default function DishForm() {
           </div>
         </div>
         <div className="form__group-2 dishform__form-group">
-          <div className=" form__group">
+          <div className="form__group">
             <label htmlFor="image" className="dishform__label form__label">
               Image
             </label>
@@ -156,10 +198,51 @@ export default function DishForm() {
               name="image"
               id="image"
               className="dishform__input form__control"
-              onChange={(e) => setImage(e.target.files[0])}
+              ref={imageInputRef}
+              onChange={newFileHandler}
             />
+            <button
+              type="button"
+              className="dishform__clear-image button"
+              onClick={() => {
+                setImage('');
+                setNewImagePreview('');
+                imageInputRef.current.value = '';
+              }}
+              disabled={!image && !newImagePreview}
+            >
+              Remove New Image
+            </button>
           </div>
+          {(imagePreview || newImagePreview) && (
+            <div className="form__group">
+              <label htmlFor="imagePreview" className="dishform__label form__label">
+                {newImagePreview ? 'New Image Preview' : 'Old Image Preview'}
+              </label>
+              <img
+                src={newImagePreview ? newImagePreview : imagePreview}
+                alt=""
+                className="dishform__image-preview"
+              />
+            </div>
+          )}
         </div>
+
+        {imagePreview && (
+          <div className="form__group-2 dishform__form-group">
+            <div className="form__group form__group--row">
+              <label htmlFor="onSale" className="dishform__label form__label">
+                Delete Old Image
+              </label>
+              <Checkbox
+                checked={deleteOldImage || newImagePreview}
+                onChange={(e) => setDeleteOldImage(e.target.checked)}
+                disabled={newImagePreview}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="form__group-2 dishform__form-group">
           <div className="form__group form__group--row">
             <label htmlFor="onSale" className="dishform__label form__label">
@@ -176,13 +259,21 @@ export default function DishForm() {
             </div>
           </div>
         </div>
-        <LoadingButton
-          loading={loading}
-          type="submit"
-          className="dishform__submit button button--primary button--small"
-        >
-          Create
-        </LoadingButton>
+        <div className="dishform__buttons">
+          <LoadingButton
+            loading={loading}
+            type="submit"
+            className="dishform__submit button button--primary button--small"
+          >
+            {editId ? 'Update' : 'Create'}
+          </LoadingButton>
+          <Link
+            to="/dashboard/dishes"
+            className="dishform__cancel button button--small button--secondary"
+          >
+            Cancel
+          </Link>
+        </div>
       </form>
     </div>
   );

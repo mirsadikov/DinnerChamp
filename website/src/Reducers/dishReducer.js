@@ -11,6 +11,8 @@ import {
   RESTAURANT_LOGOUT,
   DISHES_LOADING,
   DISH_FORM_RESET,
+  UPDATE_DISH_REQUEST,
+  UPDATE_DISH_SUCCESS,
 } from '../constants';
 
 export const dishesReducer = (state = {}, action) => {
@@ -48,8 +50,10 @@ export const dishesReducer = (state = {}, action) => {
 export const dishFormReducer = (state = {}, action) => {
   switch (action.type) {
     case ADD_DISH_REQUEST:
+    case UPDATE_DISH_REQUEST:
       return { ...state, loading: true, success: false };
     case ADD_DISH_SUCCESS:
+    case UPDATE_DISH_SUCCESS:
       return { loading: false, success: true };
     case DISH_FORM_FAIL:
       return { error: action.payload };
