@@ -234,11 +234,13 @@ export default function DishForm() {
               <label htmlFor="onSale" className="dishform__label form__label">
                 Delete Old Image
               </label>
-              <Checkbox
-                checked={deleteOldImage || newImagePreview}
-                onChange={(e) => setDeleteOldImage(e.target.checked)}
-                disabled={newImagePreview}
-              />
+              <div className="dishform__input form__control dishform__input--checkbox">
+                <Checkbox
+                  checked={newImagePreview ? true : deleteOldImage}
+                  onChange={(e) => setDeleteOldImage(e.target.checked)}
+                  disabled={newImagePreview ? true : false}
+                />
+              </div>
             </div>
           </div>
         )}
