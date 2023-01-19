@@ -1,18 +1,22 @@
+import { img_endpoint } from '@/config/variables';
 import axios from '../config/axios';
+import defaultImage from '@/images/default-img.png';
+import RestaurantCard from '@/components/RestaurantCard';
 
 export default function Home({ restaurants, error }) {
   return (
-    <>
-      <h1>Restaurants</h1>
-      {error && <p>{error}</p>}
-      {restaurants && (
-        <ul>
-          {restaurants.map((restaurant) => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
-      )}
-    </>
+    <div className="home">
+      <div className="container">
+        {error && <p>{error}</p>}
+        {restaurants && (
+          <div className="home__restaurants">
+            {restaurants.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -22,7 +26,10 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        restaurants: data,
+        restaurants: data.map((restaurant) => ({
+          ...restaurant,
+          img: restaurant.img ? `${img_endpoint}/${restaurant.img}` : defaultImage.src,
+        })),
       },
     };
   } catch (error) {

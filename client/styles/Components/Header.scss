@@ -1,0 +1,49 @@
+.header {
+  position: relative;
+  padding-top: 6rem;
+
+  &__nav {
+    height: 6rem;
+    width: 100%;
+    background-color: transparent;
+    backdrop-filter: saturate(1.8) blur(5px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+
+    &--sticky {
+      background-color: #fff8;
+      box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.11);
+    }
+
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    color: var(--color-primary);
+    font-size: var(--font-size-h1);
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 2rem;
+
+    .active {
+      color: var(--color-primary);
+    }
+  }
+}

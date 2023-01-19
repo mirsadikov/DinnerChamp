@@ -1,0 +1,32 @@
+@import './variables.scss';
+@import './Components/Header.scss', './Components/RestaurantCard.scss';
+@import './Pages/Home.scss';
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  color: var(--color-text);
+  min-height: 200rem;
+  font-size: 1.6rem;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  padding: 0 var(--gutter);
+}
