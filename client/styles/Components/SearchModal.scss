@@ -1,0 +1,134 @@
+.search-modal {
+  &__box {
+    outline: none;
+    overflow: auto;
+    height: 100%;
+  }
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: var(--color-white);
+    height: 14rem;
+    border-radius: 1rem;
+  }
+
+  &__container {
+    margin: 5rem auto;
+    max-width: 60rem;
+    // background-color: var(--color-white);
+  }
+
+  &__input-container {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary-light);
+    border-radius: 50px;
+    position: relative;
+  }
+
+  &__input {
+    flex: 1;
+    height: 3rem;
+    border: none;
+    border-radius: 50px;
+    background-color: transparent;
+    height: 5rem;
+    font-size: 2rem;
+    outline: none;
+    padding: 0 9rem 0 3rem;
+  }
+
+  &__button {
+    position: absolute;
+    right: 0.5rem;
+    height: 4rem;
+    border-radius: 50px;
+    border: none;
+    width: 8rem;
+    cursor: pointer;
+    outline: none;
+    color: var(--color-white);
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      font-size: 2.6rem;
+    }
+  }
+
+  &__card {
+    margin-bottom: 1rem;
+    background-color: var(--color-white);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    height: 14rem;
+    overflow: hidden;
+
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
+
+    &-img {
+      transition: transform 0.3s;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+
+    &-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0;
+      height: 100%;
+    }
+
+    &-title {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &-badge {
+      font-weight: 400;
+      background-color: var(--color-primary-light);
+    }
+
+    &-city, &-phone, &-address {
+      b {
+        font-weight: 600;
+      }
+      span {
+        letter-spacing: 0.5px;
+        margin-left: 0.5rem;
+      }
+    }
+
+    &-description {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      max-height: 8rem;
+      // max 2 lines and ellipsis
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

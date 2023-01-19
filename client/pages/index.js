@@ -2,9 +2,12 @@ import { img_endpoint } from '@/config/variables';
 import axios from '../config/axios';
 import defaultImage from '@/images/default-img.png';
 import RestaurantSlider from '@/components/RestaurantSlider';
-import Link from 'next/link';
+import { GlobalContext } from '@/globalContext';
+import { useContext } from 'react';
 
 export default function Home({ restaurants, error }) {
+  const { setSearchModalOpen } = useContext(GlobalContext);
+
   return (
     <>
       <div className="home">
@@ -12,13 +15,19 @@ export default function Home({ restaurants, error }) {
           <div className="container hero__container">
             <h2 className="hero__title">
               Order now.
-              <br /> Pick up when <span className="hero__title--highlight">ready.</span>
+              <br />
+              Pick up when <span className="hero__title--highlight">ready.</span>
             </h2>
             <p className="hero__description">
               Order from your favorite restaurants and don't worry about the wait.
             </p>
             <div className="hero__buttons">
-              <button className="hero__button button button--primary">Search</button>
+              <button
+                className="hero__button button button--primary"
+                onClick={() => setSearchModalOpen(true)}
+              >
+                Search
+              </button>
               <a href="#explore" className="hero__button button button--secondary">
                 Explore
               </a>
@@ -51,10 +60,7 @@ export async function getServerSideProps() {
   } catch (error) {
     return {
       props: {
-        error:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        error,
       },
     };
   }

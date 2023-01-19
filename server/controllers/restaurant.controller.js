@@ -1,6 +1,7 @@
 import { Restaurant } from '../config/sequelize.js';
 import generateToken from '../utils/tokenGenerator.js';
 import { removeS3, uploadS3 } from '../utils/imgStorage.js';
+import { Op } from 'sequelize';
 
 export async function registerRestaurant(req, res, next) {
   try {
@@ -104,10 +105,25 @@ export async function getRestaurant(req, res, next) {
 
 export async function getAllRestaurants(req, res, next) {
   try {
-    // without password
-    const restaurants = await Restaurant.findAll({
-      attributes: { exclude: ['password'] },
-    });
+    let restaurants;
+    // check if params are passed
+    if (req.query && req.query.search) {
+      const { search } = req.query;
+      restaurants = await Restaurant.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.iLike]: `%${search}%` } },
+            { city: { [Op.iLike]: `%${search}%` } },
+          ],
+        },
+        attributes: { exclude: ['password'] },
+        limit: 10,
+      });
+    } else {
+      restaurants = await Restaurant.findAll({
+        attributes: { exclude: ['password'] },
+      });
+    }
 
     res.status(200).json(restaurants);
   } catch (error) {
@@ -136,7 +152,6 @@ export async function updateRestaurant(req, res, next) {
       restaurant.address = address === '' ? null : address || restaurant.address;
       restaurant.city = city === '' ? null : city || restaurant.city;
       restaurant.running = typeof running === 'boolean' ? running : restaurant.running;
-
 
       const updatedRestaurant = await restaurant.save();
       updatedRestaurant.password = undefined;

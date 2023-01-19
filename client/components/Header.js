@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Oleo_Script_Swash_Caps } from '@next/font/google';
+import { GlobalContext } from '@/globalContext';
+import SearchModal from './SearchModal';
 
 const oleo = Oleo_Script_Swash_Caps({
   subsets: ['latin'],
@@ -8,6 +10,7 @@ const oleo = Oleo_Script_Swash_Caps({
 });
 
 export default function Header() {
+  const { setSearchModalOpen } = useContext(GlobalContext);
   const [sticky, setSticky] = useState(false);
 
   useEffect(() => {
@@ -32,6 +35,14 @@ export default function Header() {
           </div>
           <ul className="header__links">
             <li>
+              <button
+                className="header__search-btn button button--small"
+                onClick={() => setSearchModalOpen(true)}
+              >
+                Search
+              </button>
+            </li>
+            <li>
               <Link href="/cart">Cart</Link>
             </li>
             <li>
@@ -40,6 +51,7 @@ export default function Header() {
           </ul>
         </div>
       </nav>
+      <SearchModal />
     </header>
   );
 }

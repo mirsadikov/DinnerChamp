@@ -1,5 +1,6 @@
 @import './variables.scss', './utils.scss';
-@import'./Components/Mini.scss','./Components/Header.scss', './Components/RestaurantCard.scss';
+@import './Components/Mini.scss', './Components/Header.scss', './Components/RestaurantCard.scss',
+  './Components/SearchModal.scss';
 @import './Pages/Home.scss';
 
 * {
