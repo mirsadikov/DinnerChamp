@@ -122,7 +122,7 @@ export async function updateRestaurant(req, res, next) {
     });
 
     if (restaurant) {
-      const { name, email, phone, description } = req.body;
+      const { name, email, phone, description, address, city, running } = req.body;
 
       if (!name || !email) {
         res.status(400);
@@ -133,6 +133,10 @@ export async function updateRestaurant(req, res, next) {
       restaurant.email = email || restaurant.email;
       restaurant.phone = phone === '' ? null : phone || restaurant.phone;
       restaurant.description = description === '' ? null : description || restaurant.description;
+      restaurant.address = address === '' ? null : address || restaurant.address;
+      restaurant.city = city === '' ? null : city || restaurant.city;
+      restaurant.running = typeof running === 'boolean' ? running : restaurant.running;
+
 
       const updatedRestaurant = await restaurant.save();
       updatedRestaurant.password = undefined;

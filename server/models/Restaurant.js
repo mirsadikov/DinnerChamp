@@ -29,6 +29,19 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      running: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      }
     },
     {
       hooks: {

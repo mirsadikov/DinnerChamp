@@ -118,10 +118,11 @@
     border: 1px solid $color-primary-90;
 
     &--textarea {
+      resize: vertical;
       min-height: 10rem;
     }
 
-    &--checkbox{
+    &--checkbox {
       padding: 0.4rem 1rem !important;
     }
   }

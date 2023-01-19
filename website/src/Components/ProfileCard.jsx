@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { img_endpoint } from '../config';
-import { ProfileDetailsUpdateModal, ProfileImageUpdateModal } from './ProfileUpdateModals';
+import { ProfileImageUpdateModal } from './ProfileImgModal';
 import defaultImg from '../Images/default-img.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRestaurant } from '../Actions/restaurantActions';
+import { Link } from 'react-router-dom';
 
 export default function ProfileCard({ info }) {
   const dispatch = useDispatch();
 
   const [openImgModal, setOpenImgModal] = useState(false);
-  const [openDetailsModal, setOpenDetailsModal] = useState(false);
 
   const profile = useSelector((state) => state.details);
   const { info: details, loading: detailsLoading, error: detailsError } = profile;
@@ -48,26 +48,17 @@ export default function ProfileCard({ info }) {
                   <b>Phone: </b>+{details.phone}
                 </p>
               )}
-              {details.address && (
+              {details.city && (
                 <p>
-                  <b>Address: </b>
-                  {details.address}
-                </p>
-              )}
-              {details.description && (
-                <p>
-                  <b>Info: </b>
-                  {details.description}
+                  <b>City: </b>
+                  {details.city}
                 </p>
               )}
             </div>
 
-            <button
-              className="profile__edit-btn button button--small"
-              onClick={() => setOpenDetailsModal(true)}
-            >
-              Edit
-            </button>
+            <Link to="/dashboard/profileform" state={{ details }}>
+              <button className="profile__edit-btn button button--small">Edit</button>
+            </Link>
           </>
         )}
       </div>
@@ -77,11 +68,6 @@ export default function ProfileCard({ info }) {
             open={openImgModal}
             setOpen={setOpenImgModal}
             img={details?.img && img_endpoint + details?.img}
-          />
-          <ProfileDetailsUpdateModal
-            open={openDetailsModal}
-            setOpen={setOpenDetailsModal}
-            details={details}
           />
         </>
       )}

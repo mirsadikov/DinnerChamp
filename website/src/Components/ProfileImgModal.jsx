@@ -75,12 +75,25 @@ export function ProfileImageUpdateModal({ open, setOpen, img }) {
               {error}
             </Alert>
           )}
-          <img src={deleteImg ? defaultImg : newImg || (img ? img : defaultImg)} alt="profile" className="modal__profile-image" />
+          <img
+            src={deleteImg ? defaultImg : newImg || (img ? img : defaultImg)}
+            alt="profile"
+            className="modal__profile-image"
+          />
           <form className="modal__form" onSubmit={handleSave}>
-            <input ref={fileInputRef} type="file" onChange={newImageHandler} className="modal__form-input" />
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={newImageHandler}
+              className="modal__form-input"
+            />
 
             <div className="modal__form-btns">
-              <LoadingButton loading={loading} type="submit" className="modal__form-btn button button--primary button--small">
+              <LoadingButton
+                loading={loading}
+                type="submit"
+                className="modal__form-btn button button--primary button--small"
+              >
                 Save
               </LoadingButton>
 
@@ -92,7 +105,10 @@ export function ProfileImageUpdateModal({ open, setOpen, img }) {
                 Delete
               </button>
 
-              <button className="modal__form-btn modal__form-btn--cancel button button--small" onClick={closeModal}>
+              <button
+                className="modal__form-btn modal__form-btn--cancel button button--small"
+                onClick={closeModal}
+              >
                 Cancel
               </button>
             </div>
@@ -108,6 +124,8 @@ export function ProfileDetailsUpdateModal({ open, setOpen, details }) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
 
   const dispatch = useDispatch();
   const updateStatus = useSelector((state) => state.updateDetails);
@@ -124,6 +142,8 @@ export function ProfileDetailsUpdateModal({ open, setOpen, details }) {
     setEmail(details.email);
     setPhone(details.phone || '');
     setDescription(details.description || '');
+    setAddress(details.address || '');
+    setCity(details.city || '');
 
     return () => {};
   }, [details, dispatch, open]);
@@ -146,6 +166,8 @@ export function ProfileDetailsUpdateModal({ open, setOpen, details }) {
       email,
       phone,
       description,
+      address,
+      city,
     };
 
     dispatch(updateRestaurantDetails(detailsToUpdate));
@@ -205,6 +227,34 @@ export function ProfileDetailsUpdateModal({ open, setOpen, details }) {
             </div>
 
             <div className="modal__form-group form__group">
+              <label htmlFor="phone" className="modal__form-label form__label">
+                City
+              </label>
+              <input
+                type="text"
+                id="city"
+                className="modal__form-input form__control"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Street City"
+              />
+            </div>
+
+            <div className="modal__form-group form__group">
+              <label htmlFor="phone" className="modal__form-label form__label">
+                Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                className="modal__form-input form__control"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Street Address"
+              />
+            </div>
+
+            <div className="modal__form-group form__group">
               <label htmlFor="description" className="modal__form-label form__label">
                 Description
               </label>
@@ -218,11 +268,18 @@ export function ProfileDetailsUpdateModal({ open, setOpen, details }) {
             </div>
 
             <div className="modal__form-btns">
-              <LoadingButton loading={loading} type="submit" className="modal__form-btn button button--primary button--small">
+              <LoadingButton
+                loading={loading}
+                type="submit"
+                className="modal__form-btn button button--primary button--small"
+              >
                 Save
               </LoadingButton>
 
-              <button className="modal__form-btn modal__form-btn--cancel button button--small" onClick={closeModal}>
+              <button
+                className="modal__form-btn modal__form-btn--cancel button button--small"
+                onClick={closeModal}
+              >
                 Cancel
               </button>
             </div>

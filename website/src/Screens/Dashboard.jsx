@@ -5,6 +5,7 @@ import Categories from '../Components/Categories';
 import Dishes from '../Components/Dishes';
 import DishForm from '../Components/DishForm';
 import ProfileCard from '../Components/ProfileCard';
+import ProfileForm from '../Components/ProfileForm';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function Dashboard() {
         </div>
         <div className="dashboard__block dashboard__column">
           <Routes>
+            <Route path="/profileform" element={<ProfileForm />} />
             <Route path="/dishes" element={<Dishes />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/dishes/form" element={<DishForm />} />
