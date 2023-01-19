@@ -28,6 +28,7 @@ export default function Header() {
             <h1 className={`header__title ${oleo.className}`}>
               <Link href="/">DinnerChamp</Link>
             </h1>
+            <span className="header__logo-badge mini-badge">Orders</span>
           </div>
           <ul className="header__links">
             <li>

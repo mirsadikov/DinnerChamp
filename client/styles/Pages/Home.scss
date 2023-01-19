@@ -1,8 +1,124 @@
 .home {
+  &__subtitle {
+    font-size: 2.8rem;
+    // text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 3rem;      
+    letter-spacing: 2px;
+    display: inline-block;
 
-  &__restaurants {
+    &::after {
+      content: "";
+      display: block;
+      width: 200%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+      margin-top: 1.5rem;
+      transform: translateX(-25%);
+
+    }
+  }
+}
+
+.home .hero {
+  &__container {
+    padding-top: 4rem;
+    height: calc(70vh);
+    max-height: 80rem;
+    min-height: 45rem;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 7.2rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    color: var(--color-text);
+
+    &--highlight {
+      background-image: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__description {
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--color-text-gray);
+    margin-top: 2rem;
+    letter-spacing: -0.48px;
+    text-align: center;
+    line-height: 3.8rem;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+}
+
+.home .explore {
+  margin-top: 2rem;
+  padding-top: 8rem;
+  min-height: 100vh;
+  text-align: center;
+
+  &__slider {
+    position: relative;
+    overflow: visible;
+  }
+
+  &__slider-container {
+    overflow: visible;
+  }
+
+  &__slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--color-white);
+    display: grid;
+    place-content: center;
+    transition: all 0.1s ease-in-out;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    svg {
+      font-size: 2.2rem;
+    }
+
+    &--prev {
+      left: 0;
+      padding-right: 2px;
+    }
+
+    &--next {
+      right: 0;
+      padding-left: 2px;
+    }
   }
 }

@@ -31,6 +31,11 @@
     align-items: center;
   }
 
+  &__logo-badge {
+    margin-top: 0.8rem;
+    margin-left: 0.5rem;
+}
+
   &__title {
     color: var(--color-primary);
     font-size: var(--font-size-h1);
