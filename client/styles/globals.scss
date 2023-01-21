@@ -1,7 +1,7 @@
 @import './variables.scss', './utils.scss';
 @import './Components/Mini.scss', './Components/Header.scss', './Components/RestaurantCard.scss',
-  './Components/SearchModal.scss';
-@import './Pages/Home.scss';
+  './Components/SearchModal.scss', './Components/DishCard.scss';
+@import './Pages/Home.scss', './Pages/Restaurant.scss';
 
 * {
   margin: 0px;
@@ -22,7 +22,6 @@ a {
 
 body {
   color: var(--color-text);
-  min-height: 200rem;
   font-size: 1.6rem;
 }
 

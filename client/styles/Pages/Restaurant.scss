@@ -1,0 +1,110 @@
+.restaurant-page {
+  &__container {
+    max-width: 140rem !important;
+    display: flex;
+    gap: 3rem;
+  }
+
+  &__sidebar {
+    width: 25%;
+    align-self: flex-start;
+    position: sticky;
+    top: 6rem;
+    min-height: calc(100vh - 6rem);
+    padding: 3rem 0rem 2rem;
+  }
+}
+
+.restaurant-page .dishes-list {
+  margin-top: 1rem;
+  flex: 1;
+
+  &__container {
+    // background-color: #f0f8ff;
+    background-color: #ff9c3f17;
+    padding: 2rem;
+    border-radius: 2rem;
+    min-height: calc(100vh - 10rem);
+    margin-bottom: 3rem;
+  }
+
+  &__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  &__category {
+    font-size: 1.8rem;
+    padding: 2rem 1rem;
+    border-radius: 10rem;
+    border: 1px solid #bdbdbd;
+    transition: all 0.15s ease-in-out;
+
+    &.MuiChip-filled {
+      border: 1px solid var(--color-primary);
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    gap: 1.5rem;
+  }
+}
+
+.restaurant-page .restaurant-info {
+  &__img {
+    max-width: 23rem;
+    margin: 0 auto;
+    display: block;
+    border-radius: 3rem;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  &__details {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      font-size: 2.4rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__address {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__phone {
+    font-weight: 500;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &__desc {
+    margin-top: 2rem;
+    background: #b4b9bc1a;
+    border: 1px solid #83868726;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+}

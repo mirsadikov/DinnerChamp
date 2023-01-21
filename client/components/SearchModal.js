@@ -82,6 +82,7 @@ export default function SearchModal() {
                     href={`/r/${restaurant.id}`}
                     key={restaurant.id}
                     className="search-modal__card"
+                    onClick={() => setSearchModalOpen(false)}
                   >
                     <img
                       className="search-modal__card-img"
