@@ -30,7 +30,7 @@ export default function ProfileForm() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!location.state?.details) navigate('/dashboard');
+    if (!location.state?.details) navigate('/dashboard/');
 
     // get state from history
     if (location.state?.details) {
@@ -48,7 +48,7 @@ export default function ProfileForm() {
   useEffect(() => {
     if (success) {
       dispatch({ type: UPDATE_RESTAURANT_RESET });
-      navigate('/dashboard');
+      navigate('/dashboard/');
     }
   }, [success, navigate, dispatch]);
 
@@ -71,7 +71,7 @@ export default function ProfileForm() {
   return (
     <div className="dashboard__card profileform">
       <div className="dashboard__card-header profileform__header">
-        <Link to="/dashboard " className="profileform__back button button--small button--primary">
+        <Link to="/dashboard/" className="profileform__back button button--small button--primary">
           <ArrowBackIosNewIcon />
         </Link>
         <h2 className="dashboard__card-title">Edit Profile</h2>
@@ -212,7 +212,7 @@ export default function ProfileForm() {
             Update
           </LoadingButton>
           <Link
-            to="/dashboard"
+            to="/dashboard/"
             className="profileform__cancel button button--small button--secondary"
           >
             Cancel

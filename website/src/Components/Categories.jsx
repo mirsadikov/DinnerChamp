@@ -62,6 +62,7 @@ export default function Categories() {
 
   const turnOnEdit = () => {
     setName('');
+    setEditId(null);
     setEditMode(!editMode);
   };
 
