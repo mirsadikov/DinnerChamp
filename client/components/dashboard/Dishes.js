@@ -1,32 +1,41 @@
 import { Alert, Chip } from '@mui/material';
 import DishCard from '@/components/DishCard';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { GlobalContext } from '@/globalContext';
 
 export default function Dishes({ dishesData }) {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [categories, setCategories] = useState([]);
   const [filteredDishes, setFilteredDishes] = useState([]);
   const { dishes, error: dishesError } = dishesData;
+  const { cart } = useContext(GlobalContext);
 
   if (dishesError) {
     return <Alert severity="error">Something went wrong while getting items!</Alert>;
   }
 
   useEffect(() => {
-    const categories = dishes.reduce((acc, dish) => {
-      if (!dish.category) return acc;
-      if (acc.includes(dish.category)) return acc;
-      return [...acc, dish.category];
+    const categories = [];
+    dishes.forEach((dish) => {
+      if (dish.category) {
+        const category = categories.find((category) => category.id === dish.category.id);
+        if (!category) {
+          categories.push(dish.category);
+        }
+      }
+
+      setCategories(categories);
     }, []);
 
     setCategories(categories);
   }, [dishes]);
 
   useEffect(() => {
-    if (selectedCategory === 0) return;
-    const filteredDishes = dishes.filter((dish) => dish.category?.id === selectedCategory);
-
-    setFilteredDishes(filteredDishes);
+    if (selectedCategory === 0) setFilteredDishes(dishes);
+    else {
+      const filteredDishes = dishes.filter((dish) => dish.category?.id === selectedCategory);
+      setFilteredDishes(filteredDishes);
+    }
   }, [selectedCategory]);
 
   return (
@@ -52,9 +61,10 @@ export default function Dishes({ dishesData }) {
         ))}
       </div>
       <div className="dishes-list__items">
-        {selectedCategory === 0
-          ? dishes.map((dish) => <DishCard dish={dish} key={dish.id} />)
-          : filteredDishes.map((dish) => <DishCard dish={dish} key={dish.id} />)}
+        {filteredDishes.map((dish) => {
+          const dishInCart = cart.find((item) => item.id === dish.id);
+          return <DishCard dish={dish} key={dish.id} initialQuantity={dishInCart?.quantity} />;
+        })}
       </div>
     </div>
   );

@@ -6,12 +6,14 @@
   }
 
   &__sidebar {
+    position: relative;
     width: 25%;
     align-self: flex-start;
     position: sticky;
     top: 6rem;
     min-height: calc(100vh - 6rem);
     padding: 3rem 0rem 2rem;
+    // overflow-x: hidden;
   }
 }
 
@@ -25,7 +27,7 @@
     padding: 2rem;
     border-radius: 2rem;
     min-height: calc(100vh - 10rem);
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
   }
 
   &__categories {
@@ -51,14 +53,46 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: start;
-    gap: 1.5rem;
+    gap: 3rem 1.5rem;
   }
 }
 
 .restaurant-page .restaurant-info {
-  &__img {
+  &__img-container {
+    position: relative;
     max-width: 23rem;
     margin: 0 auto;
+  }
+
+  &__cart-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-40%, -40%);
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: 1px solid var(--color-white);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      transform: translate(-40%, -40%) scale(1.1);
+    }
+
+    &:active {
+      transform: translate(-40%, -40%) scale(0.9);
+    }
+  }
+
+  &__img {
     display: block;
     border-radius: 3rem;
     width: 100%;

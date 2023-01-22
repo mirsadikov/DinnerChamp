@@ -3,16 +3,21 @@ import defaultImage from '@/images/default-img.png';
 import { img_endpoint } from '@/config/variables';
 import RestaurantProfile from '@/components/dashboard/RestaurantProfile';
 import Dishes from '@/components/dashboard/Dishes';
+import Cart from '@/components/dashboard/Cart';
+import { useRef } from 'react';
 
 export default function R({ dishesData, restaurantData }) {
+  const sidebarRef = useRef(null);
+
   return (
     <div className="restaurant-page">
       <div className="container restaurant-page__container">
         <div className="dishes-list">
           <Dishes dishesData={dishesData} />
         </div>
-        <div className="restaurant-page__sidebar">
+        <div className="restaurant-page__sidebar" ref={sidebarRef}>
           <RestaurantProfile restaurantData={restaurantData} />
+          <Cart parentRef={sidebarRef} restaurantId={restaurantData.restaurant.id} />
         </div>
       </div>
     </div>

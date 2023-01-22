@@ -3,9 +3,13 @@ import PlaceIcon from '@mui/icons-material/Place';
 import PhoneIcon from '@mui/icons-material/Phone';
 import defaultImage from '@/images/default-img.png';
 import { Alert } from '@mui/material';
+import { useContext } from 'react';
+import { GlobalContext } from '@/globalContext';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function RestaurantProfile({ restaurantData }) {
   const { restaurant, error } = restaurantData;
+  const { cartIsOpen, setCartIsOpen } = useContext(GlobalContext);
 
   if (error) {
     return <Alert severity="error">Something went wrong while getting restaurant info!</Alert>;
@@ -13,9 +17,18 @@ export default function RestaurantProfile({ restaurantData }) {
 
   const { name, address, city, phone, description, img } = restaurant;
 
+  const toggleCart = () => {
+    setCartIsOpen(!cartIsOpen);
+  };
+
   return (
     <div className="restaurant-info">
-      <img src={img} alt={name} className="restaurant-info__img" />
+      <div className="restaurant-info__img-container">
+        <img src={img} alt={name} className="restaurant-info__img" />
+        <button onClick={toggleCart} className="restaurant-info__cart-btn">
+          <ShoppingCartIcon />
+        </button>
+      </div>
       <div className="restaurant-info__details">
         <h2 className="restaurant-info__title">{name}</h2>
         {(address || city) && (

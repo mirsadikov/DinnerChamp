@@ -43,9 +43,6 @@ export default function Header() {
               </button>
             </li>
             <li>
-              <Link href="/cart">Cart</Link>
-            </li>
-            <li>
               <Link href="/liked">Liked</Link>
             </li>
           </ul>

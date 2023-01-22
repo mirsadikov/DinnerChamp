@@ -48,6 +48,12 @@ export default function SearchModal() {
     }
   };
 
+  const handleLinkClick = () => {
+    setSearchModalOpen(false);
+    setSearch('');
+    setRestaurants([]);
+  };
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -82,7 +88,7 @@ export default function SearchModal() {
                     href={`/r/${restaurant.id}`}
                     key={restaurant.id}
                     className="search-modal__card"
-                    onClick={() => setSearchModalOpen(false)}
+                    onClick={handleLinkClick}
                   >
                     <img
                       className="search-modal__card-img"
