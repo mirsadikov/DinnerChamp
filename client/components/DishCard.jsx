@@ -1,12 +1,16 @@
 import { GlobalContext } from '@/globalContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-export default function DishCard({ dish, initialQuantity = 0 }) {
-  const [quantity, setQuantity] = useState(initialQuantity);
-
+export default function DishCard({ dish }) {
   const { setCartIsOpen, cart, setCart } = useContext(GlobalContext);
+  const [quantity, setQuantity] = useState(0);
+
+  useEffect(() => {
+    const initialQuantity = cart.find((item) => item.id === dish.id)?.quantity || 0;
+    setQuantity(initialQuantity);
+  }, [cart, dish]);
 
   const increaseQuantity = () => {
     setCartIsOpen(true);
@@ -66,6 +70,7 @@ export default function DishCard({ dish, initialQuantity = 0 }) {
           {dish.price} <span>so'm</span>
         </p>
         <p className="dish-card__category">{dish.category ? dish.category.name : 'Other'}</p>
+        {dish.description && <p className="dish-card__description">{dish.description}</p>}
         <div className="dish-card__buttons">
           <button className="dish-card__button" onClick={reduceQuantity}>
             <RemoveIcon />

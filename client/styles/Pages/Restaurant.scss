@@ -15,18 +15,25 @@
     padding: 3rem 0rem 2rem;
     // overflow-x: hidden;
   }
+
+  &__closed {
+    margin-bottom: 2rem;
+  }
 }
 
 .restaurant-page .dishes-list {
   margin-top: 1rem;
   flex: 1;
+  min-height: calc(100vh - 10rem);
+  display: flex;
+  flex-direction: column;
 
   &__container {
+    flex: 1;
     // background-color: #f0f8ff;
     background-color: #ff9c3f17;
     padding: 2rem;
     border-radius: 2rem;
-    min-height: calc(100vh - 10rem);
     margin-bottom: 1rem;
   }
 
@@ -52,8 +59,15 @@
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    align-items: start;
+    align-items: stretch;
     gap: 3rem 1.5rem;
+  }
+
+  &__no-items {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 2rem;
   }
 }
 

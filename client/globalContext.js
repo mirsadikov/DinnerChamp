@@ -9,15 +9,16 @@ const GlobalProvider = function ({ children }) {
 
   // set initial cart state
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    if (cart) {
-      setCart(cart);
+    const cartFromStorage = JSON.parse(localStorage.getItem('cart'));
+    if (cartFromStorage) {
+      setCart(cartFromStorage);
     }
   }, []);
 
   // update cart state before unmounting
   useEffect(() => {
     if (cart.length > 0) localStorage.setItem('cart', JSON.stringify(cart));
+    else localStorage.removeItem('cart');
   }, [cart]);
 
   return (
