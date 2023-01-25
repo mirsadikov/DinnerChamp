@@ -14,6 +14,7 @@ import errorHandler from './middlewares/errorhandler.middleware.js';
 import restaurantRoute from './routes/restaurant.route.js';
 import dishRoute from './routes/dish.route.js';
 import categoryRoute from './routes/category.route.js';
+import orderRoute from './routes/order.route.js';
 
 // config
 const app = express();
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 app.use('/api/restaurant', restaurantRoute);
 app.use('/api/dish', dishRoute);
 app.use('/api/category', categoryRoute);
+app.use('/api/order', orderRoute);
 
 // error handler
 app.use(notFound);
