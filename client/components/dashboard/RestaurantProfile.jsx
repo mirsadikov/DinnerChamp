@@ -2,18 +2,29 @@ import { img_endpoint } from '@/config/variables';
 import PlaceIcon from '@mui/icons-material/Place';
 import PhoneIcon from '@mui/icons-material/Phone';
 import defaultImage from '@/images/default-img.png';
-import { Alert } from '@mui/material';
-import { useContext } from 'react';
+import { Alert, Skeleton } from '@mui/material';
+import { useContext, useState } from 'react';
 import { GlobalContext } from '@/globalContext';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useEffect } from 'react';
 
 export default function RestaurantProfile({ restaurantData }) {
+  const [cartCount, setCartCount] = useState(0);
   const { restaurant, error } = restaurantData;
-  const { cartIsOpen, setCartIsOpen } = useContext(GlobalContext);
+  const { cartIsOpen, setCartIsOpen, cart } = useContext(GlobalContext);
 
   if (error) {
     return <Alert severity="error">Something went wrong while getting restaurant info!</Alert>;
   }
+
+  useEffect(() => {
+    const count = cart
+      ?.filter((item) => item.restaurantId === restaurant.id)
+      .reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0);
+    setCartCount(count || 0);
+  }, [cart]);
 
   const { name, address, city, phone, description, img } = restaurant;
 
@@ -24,9 +35,16 @@ export default function RestaurantProfile({ restaurantData }) {
   return (
     <div className="restaurant-info">
       <div className="restaurant-info__img-container">
-        <img src={img} alt={name} className="restaurant-info__img" />
+        <img
+          src={img}
+          alt={name}
+          className="restaurant-info__img"
+          width={230}
+          height={230}
+        />
         <button onClick={toggleCart} className="restaurant-info__cart-btn">
           <ShoppingCartIcon />
+          {cartCount > 0 && <div>{cartCount}</div>}
         </button>
       </div>
       <div className="restaurant-info__details">

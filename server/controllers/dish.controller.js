@@ -1,12 +1,17 @@
-import { Category, Dish } from '../config/sequelize.js';
+import { Category, Dish, Restaurant } from '../config/sequelize.js';
 import { removeS3, uploadS3 } from '../utils/imgStorage.js';
 
 export async function getAllDishes(req, res, next) {
   try {
+    const restaurant = await Restaurant.findByPk(req.params.restaurantId);
+
+    if (!restaurant) {
+      res.status(404);
+      throw new Error('Restaurant not found!');
+    }
+
     // Get all dishes for a restaurant
-    const dishes = await Dish.findAll({
-      where: { restaurantId: req.params.restaurantId },
-      // append category name
+    const dishes = await restaurant.getDishes({
       include: [{ model: Category, attributes: ['name', 'id'], as: 'category' }],
       attributes: { exclude: ['categoryId'] },
     });
@@ -19,10 +24,16 @@ export async function getAllDishes(req, res, next) {
 
 export async function getAllDishesOnSale(req, res, next) {
   try {
+    const restaurant = await Restaurant.findByPk(req.params.restaurantId);
+
+    if (!restaurant) {
+      res.status(404);
+      throw new Error('Restaurant not found!');
+    }
+
     // Get all dishes for a restaurant
-    const dishes = await Dish.findAll({
-      where: { restaurantId: req.params.restaurantId, onSale: true },
-      // append category name
+    const dishes = await restaurant.getDishes({
+      where: { onSale: true },
       include: [{ model: Category, attributes: ['name', 'id'], as: 'category' }],
       attributes: { exclude: ['categoryId'] },
     });

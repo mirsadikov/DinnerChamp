@@ -1,6 +1,7 @@
 import { GlobalContext } from '@/globalContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { Tooltip } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 
 export default function DishCard({ dish }) {
@@ -8,8 +9,8 @@ export default function DishCard({ dish }) {
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
-    const initialQuantity = cart.find((item) => item.id === dish.id)?.quantity || 0;
-    setQuantity(initialQuantity);
+    const initialQuantity = cart?.find((item) => item.id === dish.id)?.quantity || 0;
+    setQuantity(initialQuantity || 0);
   }, [cart, dish]);
 
   const increaseQuantity = () => {
@@ -17,7 +18,7 @@ export default function DishCard({ dish }) {
     setQuantity(quantity + 1);
 
     // add dish to cart
-    const dishInCart = cart.find((item) => item.id === dish.id);
+    const dishInCart = cart?.find((item) => item.id === dish.id);
     if (dishInCart) {
       dishInCart.quantity = dishInCart.quantity + 1;
 
@@ -70,7 +71,11 @@ export default function DishCard({ dish }) {
           {dish.price} <span>so'm</span>
         </p>
         <p className="dish-card__category">{dish.category ? dish.category.name : 'Other'}</p>
-        {dish.description && <p className="dish-card__description">{dish.description}</p>}
+        {dish.description && (
+          <Tooltip title={dish.description} placement="top" disableInteractive>
+            <p className="dish-card__description">{dish.description}</p>
+          </Tooltip>
+        )}
         <div className="dish-card__buttons">
           <button className="dish-card__button" onClick={reduceQuantity}>
             <RemoveIcon />

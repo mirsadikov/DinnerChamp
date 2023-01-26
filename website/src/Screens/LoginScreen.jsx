@@ -17,7 +17,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (info) {
-      navigate('/dashboard');
+      navigate('/dashboard/');
     }
   }, [info, navigate]);
 

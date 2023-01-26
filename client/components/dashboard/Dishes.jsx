@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export default function Dishes({ dishesData }) {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [categories, setCategories] = useState([]);
-  const [filteredDishes, setFilteredDishes] = useState([]);
+  const [filteredDishes, setFilteredDishes] = useState(null);
   const { dishes, error: dishesError } = dishesData;
 
   if (dishesError) {
@@ -34,7 +34,7 @@ export default function Dishes({ dishesData }) {
       const filteredDishes = dishes.filter((dish) => dish.category?.id === selectedCategory);
       setFilteredDishes(filteredDishes);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, dishes]);
 
   return (
     <div className="dishes-list__container">
@@ -59,11 +59,11 @@ export default function Dishes({ dishesData }) {
         ))}
       </div>
       <div className="dishes-list__items">
-        {filteredDishes.map((dish) => {
+        {filteredDishes?.map((dish) => {
           return <DishCard dish={dish} key={dish.id} />;
         })}
       </div>
-      {filteredDishes.length === 0 && (
+      {filteredDishes?.length === 0 && (
         <p className="dishes-list__no-items">Restaurant currently has no items!</p>
       )}
     </div>

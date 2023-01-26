@@ -14,7 +14,7 @@ export default function R({ dishesData, restaurantData }) {
     <div className="restaurant-page">
       <div className="container restaurant-page__container">
         <div className="dishes-list">
-          {!restaurantData.restaurant.running && (
+          {restaurantData.restaurant.running === false && (
             <Alert className='restaurant-page__closed' severity="error">Restaurant is not operating right now!</Alert>
           )}
           <Dishes dishesData={dishesData} />

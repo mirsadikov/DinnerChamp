@@ -3,42 +3,32 @@ import CloseIcon from '@mui/icons-material/Close';
 import { GlobalContext } from '@/globalContext';
 import { useContext, useEffect, useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useRouter } from 'next/router';
+import { Button, IconButton } from '@mui/material';
 
 export default function Cart({ restaurant }) {
   const [currentCart, setCurrentCart] = useState([]);
-  const { cartIsOpen, setCartIsOpen, cart, setCart } = useContext(GlobalContext);
+  const { cartIsOpen, setCartIsOpen, cart, reduceItem } = useContext(GlobalContext);
+  const router = useRouter();
 
   useEffect(() => {
-    const currentCart = cart.filter((item) => item.restaurantId === restaurant.id);
-    setCurrentCart(currentCart);
+    const currentCart = cart?.filter((item) => item.restaurantId === restaurant.id);
+    setCurrentCart(currentCart || []);
   }, [cart, restaurant]);
 
-  const reduceItem = (id) => {
-    const newCart = [];
-    cart.forEach((item) => {
-      if (item.id === id) {
-        if (item.quantity > 1) {
-          newCart.push({ ...item, quantity: item.quantity - 1 });
-        }
-      } else {
-        newCart.push(item);
-      }
-    });
-    setCart(newCart);
-  };
-  
   return (
     <Slide direction="left" in={cartIsOpen} mountOnEnter unmountOnExit>
       <div className="cart">
         <div className="cart__container">
           <div className="cart__header">
             <h3 className="cart__title">Cart</h3>
-            <button
+            <IconButton
+              color="secondary"
               className="cart__close-btn button button--primary"
               onClick={() => setCartIsOpen(false)}
             >
               <CloseIcon />
-            </button>
+            </IconButton>
           </div>
           <div className="cart__content">
             {currentCart.length > 0 ? (
@@ -55,12 +45,12 @@ export default function Cart({ restaurant }) {
                       {item.price * item.quantity} <span>so'm</span>
                     </p>
                   </div>
-                  <button
+                  <IconButton
                     className="cart__item__remove-btn button button--small"
                     onClick={() => reduceItem(item.id)}
                   >
                     <RemoveIcon />
-                  </button>
+                  </IconButton>
                 </div>
               ))
             ) : (
@@ -74,12 +64,13 @@ export default function Cart({ restaurant }) {
               }, 0)}{' '}
               so'm
             </h3>
-            <button
+            <Button
               className="cart__checkout-btn button button--small"
               disabled={currentCart.length === 0 || !restaurant.running}
+              onClick={() => router.push(`/r/${restaurant.id}/checkout`)}
             >
               Checkout
-            </button>
+            </Button>
           </div>
         </div>
       </div>

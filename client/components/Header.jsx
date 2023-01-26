@@ -43,7 +43,7 @@ export default function Header() {
               </button>
             </li>
             <li>
-              <Link href="/liked">Liked</Link>
+              <Link href="/orders">Orders</Link>
             </li>
           </ul>
         </div>

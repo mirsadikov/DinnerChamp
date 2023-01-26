@@ -24,7 +24,7 @@ export default function Dashboard() {
         <div className="dashboard__main dashboard__column">
           <h2 className="dashboard__title">Profile</h2>
           <ProfileCard info={info} />
-          <NavLink to="/dashboard/" exact className="dashboard__card">
+          <NavLink to="/dashboard/" className="dashboard__card">
             Dashboard
           </NavLink>
           <NavLink to="/dashboard/dishes" className="dashboard__card">
