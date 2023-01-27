@@ -13,10 +13,6 @@ export default function RestaurantProfile({ restaurantData }) {
   const { restaurant, error } = restaurantData;
   const { cartIsOpen, setCartIsOpen, cart } = useContext(GlobalContext);
 
-  if (error) {
-    return <Alert severity="error">Something went wrong while getting restaurant info!</Alert>;
-  }
-
   useEffect(() => {
     const count = cart
       ?.filter((item) => item.restaurantId === restaurant.id)
@@ -24,7 +20,11 @@ export default function RestaurantProfile({ restaurantData }) {
         return acc + item.quantity;
       }, 0);
     setCartCount(count || 0);
-  }, [cart]);
+  }, [cart, restaurant.id]);
+
+  if (error) {
+    return <Alert severity="error">Something went wrong while getting restaurant info!</Alert>;
+  }
 
   const { name, address, city, phone, description, img } = restaurant;
 
@@ -35,13 +35,7 @@ export default function RestaurantProfile({ restaurantData }) {
   return (
     <div className="restaurant-info">
       <div className="restaurant-info__img-container">
-        <img
-          src={img}
-          alt={name}
-          className="restaurant-info__img"
-          width={230}
-          height={230}
-        />
+        <img src={img} alt={name} className="restaurant-info__img" />
         <button onClick={toggleCart} className="restaurant-info__cart-btn">
           <ShoppingCartIcon />
           {cartCount > 0 && <div>{cartCount}</div>}

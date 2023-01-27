@@ -19,7 +19,7 @@ export default function Home({ restaurants, error }) {
               Pick up when <span className="hero__title--highlight">ready.</span>
             </h2>
             <p className="hero__description">
-              Order from your favorite restaurants and don't worry about the wait.
+              Order from your favorite restaurants and don&apos;t worry about the wait.
             </p>
             <div className="hero__buttons">
               <button

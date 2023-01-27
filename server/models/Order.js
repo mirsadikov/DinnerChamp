@@ -22,6 +22,10 @@ export default function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    comment: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     // timestapms only createdAt
     timestamps: true,

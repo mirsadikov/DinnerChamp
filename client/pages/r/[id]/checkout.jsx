@@ -33,7 +33,7 @@ export default function Checkout({ restaurant }) {
     setTotal(total);
 
     setCurrentCart(currentCart || []);
-  }, [cart]);
+  }, [cart, restaurant.id, submitTriggered, router]);
 
   const handeSubmit = async (e) => {
     e.preventDefault();
@@ -109,7 +109,7 @@ export default function Checkout({ restaurant }) {
                         </IconButton>
                       </div>
                       <div className="cart__item__price">
-                        {item.price} <span>so'm</span>
+                        {item.price} <span>so&apos;m</span>
                       </div>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export default function Checkout({ restaurant }) {
               <hr className="sidebar__divider" />
               <p className="sidebar__total">
                 <span>To pay:</span>
-                <span>{total} so'm</span>
+                <span>{total} so&apos;m</span>
               </p>
               <LoadingButton loading={loading} className="sidebar__button button" type="submit">
                 Send order

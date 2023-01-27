@@ -2,7 +2,7 @@ import { Order, OrderDish, Restaurant, Dish } from '../config/sequelize.js';
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { orderer, restaurantId, orderDishes } = req.body;
+    const { orderer, restaurantId, orderDishes, comment } = req.body;
 
     if (!orderer || !orderer.phone || !orderer.name || !restaurantId || !orderDishes) {
       return res.status(400).json({
@@ -65,6 +65,7 @@ export const createOrder = async (req, res, next) => {
       ordererPhone: orderer.phone,
       restaurantId,
       total: dishesWithQuantity.reduce((total, dish) => total + dish.price * dish.quantity, 0),
+      comment,
     });
 
     const orderDishesToCreate = dishesWithQuantity.map((dish) => ({

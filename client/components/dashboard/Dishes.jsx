@@ -8,10 +8,6 @@ export default function Dishes({ dishesData }) {
   const [filteredDishes, setFilteredDishes] = useState(null);
   const { dishes, error: dishesError } = dishesData;
 
-  if (dishesError) {
-    return <Alert severity="error">Something went wrong while getting items!</Alert>;
-  }
-
   useEffect(() => {
     const categories = [];
     dishes.forEach((dish) => {
@@ -35,6 +31,10 @@ export default function Dishes({ dishesData }) {
       setFilteredDishes(filteredDishes);
     }
   }, [selectedCategory, dishes]);
+
+  if (dishesError) {
+    return <Alert severity="error">Something went wrong while getting items!</Alert>;
+  }
 
   return (
     <div className="dishes-list__container">

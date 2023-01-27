@@ -42,7 +42,7 @@ export default function Cart({ restaurant }) {
                       {item.name} <span>- x{item.quantity}</span>
                     </h4>
                     <p className="cart__item__price">
-                      {item.price * item.quantity} <span>so'm</span>
+                      {item.price * item.quantity} <span>so&apos;m</span>
                     </p>
                   </div>
                   <IconButton
@@ -62,7 +62,7 @@ export default function Cart({ restaurant }) {
               {currentCart.reduce((acc, item) => {
                 return acc + item.price * item.quantity;
               }, 0)}{' '}
-              so'm
+              so&apos;m
             </h3>
             <Button
               className="cart__checkout-btn button button--small"

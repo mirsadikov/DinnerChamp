@@ -68,7 +68,7 @@ export default function DishCard({ dish }) {
       <div className="dish-card__details">
         <h3 className="dish-card__title">{dish.name}</h3>
         <p className="dish-card__price">
-          {dish.price} <span>so'm</span>
+          {dish.price} <span>so&apos;m</span>
         </p>
         <p className="dish-card__category">{dish.category ? dish.category.name : 'Other'}</p>
         {dish.description && (
