@@ -49,6 +49,15 @@
     min-width: 25rem;    
   }
 
+  .statistics {
+    min-height: 90%;
+
+    .dashboard__card-content {
+      display: grid;
+      place-content: center;
+    }
+  }
+
   a.active {
     color: $color-primary;
   }
