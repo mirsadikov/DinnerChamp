@@ -14,7 +14,7 @@ export default function (sequelize, DataTypes) {
       defaultValue: 1
     },
     price: {
-      type: DataTypes.INTEGER(15),
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },

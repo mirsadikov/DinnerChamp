@@ -71,8 +71,6 @@ export async function getServerSideProps({ params }) {
   try {
     const { data: restaurant } = await axios.get('/api/restaurant/' + params.id);
 
-    console.log(restaurant);
-
     return {
       props: {
         restaurant: {

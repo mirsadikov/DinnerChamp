@@ -1,9 +1,49 @@
+import { Op } from 'sequelize';
 import { Order, OrderDish, Restaurant, Dish } from '../config/sequelize.js';
+import socket from '../socket/socket.js';
+
+const getOrders = async (restaurantId, ofTheLastHours) => {
+  const orders = await Order.findAll({
+    where: {
+      restaurantId: restaurantId,
+      // if hour is not provided, get all orders
+      ...(ofTheLastHours && {
+        createdAt: {
+          [Op.gt]: new Date(new Date() - ofTheLastHours * 60 * 60 * 1000),
+        },
+      }),
+    },
+    include: {
+      nest: true,
+      model: OrderDish,
+      as: 'orderDishes',
+      include: {
+        model: Dish,
+        as: 'dish',
+      },
+    },
+    order: [['createdAt', 'DESC']],
+  });
+
+  const flattenOrders = orders.map((order) => ({
+    ...order.toJSON(),
+    orderDishes: order.orderDishes.map((orderDish) => {
+      const { dish, ...orderDishWithoutDish } = orderDish.toJSON();
+      return {
+        ...orderDishWithoutDish,
+        dishName: dish.name,
+      };
+    }),
+  }));
+
+  return flattenOrders;
+};
 
 export const createOrder = async (req, res, next) => {
   try {
     const { orderer, restaurantId, orderDishes, comment } = req.body;
 
+    // if missing required fields
     if (!orderer || !orderer.phone || !orderer.name || !restaurantId || !orderDishes) {
       return res.status(400).json({
         message: 'Missing required fields',
@@ -60,6 +100,7 @@ export const createOrder = async (req, res, next) => {
       };
     });
 
+    // create order
     const order = await Order.create({
       ordererName: orderer.name,
       ordererPhone: orderer.phone,
@@ -68,6 +109,7 @@ export const createOrder = async (req, res, next) => {
       comment,
     });
 
+    // create orderDishes for many-to-many relationship
     const orderDishesToCreate = dishesWithQuantity.map((dish) => ({
       orderId: order.id,
       ...dish,
@@ -75,7 +117,19 @@ export const createOrder = async (req, res, next) => {
 
     await OrderDish.bulkCreate(orderDishesToCreate);
 
+    // emit new order to restaurant
+    socket.emit('order:create', await getOrders(restaurantId));
+
     return res.status(201).json(order);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllOrders = async (req, res, next) => {
+  try {
+    const flattenOrders = await getOrders(req.restaurant.id);
+    return res.status(200).json(flattenOrders);
   } catch (error) {
     next(error);
   }

@@ -67,7 +67,6 @@ export default function Checkout({ restaurant }) {
       setCart((prev) => prev.filter((item) => item.restaurantId !== parseInt(restaurant.id)));
       router.push(`/orders`);
     } catch (error) {
-      console.log(error);
       setLoading(false);
       setError(error);
     }

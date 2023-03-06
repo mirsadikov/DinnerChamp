@@ -31,7 +31,7 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-(async () => await db.sync({ alter: true }))();
+// (async () => await db.sync({ alter: true }))();
 const Restaurant = RestaurantModel(db, DataTypes);
 const Dish = DishModel(db, DataTypes);
 const Category = CategoryModel(db, DataTypes);
@@ -76,7 +76,7 @@ Restaurant.hasMany(Order, {
 Order.belongsTo(Restaurant, {
   foreignKey: 'restaurantId',
   as: 'restaurant',
-}); 
+});
 
 Order.hasMany(OrderDish, {
   foreignKey: 'orderId',

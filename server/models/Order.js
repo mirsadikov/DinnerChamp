@@ -6,7 +6,7 @@ export default function (sequelize, DataTypes) {
       defaultValue: 'pending',
     },
     total: {
-      type: DataTypes.INTEGER(15),
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },

@@ -1,6 +1,9 @@
 import 'colors';
+import { createServer } from 'http';
+import { Server as SocketServer } from 'socket.io';
 import app from './app.js';
 import db from './config/sequelize.js';
+import socket from './socket/socket.js';
 
 // listen
 const { PORT } = process.env;
@@ -15,6 +18,9 @@ try {
   console.error('Unable to connect to the database:'.red, error);
 }
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`.blue.inverse);
+const httpServer = createServer(app);
+socket.init(new SocketServer(httpServer));
+
+httpServer.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`.bgBlue);
 });
