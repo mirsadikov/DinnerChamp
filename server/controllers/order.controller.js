@@ -118,7 +118,7 @@ export const createOrder = async (req, res, next) => {
     await OrderDish.bulkCreate(orderDishesToCreate);
 
     // emit new order to restaurant
-    socket.emit('order:create', await getOrders(restaurantId));
+    socket.emit('order:create', await getOrders(restaurantId, 24));
 
     return res.status(201).json(order);
   } catch (error) {
