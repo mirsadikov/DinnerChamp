@@ -1,52 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import socketServcies from './config/socket.js';
-import OrderCard from './components/OrderCard.js';
+import { Provider } from 'react-redux';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import { HOME_SCREEN, LOGIN_SCREEN } from './screens';
+import { store } from './config/store';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-  const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    socketServcies.initializeSocket();
-
-    socketServcies.on('order:create', (data) => {
-      setOrders(data);
-    });
-
-    return () => {
-      socketServcies.disconnect();
-    };
-  }, []);
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {/* <ScrollView style={styles.scrollView}> */}
-      <FlatList
-        horizontal={true}
-        style={styles.cardList}
-        data={orders}
-        renderItem={({ item }) => <OrderCard order={item} />}
-        keyExtractor={(item) => item.id}
-      />
-      {/* </ScrollView> */}
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={LOGIN_SCREEN}>
+          <Stack.Screen
+            name={HOME_SCREEN}
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 30,
-  },
-  text: {
-    fontSize: 40,
-  },
-  cardList: {
-    marginBottom: 20,
-  },
-});
