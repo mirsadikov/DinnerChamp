@@ -1,14 +1,17 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../actions/login';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
 
   const handleLogin = () => {
+    console.log(token);
     dispatch(login(email, password));
   };
 

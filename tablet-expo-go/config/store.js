@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -9,9 +9,8 @@ import { loginReducer } from '../reducers/loginReducer';
 
 // persist config
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage: AsyncStorage,
-  whitelist: ['auth'],
 };
 
 // persist reducer
