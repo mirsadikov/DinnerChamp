@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { Order, OrderDish, Restaurant, Dish } from '../config/sequelize.js';
+import { Order, OrderDish, Restaurant, Dish, Orderer } from '../config/sequelize.js';
 import io from '../socket/socket.js';
 
 const getOrders = async (restaurantId, ofTheLastHours) => {
@@ -41,10 +41,10 @@ const getOrders = async (restaurantId, ofTheLastHours) => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { orderer, restaurantId, orderDishes, comment } = req.body;
+    const { orderer, restaurantId, orderDishes, comment, code } = req.body;
 
     // if missing required fields
-    if (!orderer || !orderer.phone || !orderer.name || !restaurantId || !orderDishes) {
+    if (!orderer || !orderer.phone || !orderer.name || !restaurantId || !orderDishes || !code) {
       return res.status(400).json({
         message: 'Missing required fields',
       });
@@ -54,6 +54,20 @@ export const createOrder = async (req, res, next) => {
     if (orderDishes.length === 0) {
       return res.status(400).json({
         message: 'Order must have at least one dish',
+      });
+    }
+
+    // if code is incorrect
+    const ordererInDB = await Orderer.findOne({
+      where: {
+        phone: orderer.phone,
+        code,
+      },
+    });
+
+    if (!ordererInDB) {
+      return res.status(400).json({
+        message: 'Incorrect code',
       });
     }
 
@@ -130,6 +144,36 @@ export const getAllOrders = async (req, res, next) => {
   try {
     const flattenOrders = await getOrders(req.restaurant.id);
     return res.status(200).json(flattenOrders);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const sendCode = async (req, res, next) => {
+  try {
+    // generate random 6-digit code
+    const code = Math.floor(100000 + Math.random() * 900000);
+
+    const { phone } = req.body;
+
+    // if missing required fields
+    if (!phone) {
+      return res.status(400).json({
+        message: 'Missing required fields',
+      });
+    }
+
+    Orderer.upsert({
+      phone,
+      code,
+    });
+
+    // TODO
+    // send to phone number with twilio
+
+    console.log(`CODE for ${phone}: `, code);
+
+    return res.status(200).json();
   } catch (error) {
     next(error);
   }

@@ -4,6 +4,7 @@ import DishModel from '../models/Dish.js';
 import CategoryModel from '../models/Category.js';
 import OrderModel from '../models/Order.js';
 import OrderDishModel from '../models/OrderDish.js';
+import OrdererModel from '../models/Orderer.js';
 
 const dbConfig = {
   HOST: 'localhost',
@@ -37,6 +38,7 @@ const Dish = DishModel(db, DataTypes);
 const Category = CategoryModel(db, DataTypes);
 const Order = OrderModel(db, DataTypes);
 const OrderDish = OrderDishModel(db, DataTypes);
+const Orderer = OrdererModel(db, DataTypes);
 
 Restaurant.hasMany(Dish, {
   foreignKey: 'restaurantId',
@@ -99,4 +101,4 @@ OrderDish.belongsTo(Dish, {
 });
 
 export default db;
-export { Restaurant, Dish, Category, Order, OrderDish };
+export { Restaurant, Dish, Category, Order, OrderDish, Orderer };

@@ -139,7 +139,8 @@
 
   &__comment,
   &__name,
-  &__phone {
+  &__phone,
+  &__code {
     font-family: inherit;
     padding: 1rem;
     border-radius: 2rem;
@@ -153,6 +154,12 @@
     }
   }
 
+  &__code-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
   &__label {
     display: block;
     margin-left: 1rem;
@@ -162,6 +169,18 @@
   &__input {
     width: 100%;
     display: block;
+  }
+
+  &__phone__btn {
+    background-color: var(--color-primary);;
+    padding: 5px;
+    color: var(--color-white);
+    margin-left: auto;
+    width: 50%;
+
+    &:hover {
+      background-color: var(--color-primary-light);
+    }
   }
 
   &__comment {

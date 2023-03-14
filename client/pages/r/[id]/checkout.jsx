@@ -18,8 +18,22 @@ export default function Checkout({ restaurant }) {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [submitTriggered, setSubmitTriggered] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [code, setCode] = useState('');
   const { cart, setCart, increaseItem, reduceItem, setOrders } = useContext(GlobalContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (codeSent) {
+      const timer = setTimeout(() => {
+        setCodeSent(false);
+      }, 30000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [codeSent]);
 
   useEffect(() => {
     const currentCart = cart?.filter((item) => item.restaurantId === parseInt(restaurant.id));
@@ -34,6 +48,25 @@ export default function Checkout({ restaurant }) {
 
     setCurrentCart(currentCart || []);
   }, [cart, restaurant.id, submitTriggered, router]);
+
+  const requestCode = async (e) => {
+    try {
+      if (!phone) {
+        setError('Please enter your phone number');
+        return;
+      }
+
+      if (codeSent) {
+        alert(`Code already sent, try again in 30 seconds`);
+        return;
+      }
+
+      await axios.post('/api/order/code', { phone });
+      setCodeSent(true);
+    } catch (error) {
+      setError(error);
+    }
+  };
 
   const handeSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +85,7 @@ export default function Checkout({ restaurant }) {
           id: item.id,
           quantity: item.quantity,
         })),
+        code,
       };
       const { data } = await axios.post('/api/order/create', order);
       setOrders((prev) => [
@@ -141,23 +175,6 @@ export default function Checkout({ restaurant }) {
                 />
               </div>
               <div className="sidebar__input">
-                <label htmlFor="phone" className="sidebar__label">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="sidebar__phone"
-                  required
-                  placeholder="Orderer phone"
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="sidebar__input">
                 <label htmlFor="comment" className="sidebar__label">
                   Comment
                 </label>
@@ -171,6 +188,50 @@ export default function Checkout({ restaurant }) {
                     setComment(e.target.value);
                   }}
                 ></textarea>
+              </div>
+              <div className="sidebar__input">
+                <label htmlFor="phone" className="sidebar__label">
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  className="sidebar__phone"
+                  required
+                  placeholder="+998 90 123 45 67"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="sidebar__input">
+                <label htmlFor="code" className="sidebar__label">
+                  Code
+                </label>
+
+                <div className="sidebar__code-container">
+                  <input
+                    type="text"
+                    name="code"
+                    id="code"
+                    className="sidebar__code"
+                    required
+                    placeholder="123456"
+                    value={code}
+                    onChange={(e) => {
+                      setCode(e.target.value);
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="sidebar__phone__btn button"
+                    onClick={requestCode}
+                  >
+                    Get code
+                  </button>
+                </div>
               </div>
               <hr className="sidebar__divider" />
               <p className="sidebar__total">
