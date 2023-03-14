@@ -1,10 +1,15 @@
 import io from 'socket.io-client';
-const SOCKET_URL = 'http://192.168.1.12:5001/';
+const SOCKET_URL = 'http://10.10.11.175:5001/';
+
 
 class WSService {
-  initializeSocket = async () => {
+  initializeSocket = async (token) => {
     try {
-      this.socket = io(SOCKET_URL);
+      this.socket = io(SOCKET_URL, {
+        auth: {
+          token,
+        },
+      });
 
       this.socket.on('connect', (data) => {
         console.log('=== socket connected ===');

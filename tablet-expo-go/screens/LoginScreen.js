@@ -11,7 +11,6 @@ export default function LoginScreen({ navigation }) {
   const { token } = useSelector((state) => state.auth);
 
   const handleLogin = () => {
-    console.log(token);
     dispatch(login(email, password));
   };
 

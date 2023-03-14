@@ -1,14 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, FlatList, Text } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { useSelector } from 'react-redux';
 import socketServcies from '../config/socket.js';
 import OrderCard from '../components/OrderCard.js';
 
 export default function HomeScreen() {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
   const [orders, setOrders] = useState([]);
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    socketServcies.initializeSocket();
+    socketServcies.initializeSocket(token);
 
     socketServcies.on('order:create', (data) => {
       setOrders(data);
@@ -21,7 +25,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
       <StatusBar style="auto" />
       {/* <ScrollView style={styles.scrollView}> */}
       <FlatList
