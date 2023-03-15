@@ -8,15 +8,22 @@ export default function OrderCard({ order }) {
         <Text style={styles.title}>{order.ordererName}</Text>
         <Text>{order.ordererPhone}</Text>
         <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
-        <View
-          style={styles.divider}
-        />
+        <View style={styles.divider} />
         {order.orderDishes.map((orderDish) => (
           <View key={orderDish.id} style={styles.dishRow}>
             <Text style={styles.quantity}>{orderDish.quantity}x</Text>
-            <Text>{orderDish.dishName}</Text>
+            <Text style={styles.dishName}>{orderDish.dishName}</Text>
           </View>
         ))}
+        {order.comment && (
+          <>
+            <View style={styles.divider} />
+            <View style={styles.commentBox}>
+              <Text style={styles.commentTitle}>Comment:</Text>
+              <Text>{order.comment}</Text>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
@@ -44,8 +51,20 @@ const styles = StyleSheet.create({
   dishRow: {
     flexDirection: 'row',
     width: '100%',
+    alignItems: 'center',
   },
   quantity: {
     marginRight: 10,
+  },
+  dishName: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  commentBox: {
+    width: '100%',
+  },
+  commentTitle: {
+    fontWeight: '600',
   },
 });
