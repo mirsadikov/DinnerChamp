@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { getOrders } from '../controllers/order.controller.js';
 
 class IO {
   init(io) {
@@ -30,8 +31,11 @@ class IO {
 
   // events
   listen() {
-    this.io.on('connection', (socket) => {
+    this.io.on('connection', async (socket) => {
       console.log('New socket'.bgYellow);
+
+      // initial data
+      socket.emit('order:read', await getOrders(socket.restaurantId, 24));
 
       socket.on('disconnect', () => console.log('Socket disconnected'.bgRed));
     });

@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import { Order, OrderDish, Restaurant, Dish, Orderer } from '../config/sequelize.js';
 import io from '../socket/socket.js';
 
-const getOrders = async (restaurantId, ofTheLastHours) => {
+export const getOrders = async (restaurantId, ofTheLastHours) => {
   const orders = await Order.findAll({
     where: {
       restaurantId: restaurantId,
@@ -132,7 +132,7 @@ export const createOrder = async (req, res, next) => {
     await OrderDish.bulkCreate(orderDishesToCreate);
 
     // emit new order to restaurant
-    io.emitTo(restaurantId, 'order:create', await getOrders(restaurantId, 24));
+    io.emitTo(restaurantId, 'order:read', await getOrders(restaurantId, 24));
 
     return res.status(201).json(order);
   } catch (error) {

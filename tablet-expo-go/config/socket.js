@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-const SOCKET_URL = 'http://10.10.11.175:5001/';
+const SOCKET_URL = 'http://192.168.1.12:5001/';
 
 
 class WSService {
@@ -11,11 +11,11 @@ class WSService {
         },
       });
 
-      this.socket.on('connect', (data) => {
+      this.socket.on('connect', () => {
         console.log('=== socket connected ===');
       });
 
-      this.socket.on('disconnect', (data) => {
+      this.socket.on('disconnect', () => {
         console.log('=== socket disconnected ===');
       });
 

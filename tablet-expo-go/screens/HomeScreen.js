@@ -14,7 +14,7 @@ export default function HomeScreen() {
   useEffect(() => {
     socketServcies.initializeSocket(token);
 
-    socketServcies.on('order:create', (data) => {
+    socketServcies.on('order:read', (data) => {
       setOrders(data);
     });
 
