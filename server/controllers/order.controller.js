@@ -39,6 +39,24 @@ export const getOrders = async (restaurantId, ofTheLastHours) => {
   return flattenOrders;
 };
 
+export const updateOrder = async (id, status) => {
+  try {
+    const order = await Order.findByPk(id);
+
+    if (!order) {
+      return io.emit('error', 'Order not found');
+    }
+
+    order.status = status;
+    await order.save();
+
+    // emit to restaurant
+    io.emitTo(order.restaurantId, 'order:update', order);
+  } catch (err) {
+    return io.emit('error', err);
+  }
+};
+
 export const createOrder = async (req, res, next) => {
   try {
     const { orderer, restaurantId, orderDishes, comment, code } = req.body;

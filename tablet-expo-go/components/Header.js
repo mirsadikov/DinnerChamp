@@ -1,14 +1,19 @@
 import React from 'react';
 import { StyleSheet, Button, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { RESTAURANT_LOGOUT } from '../constants.js';
+import { RESTAURANT_LOGOUT, SET_SELECTED_ORDER } from '../constants.js';
 
-const Header = ({ menuToggle }) => {
+const Header = ({ menuIsOpen, setMenuIsOpen }) => {
   const dispatch = useDispatch();
+
+  const handleToggle = () => {
+    if (!menuIsOpen) dispatch({ type: SET_SELECTED_ORDER });
+    setMenuIsOpen((v) => !v);
+  };
 
   return (
     <View style={styles.header}>
-      <Button title="Options" onPress={menuToggle} />
+      <Button title="Options" onPress={handleToggle} />
       <Button
         title="Logout"
         onPress={() => {

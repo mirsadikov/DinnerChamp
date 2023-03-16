@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 const SOCKET_URL = 'http://192.168.1.12:5001/';
 
-
 class WSService {
   initializeSocket = async (token) => {
     try {
@@ -27,8 +26,8 @@ class WSService {
     }
   };
 
-  emit(event, data = {}) {
-    this.socket.emit(event, data);
+  emit(event, ...data) {
+    this.socket.emit(event, ...data);
   }
 
   on(event, cb) {

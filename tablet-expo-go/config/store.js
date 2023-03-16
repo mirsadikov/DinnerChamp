@@ -4,8 +4,8 @@ import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 // reducers
-import { dishesReducer } from '../reducers/dishesReducer';
 import { loginReducer } from '../reducers/loginReducer';
+import { ordersReducer } from '../reducers/ordersReducer';
 
 // persist config
 const persistConfig = {
@@ -20,7 +20,7 @@ const persistedReducer = persistReducer(persistConfig, loginReducer);
 const store = configureStore({
   reducer: {
     auth: persistedReducer,
-    dishes: dishesReducer,
+    orders: ordersReducer,
   },
   middleware: [thunk],
 });

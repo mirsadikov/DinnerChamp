@@ -1,6 +1,10 @@
-export const HOME_SCREEN = "Home";
-export const LOGIN_SCREEN = "Login";
+export const HOME_SCREEN = 'Home';
+export const LOGIN_SCREEN = 'Login';
 
 export const RESTAURANT_LOGIN_SUCCESS = 'RESTAURANT_LOGIN_SUCCESS';
 export const RESTAURANT_LOGIN_FAIL = 'RESTAURANT_LOGIN_FAIL';
 export const RESTAURANT_LOGOUT = 'RESTAURANT_LOGOUT';
+
+export const SET_ORDERS = 'SET_ORDERS';
+export const UPDATE_ORDER = 'UPDATE_ORDER';
+export const SET_SELECTED_ORDER = 'SET_SELECTED_ORDER';

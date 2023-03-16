@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { getOrders } from '../controllers/order.controller.js';
+import { getOrders, updateOrder } from '../controllers/order.controller.js';
 
 class IO {
   init(io) {
@@ -37,6 +37,7 @@ class IO {
       // initial data
       socket.emit('order:read', await getOrders(socket.restaurantId, 24));
 
+      socket.on('order:update', updateOrder);
       socket.on('disconnect', () => console.log('Socket disconnected'.bgRed));
     });
 

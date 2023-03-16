@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/login';
 
@@ -8,7 +8,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
 
   const handleLogin = () => {
     dispatch(login(email, password));
@@ -37,6 +37,8 @@ export default function LoginScreen({ navigation }) {
             secureTextEntry={true}
           />
         </View>
+
+        {error && <Text style={{ color: 'red' }}>{error}</Text>}
 
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>

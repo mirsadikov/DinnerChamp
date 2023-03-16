@@ -1,30 +1,39 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { View, Text } from 'react-native';
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ order, onPress, isSelected }) {
+  const cardStatusStyle =
+    order.status === 'pending'
+      ? { backgroundColor: '#fcddc2' }
+      : order.status === 'preparing'
+      ? { backgroundColor: '#fff' }
+      : { backgroundColor: '#d9ffda' };
+
   return (
     <View>
-      <View style={styles.card}>
-        <Text style={styles.title}>{order.ordererName}</Text>
-        <Text>{order.ordererPhone}</Text>
-        <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
-        <View style={styles.divider} />
-        {order.orderDishes.map((orderDish) => (
-          <View key={orderDish.id} style={styles.dishRow}>
-            <Text style={styles.quantity}>{orderDish.quantity}x</Text>
-            <Text style={styles.dishName}>{orderDish.dishName}</Text>
-          </View>
-        ))}
-        {order.comment && (
-          <>
-            <View style={styles.divider} />
-            <View style={styles.commentBox}>
-              <Text style={styles.commentTitle}>Comment:</Text>
-              <Text>{order.comment}</Text>
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
+          <Text style={styles.title}>{order.ordererName}</Text>
+          <Text>{order.ordererPhone}</Text>
+          <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
+          <View style={styles.divider} />
+          {order.orderDishes.map((orderDish) => (
+            <View key={orderDish.id} style={styles.dishRow}>
+              <Text style={styles.quantity}>{orderDish.quantity}x</Text>
+              <Text style={styles.dishName}>{orderDish.dishName}</Text>
             </View>
-          </>
-        )}
-      </View>
+          ))}
+          {order.comment && (
+            <>
+              <View style={styles.divider} />
+              <View style={styles.commentBox}>
+                <Text style={styles.commentTitle}>Comment:</Text>
+                <Text>{order.comment}</Text>
+              </View>
+            </>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -38,6 +47,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     padding: 10,
+  },
+  selectedCard: {
+    borderColor: '#000',
+    shadowColor: '#666',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
+    elevation: 5,
   },
   title: {
     fontSize: 24,
