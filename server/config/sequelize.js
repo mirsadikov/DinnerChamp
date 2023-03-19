@@ -100,5 +100,16 @@ OrderDish.belongsTo(Dish, {
   as: 'dish',
 });
 
+Orderer.hasMany(Order, {
+  foreignKey: 'ordererPhone',
+  as: 'orders',
+});
+
+Order.belongsTo(Orderer, {
+  foreignKey: 'ordererPhone',
+  as: 'orderer',
+});
+
+
 export default db;
 export { Restaurant, Dish, Category, Order, OrderDish, Orderer };

@@ -1,17 +1,26 @@
 import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Oleo_Script_Swash_Caps } from '@next/font/google';
+import PersonIcon from '@mui/icons-material/Person';
+import { Inter, Oleo_Script_Swash_Caps } from '@next/font/google';
 import { GlobalContext } from '@/globalContext';
 import SearchModal from './SearchModal';
+import AuthModal from './AuthModal';
+import { Popover } from '@mui/material';
 
 const oleo = Oleo_Script_Swash_Caps({
   subsets: ['latin'],
   weight: '400',
 });
 
+const inter = Inter({
+  subsets: ['latin'],
+});
+
 export default function Header() {
-  const { setSearchModalOpen } = useContext(GlobalContext);
+  const { setSearchModalOpen, setAuthModalOpen, auth, setAuth } = useContext(GlobalContext);
   const [sticky, setSticky] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -22,6 +31,20 @@ export default function Header() {
       }
     });
   }, []);
+
+  const handleProfileClick = (e) => {
+    if (auth.token) {
+      setAnchorEl(e.currentTarget);
+    } else {
+      setAuthModalOpen(true);
+    }
+  };
+
+  const logout = () => {
+    setAnchorEl(null);
+    localStorage.removeItem('auth');
+    setAuth({});
+  };
 
   return (
     <header className="header">
@@ -45,10 +68,45 @@ export default function Header() {
             <li>
               <Link href="/orders">Orders</Link>
             </li>
+            <li>
+              <button
+                className={`header__profile-btn button button--small ${
+                  auth.token ? 'button--secondary' : ''
+                }`}
+                onClick={handleProfileClick}
+              >
+                <PersonIcon />
+              </button>
+              {auth.token && (
+                <Popover
+                  className={inter.className}
+                  open={open}
+                  onClose={() => setAnchorEl(null)}
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  elevation={3}
+                >
+                  <div className="header__profile-popup">
+                    <h3>+{auth.number}</h3>
+                    <button onClick={logout} className="button button--small button--secondary">
+                      Logout
+                    </button>
+                  </div>
+                </Popover>
+              )}
+            </li>
           </ul>
         </div>
       </nav>
       <SearchModal />
+      <AuthModal />
     </header>
   );
 }

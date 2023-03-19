@@ -1,11 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import passport from 'passport';
-import { Strategy as JwtStrategy } from 'passport-jwt';
 import fileUpload from 'express-fileupload';
 // config
 import './config/env.js';
-import { jwtCallback, jwtOptions } from './config/passport.js';
+import { initializePassport } from './config/passport.js';
 // middlewares
 import logger from './utils/logger.js';
 import notFound from './middlewares/notfound.middleware.js';
@@ -15,6 +13,7 @@ import restaurantRoute from './routes/restaurant.route.js';
 import dishRoute from './routes/dish.route.js';
 import categoryRoute from './routes/category.route.js';
 import orderRoute from './routes/order.route.js';
+import clientRoute from './routes/client.route.js';
 
 // config
 const app = express();
@@ -25,8 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger);
 app.use(fileUpload());
-app.use(passport.initialize());
-passport.use(new JwtStrategy(jwtOptions, jwtCallback));
+initializePassport(app);
 
 // routes
 app.get('/', (req, res) => {
@@ -37,6 +35,7 @@ app.use('/api/restaurant', restaurantRoute);
 app.use('/api/dish', dishRoute);
 app.use('/api/category', categoryRoute);
 app.use('/api/order', orderRoute);
+app.use('/api/client', clientRoute);
 
 // error handler
 app.use(notFound);

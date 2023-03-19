@@ -6,23 +6,25 @@ export default function Orders() {
 
   return (
     <div className="orders">
-      <h1>Orders</h1>
-      {orders?.length > 0 && (
-        <div className="orders__list">
-          {orders.map((order) => (
-            <div className="orders__item" key={order.id}>
-              <div className="orders__item__id">
-                <h3>Order ID: {order.id}</h3>
+      <div className="container">
+        <h1 className="orders__header">My Orders</h1>
+        {orders?.length > 0 && (
+          <div className="orders__list">
+            {orders.map((order) => (
+              <div className="orders__item" key={order.id}>
+                <div className="orders__item__id">
+                  <h3>Order ID: {order.id}</h3>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-      {orders?.length === 0 && (
-        <div className="orders__empty">
-          <h3>You have no orders</h3>
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+        {orders?.length === 0 && (
+          <div className="orders__empty">
+            <h3>You have no orders</h3>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

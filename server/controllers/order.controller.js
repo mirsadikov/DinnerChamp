@@ -59,10 +59,10 @@ export const updateOrder = async (id, status) => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { orderer, restaurantId, orderDishes, comment, code } = req.body;
+    const { ordererName, restaurantId, orderDishes, comment } = req.body;
 
     // if missing required fields
-    if (!orderer || !orderer.phone || !orderer.name || !restaurantId || !orderDishes || !code) {
+    if (!ordererName || !restaurantId || !orderDishes) {
       return res.status(400).json({
         message: 'Missing required fields',
       });
@@ -72,20 +72,6 @@ export const createOrder = async (req, res, next) => {
     if (orderDishes.length === 0) {
       return res.status(400).json({
         message: 'Order must have at least one dish',
-      });
-    }
-
-    // if code is incorrect
-    const ordererInDB = await Orderer.findOne({
-      where: {
-        phone: orderer.phone,
-        code,
-      },
-    });
-
-    if (!ordererInDB) {
-      return res.status(400).json({
-        message: 'Incorrect code',
       });
     }
 
@@ -132,10 +118,11 @@ export const createOrder = async (req, res, next) => {
       };
     });
 
+    console.log(req.orderer)
     // create order
     const order = await Order.create({
-      ordererName: orderer.name,
-      ordererPhone: orderer.phone,
+      ordererName: ordererName,
+      ordererPhone: req.orderer.number,
       restaurantId,
       total: dishesWithQuantity.reduce((total, dish) => total + dish.price * dish.quantity, 0),
       comment,
@@ -162,36 +149,6 @@ export const getAllOrders = async (req, res, next) => {
   try {
     const flattenOrders = await getOrders(req.restaurant.id);
     return res.status(200).json(flattenOrders);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const sendCode = async (req, res, next) => {
-  try {
-    // generate random 6-digit code
-    const code = Math.floor(100000 + Math.random() * 900000);
-
-    const { phone } = req.body;
-
-    // if missing required fields
-    if (!phone) {
-      return res.status(400).json({
-        message: 'Missing required fields',
-      });
-    }
-
-    Orderer.upsert({
-      phone,
-      code,
-    });
-
-    // TODO
-    // send to phone number with twilio
-
-    console.log(`CODE for ${phone}: `, code);
-
-    return res.status(200).json();
   } catch (error) {
     next(error);
   }

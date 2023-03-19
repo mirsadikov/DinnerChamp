@@ -1,8 +1,11 @@
 import { useState, createContext, useEffect } from 'react';
+import jwt_decode from 'jwt-decode';
 
 const GlobalContext = createContext();
 
 const GlobalProvider = function ({ children }) {
+  const [auth, setAuth] = useState({});
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cart, setCart] = useState(null);
@@ -10,6 +13,17 @@ const GlobalProvider = function ({ children }) {
 
   // set initial cart state
   useEffect(() => {
+    const authFromStorage = JSON.parse(localStorage.getItem('auth'));
+    // verify token
+    if (authFromStorage?.token) {
+      const decodedJwt = jwt_decode(authFromStorage.token);
+      if (decodedJwt?.exp * 1000 < Date.now()) {
+        localStorage.removeItem('auth');
+      } else {
+        setAuth(authFromStorage);
+      }
+    }
+
     const cartFromStorage = JSON.parse(localStorage.getItem('cart'));
     setCart(cartFromStorage || []);
 
@@ -28,6 +42,9 @@ const GlobalProvider = function ({ children }) {
     if (orders?.length === 0) localStorage.removeItem('orders');
   }, [orders]);
 
+  useEffect(() => {
+    if (auth?.token) localStorage.setItem('auth', JSON.stringify(auth));
+  }, [auth]);
 
   const reduceItem = (id) => {
     const newCart = [];
@@ -58,6 +75,10 @@ const GlobalProvider = function ({ children }) {
   return (
     <GlobalContext.Provider
       value={{
+        auth,
+        setAuth,
+        authModalOpen,
+        setAuthModalOpen,
         searchModalOpen,
         setSearchModalOpen,
         cartIsOpen,

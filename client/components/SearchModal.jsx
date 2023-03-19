@@ -39,7 +39,7 @@ export default function SearchModal() {
           else setNoResults(false);
 
           setRestaurants(
-            res.data.map((r) => ({ ...r, img: r.img ? img_endpoint + r.img : defaultImage.src })),
+            res.data.map((r) => ({ ...r, img: r.img ? img_endpoint + r.img : defaultImage.src }))
           );
         })
         .catch((err) => {
@@ -52,6 +52,14 @@ export default function SearchModal() {
     setSearchModalOpen(false);
     setSearch('');
     setRestaurants([]);
+    setError('');
+  };
+
+  const overlayClick = (e) => {
+    if (e.target.classList.contains('search-modal__box')) {
+      setSearchModalOpen(false);
+      setError('');
+    }
   };
 
   return (
@@ -61,12 +69,13 @@ export default function SearchModal() {
       open={searchModalOpen}
       onClose={() => {
         setSearchModalOpen(false);
+        setError('');
       }}
       closeAfterTransition
       className={`search-modal ${inter.className}`}
     >
       <Fade in={searchModalOpen} onTransitionEnd={focusInput}>
-        <div className="search-modal__box">
+        <div className="search-modal__box" onClick={overlayClick}>
           <div className="search-modal__container">
             <form className="search-modal__input-container" onSubmit={handleSearch}>
               <input
