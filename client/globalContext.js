@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 const GlobalContext = createContext();
 
 const GlobalProvider = function ({ children }) {
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [cartIsOpen, setCartIsOpen] = useState(false);
@@ -19,16 +19,16 @@ const GlobalProvider = function ({ children }) {
       const decodedJwt = jwt_decode(authFromStorage.token);
       if (decodedJwt?.exp * 1000 < Date.now()) {
         localStorage.removeItem('auth');
+        setAuth({})
       } else {
         setAuth(authFromStorage);
       }
+    } else {
+      setAuth({});
     }
 
     const cartFromStorage = JSON.parse(localStorage.getItem('cart'));
     setCart(cartFromStorage || []);
-
-    const ordersFromStorage = JSON.parse(localStorage.getItem('orders'));
-    setOrders(ordersFromStorage || []);
   }, []);
 
   // update cart state before unmounting
@@ -36,11 +36,6 @@ const GlobalProvider = function ({ children }) {
     if (cart?.length > 0) localStorage.setItem('cart', JSON.stringify(cart));
     if (cart?.length === 0) localStorage.removeItem('cart');
   }, [cart]);
-
-  useEffect(() => {
-    if (orders?.length > 0) localStorage.setItem('orders', JSON.stringify(orders));
-    if (orders?.length === 0) localStorage.removeItem('orders');
-  }, [orders]);
 
   useEffect(() => {
     if (auth?.token) localStorage.setItem('auth', JSON.stringify(auth));

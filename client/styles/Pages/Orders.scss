@@ -1,6 +1,89 @@
 .orders {
+  max-width: 100rem;
+  margin: 0 auto;
+
   &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    margin: 2rem 0;
+  }
+
+  &__login,
+  &__empty {
     margin: 2rem 0;
     text-align: center;
+  }
+
+  &__login__button {
+    margin: 2rem 0;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  &__item {
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    padding: 0.5rem 1.5rem;
+
+    &__id,
+    &__date {
+      font-size: 1.4rem;
+      color: #666;
+    }
+
+    &__restaurant {
+      font-size: 2.2rem;
+      font-weight: 500;
+      margin: 1rem 0;
+    }
+
+    &__status {
+      color: #ff8400;
+
+      &--ready {
+        color: #00c703;
+      }
+    }
+
+    &__total {
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    &__products-row {
+      display: flex;
+      gap: 2rem;
+    }
+
+    &__products {
+      flex: 1;
+      display: flex;
+      gap: 0.5rem;
+      overflow: auto;
+    }
+
+    &__product {
+      &__img {
+        height: 3rem;
+        width: 3rem;
+        object-fit: contain;
+        border-radius: 1rem;
+        border: 0.5px solid #ccc;
+      }
+    }
   }
 }

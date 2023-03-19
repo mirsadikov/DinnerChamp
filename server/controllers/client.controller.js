@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Orderer } from '../config/sequelize.js';
+import { Orderer, Order, Restaurant, OrderDish, Dish } from '../config/sequelize.js';
 
 export const sendCode = async (req, res, next) => {
   try {
@@ -72,6 +72,48 @@ export const verifyCode = async (req, res, next) => {
     });
 
     return res.status(200).json({ token, number: newPhone });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOrders = async (req, res, next) => {
+  try {
+    const { number } = req.orderer;
+
+    const ordererFromDB = await Orderer.findOne({
+      where: {
+        phone: number,
+      },
+      // include orders that include restaurant
+      include: [
+        {
+          model: Order,
+          as: 'orders',
+          include: [
+            {
+              model: Restaurant,
+              as: 'restaurant',
+              attributes: ['name', 'img', 'address', 'phone'],
+            },
+            {
+              model: OrderDish,
+              as: 'orderDishes',
+              attributes: ['quantity', 'id'],
+              include: [
+                {
+                  model: Dish,
+                  as: 'dish',
+                  attributes: ['image', 'name'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.status(200).json(ordererFromDB.orders);
   } catch (error) {
     next(error);
   }

@@ -17,7 +17,7 @@ export default function Checkout({ restaurant }) {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [submitTriggered, setSubmitTriggered] = useState(false);
-  const { cart, setCart, increaseItem, reduceItem, setOrders, auth, setAuthModalOpen } =
+  const { cart, setCart, increaseItem, reduceItem, auth, setAuthModalOpen } =
     useContext(GlobalContext);
   const router = useRouter();
 
@@ -63,13 +63,6 @@ export default function Checkout({ restaurant }) {
       };
 
       const { data } = await axios.post('/api/order/create', order, config);
-      setOrders((prev) => [
-        ...prev,
-        {
-          id: data.id,
-          restaurantId: data.restaurantId,
-        },
-      ]);
 
       // clear cart of current restaurant
       setLoading(false);

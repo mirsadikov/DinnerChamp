@@ -71,13 +71,13 @@ export default function Header() {
             <li>
               <button
                 className={`header__profile-btn button button--small ${
-                  auth.token ? 'button--secondary' : ''
+                  auth?.token ? 'button--secondary' : ''
                 }`}
                 onClick={handleProfileClick}
               >
                 <PersonIcon />
               </button>
-              {auth.token && (
+              {auth?.token && (
                 <Popper
                   className={`${inter.className} header__profile-popup`}
                   open={open}
