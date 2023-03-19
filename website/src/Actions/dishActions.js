@@ -60,8 +60,6 @@ export const createDish = (dish, category) => async (dispatch, getState) => {
       type: ADD_DISH_SUCCESS,
     });
 
-    console.log(category);
-
     dispatch({
       type: DISH_LIST_ADD,
       payload: { ...data, category },

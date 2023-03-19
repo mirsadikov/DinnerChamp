@@ -118,7 +118,6 @@ export const createOrder = async (req, res, next) => {
       };
     });
 
-    console.log(req.orderer)
     // create order
     const order = await Order.create({
       ordererName: ordererName,

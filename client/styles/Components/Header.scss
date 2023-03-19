@@ -61,6 +61,14 @@
   }
 
   &__profile-popup {
+    z-index: 100;
+  }
+  
+  &__profile-popup-box {
+    transform: translateY(2rem);
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: var(--color-white);
+    border-radius: 0.8rem;
     padding: 2rem;
     display: flex;
     flex-direction: column;

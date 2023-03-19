@@ -5,7 +5,7 @@ import { Inter, Oleo_Script_Swash_Caps } from '@next/font/google';
 import { GlobalContext } from '@/globalContext';
 import SearchModal from './SearchModal';
 import AuthModal from './AuthModal';
-import { Popover } from '@mui/material';
+import { ClickAwayListener, Popper } from '@mui/material';
 
 const oleo = Oleo_Script_Swash_Caps({
   subsets: ['latin'],
@@ -78,28 +78,22 @@ export default function Header() {
                 <PersonIcon />
               </button>
               {auth.token && (
-                <Popover
-                  className={inter.className}
+                <Popper
+                  className={`${inter.className} header__profile-popup`}
                   open={open}
                   onClose={() => setAnchorEl(null)}
                   anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  elevation={3}
+                  placement="bottom-end"
                 >
-                  <div className="header__profile-popup">
-                    <h3>+{auth.number}</h3>
-                    <button onClick={logout} className="button button--small button--secondary">
-                      Logout
-                    </button>
-                  </div>
-                </Popover>
+                  <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
+                    <div className="header__profile-popup-box">
+                      <h3>+{auth.number}</h3>
+                      <button onClick={logout} className="button button--small button--secondary">
+                        Logout
+                      </button>
+                    </div>
+                  </ClickAwayListener>
+                </Popper>
               )}
             </li>
           </ul>
