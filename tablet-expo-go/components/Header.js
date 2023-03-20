@@ -13,9 +13,10 @@ const Header = ({ menuIsOpen, setMenuIsOpen }) => {
 
   return (
     <View style={styles.header}>
-      <Button title="Options" onPress={handleToggle} />
+      <Button title="Options" onPress={handleToggle} color='#fff' />
       <Button
         title="Logout"
+        color='#fff' 
         onPress={() => {
           dispatch({ type: RESTAURANT_LOGOUT });
         }}
@@ -30,6 +31,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
+    backgroundColor: '#ff4b00',
+    paddingTop: 24,
+    shadowColor: '#666',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 2,
+    zIndex: 2,
   },
 });
 

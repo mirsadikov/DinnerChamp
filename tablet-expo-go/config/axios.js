@@ -12,7 +12,7 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401 && error.response.data.message === 'Unauthorized') {
+    if (error.response?.status === 401 && error.response?.data.message === 'Unauthorized') {
       store.dispatch({ type: RESTAURANT_LOGOUT });
     }
     return Promise.reject(error);

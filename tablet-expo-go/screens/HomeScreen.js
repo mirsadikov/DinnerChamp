@@ -7,6 +7,7 @@ import { SET_ORDERS, UPDATE_ORDER } from '../constants.js';
 import socketServcies from '../config/socket.js';
 import ControlMenu from '../components/ControlMenu.js';
 import Dashboard from '../components/Dashboard.js';
+import Header from '../components/Header.js';
 
 export default function HomeScreen() {
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -33,9 +34,12 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <ControlMenu setIsOpen={setMenuIsOpen} isOpen={menuIsOpen} />
-      <Dashboard setMenuIsOpen={setMenuIsOpen} menuIsOpen={menuIsOpen} />
+      <StatusBar style="light" />
+      <Header setMenuIsOpen={setMenuIsOpen} menuIsOpen={menuIsOpen} />
+      <View style={{ flex: 1 }}>
+        <ControlMenu setIsOpen={setMenuIsOpen} isOpen={menuIsOpen} />
+        <Dashboard setMenuIsOpen={setMenuIsOpen} menuIsOpen={menuIsOpen} />
+      </View>
     </View>
   );
 }
@@ -44,6 +48,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: 24,
   },
 });

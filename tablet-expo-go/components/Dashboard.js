@@ -5,8 +5,6 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { StyleSheet, FlatList } from 'react-native';
-
-import Header from './Header.js';
 import OrderCard from './OrderCard.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_ORDER } from '../constants.js';
@@ -25,6 +23,7 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
       }),
       zIndex: 2,
       paddingHorizontal: 0,
+      paddingBottom: 20,
     };
   });
   // end styles
@@ -39,8 +38,12 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   };
 
   return (
-    <Animated.View style={listStyle}>
-      <Header setMenuIsOpen={setMenuIsOpen} menuIsOpen={menuIsOpen} />
+    <Animated.View
+      style={listStyle}
+      onTouchStart={() => {
+        setMenuIsOpen(false);
+      }}
+    >
       <FlatList
         horizontal={true}
         style={styles.cardList}
@@ -60,7 +63,7 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
 
 const styles = StyleSheet.create({
   cardList: {
-    marginBottom: 20,
+    paddingTop: 10,
     paddingHorizontal: 10,
   },
 });

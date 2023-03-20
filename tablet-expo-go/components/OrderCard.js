@@ -11,29 +11,35 @@ export default function OrderCard({ order, onPress, isSelected }) {
 
   return (
     <View>
-      <TouchableWithoutFeedback onPress={onPress}>
-        <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
-          <Text style={styles.title}>{order.ordererName}</Text>
-          <Text>{order.ordererPhone}</Text>
-          <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
-          <View style={styles.divider} />
-          {order.orderDishes.map((orderDish) => (
-            <View key={orderDish.id} style={styles.dishRow}>
-              <Text style={styles.quantity}>{orderDish.quantity}x</Text>
-              <Text style={styles.dishName}>{orderDish.dishName}</Text>
-            </View>
-          ))}
-          {order.comment && (
-            <>
-              <View style={styles.divider} />
-              <View style={styles.commentBox}>
-                <Text style={styles.commentTitle}>Comment:</Text>
-                <Text>{order.comment}</Text>
+      <View
+        onTouchStart={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <TouchableWithoutFeedback onPress={onPress}>
+          <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
+            <Text style={styles.title}>{order.ordererName}</Text>
+            <Text>{order.ordererPhone}</Text>
+            <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
+            <View style={styles.divider} />
+            {order.orderDishes.map((orderDish) => (
+              <View key={orderDish.id} style={styles.dishRow}>
+                <Text style={styles.quantity}>{orderDish.quantity}x</Text>
+                <Text style={styles.dishName}>{orderDish.dishName}</Text>
               </View>
-            </>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+            ))}
+            {order.comment && (
+              <>
+                <View style={styles.divider} />
+                <View style={styles.commentBox}>
+                  <Text style={styles.commentTitle}>Comment:</Text>
+                  <Text>{order.comment}</Text>
+                </View>
+              </>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </View>
   );
 }
