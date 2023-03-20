@@ -107,9 +107,9 @@ export default function SearchModal() {
                     <div className="search-modal__card-info">
                       <h3 className="search-modal__card-title">
                         {restaurant.name}
-                        {restaurant.running && (
-                          <span className="search-modal__card-badge mini-badge">Open</span>
-                        )}
+                        <span className="search-modal__card-badge mini-badge">
+                          {restaurant.running ? 'Open' : 'Closed'}
+                        </span>
                       </h3>
                       {restaurant.city ? (
                         <p className="search-modal__card-city">

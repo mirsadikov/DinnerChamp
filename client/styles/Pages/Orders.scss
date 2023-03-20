@@ -1,6 +1,7 @@
 .orders {
   max-width: 100rem;
   margin: 0 auto;
+  margin-top: 4rem;
 
   &__header {
     text-align: center;
@@ -11,6 +12,10 @@
     margin: 2rem 0;
   }
 
+  &__refresh {
+    margin-bottom: 1rem;
+  }
+
   &__login,
   &__empty {
     margin: 2rem 0;
@@ -19,6 +24,7 @@
 
   &__login__button {
     margin: 2rem 0;
+
   }
 
   &__list {

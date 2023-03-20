@@ -7,19 +7,51 @@
   display: flex;
   flex-direction: column;
   aspect-ratio: 3 / 4;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 1rem var(--color-primary-50);
+    transform: translateY(-0.2rem);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 
   &__img {
     img {
       width: 100%;
       object-fit: cover;
       aspect-ratio: 1 / 1;
+      display: block;
     }
   }
 
   &__info {
     padding: 1rem;
+    padding-top: 0.8rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    flex: 1;
+  }
+
+  &__name {
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 2.8rem;
+  }
+
+  &__city {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    svg {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.3rem;
+      color: var(--color-primary);
+      padding-bottom: 0.1rem;
+    }
   }
 }

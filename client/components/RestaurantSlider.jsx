@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import PlaceIcon from '@mui/icons-material/Place';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -64,15 +66,20 @@ export default function RestaurantSlider({ restaurants }) {
         >
           {restaurants.map((restaurant) => (
             <SwiperSlide key={restaurant.id}>
-              <div className="restaurant-card">
+              <Link className="restaurant-card" href={`/r/${restaurant.id}`}>
                 <div className="restaurant-card__img">
                   <img src={restaurant.img} alt={restaurant.name} />
                 </div>
                 <div className="restaurant-card__info">
                   <h3 className="restaurant-card__name">{restaurant.name}</h3>
-                  <p className="reastaurant-card__city">{restaurant.city}</p>
+                  {restaurant.running && (
+                    <p className="restaurant-card__city">
+                      <PlaceIcon />
+                      <span>{restaurant.city}</span>
+                    </p>
+                  )}
                 </div>
-              </div>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
