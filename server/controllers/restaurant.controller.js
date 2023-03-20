@@ -1,7 +1,8 @@
-import { Restaurant } from '../config/sequelize.js';
+import moment from 'moment';
+import Sequelize, { Op } from 'sequelize';
+import { Order, Restaurant } from '../config/sequelize.js';
 import generateToken from '../utils/tokenGenerator.js';
 import { removeS3, uploadS3 } from '../utils/imgStorage.js';
-import { Op } from 'sequelize';
 
 export async function registerRestaurant(req, res, next) {
   try {
@@ -214,6 +215,101 @@ export async function removeRestaurantImage(req, res, next) {
     await restaurant.save();
 
     res.status(200).json(restaurant);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getStatistics(req, res, next) {
+  try {
+    const { time: timeQuery } = req.query;
+
+    let time;
+    let periodUnit;
+    let periodName;
+
+    switch (timeQuery) {
+      case 'year':
+        periodUnit = 'month';
+        time = moment().subtract(1, 'year').toDate();
+        periodName = 'MONTH';
+        break;
+      case 'month':
+        periodUnit = 'week';
+        time = moment().subtract(2, 'month').toDate();
+        periodName = 'WEEK';
+        break;
+      case 'week':
+        periodUnit = 'day';
+        time = moment().subtract(1, 'week').toDate();
+        periodName = 'ISODOW';
+        break;
+      default:
+        periodUnit = 'hour';
+        time = moment().subtract(1, 'day').toDate();
+        periodName = 'HOUR';
+    }
+
+    // total orders
+    const totalOrders = await Order.count({
+      where: {
+        restaurantId: req.restaurant.id,
+        createdAt: {
+          [Op.gte]: time,
+        },
+      },
+    });
+
+    // total revenue
+    const totalRevenue = await Order.sum('total', {
+      where: {
+        restaurantId: req.restaurant.id,
+        createdAt: {
+          [Op.gte]: time,
+        },
+      },
+    });
+
+    // total customers
+    const totalCustomers = await Order.count({
+      where: {
+        restaurantId: req.restaurant.id,
+        createdAt: {
+          [Op.gte]: time,
+        },
+      },
+      distinct: true,
+      col: 'ordererPhone',
+    });
+
+    // orders by period
+    const orderByPeriod = await Order.findAll({
+      attributes: [
+        [
+          Sequelize.literal(
+            `date_trunc('${periodUnit}', "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '+5') AT TIME ZONE 'UTC'`
+          ),
+          'period',
+        ],
+        [
+          Sequelize.literal(
+            `EXTRACT(${periodName} FROM "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '+5')`
+          ),
+          'periodName',
+        ],
+        [Sequelize.fn('count', Sequelize.col('id')), 'count'],
+      ],
+      where: {
+        restaurantId: req.restaurant.id,
+        createdAt: {
+          [Op.gte]: time,
+        },
+      },
+      group: ['periodName', 'period'],
+      order: ['period'],
+    });
+
+    res.json({ timeQuery, totalOrders, totalRevenue, totalCustomers, orderByPeriod });
   } catch (error) {
     next(error);
   }

@@ -37,7 +37,6 @@
     margin-bottom: 2rem;
   }
 
-
   &__main {
     min-width: 25rem;
     display: flex;
@@ -46,19 +45,55 @@
   }
 
   &__block {
-    min-width: 25rem;    
-  }
-
-  .statistics {
-    min-height: 90%;
-
-    .dashboard__card-content {
-      display: grid;
-      place-content: center;
-    }
+    min-width: 25rem;
   }
 
   a.active {
     color: $color-primary;
+  }
+}
+
+.dashboard .statistics {
+  // min-height: 90%;
+
+  &__toggle-group {
+    margin-left: 1rem;
+  }
+
+  &__toggle-btn {
+    height: 3rem;
+    text-transform: capitalize;
+  }
+
+  &__content {
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-gap: 2rem;
+  }
+
+  &__chart {
+    margin: 2rem 0 4rem;
+  }
+
+  &__card {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #f0f8ff;
+
+    &-title {
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      color: $color-secondary;
+    }
+
+    &-value {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 2rem 0rem 1rem;
+      text-align: center;
+    }
   }
 }
