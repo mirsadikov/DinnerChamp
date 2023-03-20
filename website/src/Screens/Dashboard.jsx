@@ -5,6 +5,8 @@ import Categories from '../Components/Categories';
 import DashboardCard from '../Components/DashboardCard';
 import Dishes from '../Components/Dishes';
 import DishForm from '../Components/DishForm';
+import EmployeeForm from '../Components/EmployeeForm';
+import Employees from '../Components/Employees';
 import ProfileCard from '../Components/ProfileCard';
 import ProfileForm from '../Components/ProfileForm';
 
@@ -33,14 +35,19 @@ export default function Dashboard() {
           <NavLink to="/dashboard/categories" className="dashboard__card">
             View Categories
           </NavLink>
+          <NavLink to="/dashboard/employees" className="dashboard__card">
+            View Employees
+          </NavLink>
         </div>
         <div className="dashboard__block dashboard__column">
           <Routes>
             <Route path="/" element={<DashboardCard />} />
             <Route path="/profileform" element={<ProfileForm />} />
             <Route path="/dishes" element={<Dishes />} />
-            <Route path="/categories" element={<Categories />} />
             <Route path="/dishes/form" element={<DishForm />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/employees" element={<Employees />} />
+            <Route path="/employees/form" element={<EmployeeForm />} />
           </Routes>
         </div>
       </div>

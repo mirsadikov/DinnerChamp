@@ -9,6 +9,7 @@ import {
   updateRestaurantImageReducer,
 } from './Reducers/restaurantReducer';
 import { statisticsReducer } from './Reducers/statisticsReducer';
+import { EmployeeFormReducer, employeesReducer } from './Reducers/employeeReducer';
 
 const authFromStorage = localStorage.getItem('auth')
   ? JSON.parse(localStorage.getItem('auth'))
@@ -29,6 +30,8 @@ const store = configureStore({
     dishes: dishesReducer,
     dishForm: dishFormReducer,
     statistics: statisticsReducer,
+    employees: employeesReducer,
+    employeeForm: EmployeeFormReducer
   },
   preloadedState: initialState,
 });

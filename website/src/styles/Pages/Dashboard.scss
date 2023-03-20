@@ -1,6 +1,5 @@
 .dashboard {
   padding-top: 3rem;
-  padding-bottom: 5rem;
 
   &__title {
     font-size: 2.8rem;
@@ -63,9 +62,6 @@
   &__toggle-btn {
     height: 3rem;
     text-transform: capitalize;
-  }
-
-  &__content {
   }
 
   &__cards {

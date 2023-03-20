@@ -1,4 +1,51 @@
-.dishes {
+.form {
+  &__group {
+    display: flex;
+    flex-direction: column;
+
+    &--row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__group-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3rem;
+  }
+
+  &__label {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__control {
+    font-family: $font-text;
+    padding: 1.5rem 2rem;
+    font-size: 1.6rem;
+    border: 1px solid $color-primary;
+    border-radius: 0.8rem;
+    outline: none;
+    transition: all 0.2s;
+
+    &:focus {
+      border: 1px solid $color-secondary;
+    }
+  }
+
+  &--small &__control {
+    padding: 1rem 1.5rem;
+  }
+}
+
+.dishes,
+.employees {
   .MuiDataGrid-root {
     border: 1px solid transparent;
 
@@ -83,7 +130,8 @@
   }
 }
 
-.dishform {
+.dishform,
+.employeeform {
   &__header {
     justify-content: flex-start !important;
     align-items: center;
