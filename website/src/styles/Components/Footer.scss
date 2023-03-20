@@ -1,0 +1,37 @@
+.footer {
+  background-color: $color-secondary;
+  color: $color-white;
+  text-align: center;
+  padding: 5rem 0;
+  margin-top: 15rem;
+
+  &__title {
+    font-family: "Oleo Script Swash Caps", cursive;
+    font-weight: 400;
+    font-size: 5.2rem;
+    margin-bottom: 3rem;
+    color: $color-primary;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-bottom: 8rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      &:hover {
+        color: $color-primary-light;
+      }
+    }
+  }
+
+  &__text {
+    color: #aaa;
+    margin-bottom: 1rem;
+  }
+}

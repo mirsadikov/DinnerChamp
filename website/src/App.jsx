@@ -7,6 +7,7 @@ import RegisterScreen from './Screens/RegisterScreen';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
 import AuthVerify from './Components/AuthVerify';
+import Footer from './Components/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/register" element={<RegisterScreen />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </>
   );

@@ -46,6 +46,53 @@
 .about {
   margin-top: 2rem;
   padding-top: 8rem;
-  min-height: 100vh;
   text-align: center;
+
+  &__subtitle {
+    font-size: 2.6rem;
+    margin-bottom: 3rem;
+    display: inline-block;
+
+    &::after {
+      border-radius: 5px;
+      content: '';
+      display: block;
+      width: 200%;
+      height: 2px;
+      background: linear-gradient(90deg, $color-primary, $color-primary-light);
+      margin-top: 1.5rem;
+      transform: translateX(-25%);
+    }
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    padding: 0 8rem;
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    gap: 5rem;
+    margin-top: 3rem
+  }
+
+  &__desc {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: $color-text-gray;
+    line-height: 3.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    
+    p {
+      letter-spacing: -0.7px;
+
+    }
+  }
+
+
+  &__image {
+    border-radius: 2rem;
+    max-height: 38rem;
+  }
 }
