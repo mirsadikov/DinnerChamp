@@ -30,7 +30,7 @@ export default function EmployeeForm() {
     return () => {
       dispatch({ type: EMPLOYEE_FORM_RESET });
     };
-  }, [location.state]);
+  }, [location.state, dispatch]);
 
   useEffect(() => {
     if (success) {

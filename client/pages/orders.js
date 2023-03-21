@@ -1,26 +1,28 @@
-import { GlobalContext, withAuth } from '@/globalContext';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import dateFormat from 'dateformat';
-import { img_endpoint } from '@/config/variables.js';
-
 import axios from '@/config/axios.js';
+import { GlobalContext } from '@/globalContext';
+import { img_endpoint } from '@/config/variables.js';
 
 function Orders() {
   const { auth, setAuthModalOpen, setOrders, orders } = useContext(GlobalContext);
 
-  const getOrders = async (token) => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const { data } = await axios.get('/api/client/orders', config);
-      setOrders(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const getOrders = useCallback(
+    async (token) => {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const { data } = await axios.get('/api/client/orders', config);
+        setOrders(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [setOrders]
+  );
 
   useEffect(() => {
     if (!auth?.token) {
@@ -28,7 +30,7 @@ function Orders() {
     } else {
       setAuthModalOpen(false);
     }
-  }, [auth]);
+  }, [auth, setAuthModalOpen]);
 
   useEffect(() => {
     if (auth?.token) {
@@ -36,7 +38,7 @@ function Orders() {
     } else {
       setOrders(null);
     }
-  }, [auth?.token]);
+  }, [auth?.token, setOrders, getOrders]);
 
   return (
     <div className="orders">
@@ -99,7 +101,7 @@ function Orders() {
                           </div>
                         ))}
                     </div>
-                    <p className="orders__item__total">{order.total} so'm</p>
+                    <p className="orders__item__total">{order.total} so&apos;m</p>
                   </div>
                 </div>
               ))}
