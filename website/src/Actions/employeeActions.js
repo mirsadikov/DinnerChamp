@@ -43,7 +43,7 @@ export const getAllEmployees = () => async (dispatch, getState) => {
   }
 };
 
-export const createEmployee = (name, staffId) => async (dispatch, getState) => {
+export const createEmployee = (name, staffId, password) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ADD_EMPLOYEE_REQUEST,
@@ -59,7 +59,7 @@ export const createEmployee = (name, staffId) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/employee/create`, { staffId, name }, config);
+    const { data } = await axios.post(`/api/employee/create`, { staffId, name, password }, config);
 
     dispatch({
       type: ADD_EMPLOYEE_SUCCESS,
@@ -78,7 +78,7 @@ export const createEmployee = (name, staffId) => async (dispatch, getState) => {
   }
 };
 
-export const updateEmployee = (id, name, staffId) => async (dispatch, getState) => {
+export const updateEmployee = (id, name, staffId, password) => async (dispatch, getState) => {
   try {
     dispatch({
       type: UPDATE_EMPLOYEE_REQUEST,
@@ -94,7 +94,7 @@ export const updateEmployee = (id, name, staffId) => async (dispatch, getState) 
       },
     };
 
-    await axios.put(`/api/employee/${id}`, { name, staffId }, config);
+    await axios.put(`/api/employee/${id}`, { name, staffId, password }, config);
 
     dispatch({
       type: UPDATE_EMPLOYEE_SUCCESS,

@@ -47,7 +47,7 @@ export async function registerRestaurant(req, res, next) {
 
 export async function loginRestaurant(req, res, next) {
   try {
-    const { email, password } = req.body;
+    const { email, password, tablet } = req.body;
 
     if (!email || !password) {
       res.status(400);
@@ -71,7 +71,8 @@ export async function loginRestaurant(req, res, next) {
           email: restaurant.email,
           phone: restaurant.role,
           description: restaurant.description,
-          token: `Bearer ${generateToken(payload)}`,
+          // if from tablet never expire
+          token: `Bearer ${generateToken(payload, tablet ? '-1' : null)}`,
         });
       } else {
         res.status(401);

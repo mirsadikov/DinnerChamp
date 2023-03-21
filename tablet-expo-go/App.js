@@ -6,24 +6,34 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './config/store';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import { HOME_SCREEN, LOGIN_SCREEN } from './constants';
+import { EMP_LOGIN_SCREEN, HOME_SCREEN, LOGIN_SCREEN } from './constants';
 import AuthVerify from './components/AuthVerify';
+import EmployeeLoginScreen from './screens/EmployeeLoginScreen';
 
 const Stack = createNativeStackNavigator();
 
 const RootComponent = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token: employeeToken } = useSelector((state) => state.employee);
+  const { token: restaurantToken } = useSelector((state) => state.restaurant);
 
   return (
     <NavigationContainer>
       <AuthVerify />
       <Stack.Navigator>
-        {token ? (
-          <Stack.Screen
-            name={HOME_SCREEN}
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
+        {restaurantToken ? (
+          employeeToken ? (
+            <Stack.Screen
+              name={HOME_SCREEN}
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <Stack.Screen
+              name={EMP_LOGIN_SCREEN}
+              options={{ headerTitle: 'Employee login' }}
+              component={EmployeeLoginScreen}
+            />
+          )
         ) : (
           <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
         )}

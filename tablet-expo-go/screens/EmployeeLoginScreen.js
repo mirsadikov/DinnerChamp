@@ -1,29 +1,37 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/login';
+import { employeeLogin } from '../actions/login';
+import { RESET_ERRORS } from '../constants';
 
-export default function LoginScreen() {
-  const [email, setEmail] = useState('');
+export default function EmployeeLoginScreen() {
+  const [employeeId, setEmployeeId] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.restaurant);
+  const { error } = useSelector((state) => state.employee);
 
   const handleLogin = () => {
-    dispatch(login(email, password));
+    dispatch(employeeLogin(employeeId, password));
   };
+
+  // reset error when component unmounts
+  useEffect(() => {
+    return () => {
+      dispatch({ type: RESET_ERRORS });
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Email</Text>
+          <Text style={styles.label}>Employee ID</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter email"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
+            placeholder="Enter ID"
+            onChangeText={(id) => setEmployeeId(id)}
+            value={employeeId}
           />
         </View>
 

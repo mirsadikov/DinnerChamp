@@ -11,6 +11,8 @@ export default function EmployeeForm() {
   const [editId, setEditId] = useState('');
   const [name, setName] = useState('');
   const [staffId, setStaffId] = useState('');
+  const [password, setPassword] = useState('');
+  const [validationError, setValidationError] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ export default function EmployeeForm() {
 
     return () => {
       dispatch({ type: EMPLOYEE_FORM_RESET });
+      setValidationError(false);
     };
   }, [location.state, dispatch]);
 
@@ -42,10 +45,18 @@ export default function EmployeeForm() {
   function submitHandler(e) {
     e.preventDefault();
 
+    // validate form with trim
+    if (!name.trim() || !staffId.trim()) {
+      setValidationError(true);
+      return;
+    }
+
+    const passwordTrimmed = password.trim();
+
     if (editId) {
-      dispatch(updateEmployee(editId, name, staffId));
+      dispatch(updateEmployee(editId, name, staffId, passwordTrimmed));
     } else {
-      dispatch(createEmployee(name, staffId));
+      dispatch(createEmployee(name, staffId, passwordTrimmed));
     }
   }
 
@@ -68,6 +79,11 @@ export default function EmployeeForm() {
           {error}
         </Alert>
       )}
+      {validationError && (
+        <Alert className="employeeform__alert" severity="error">
+          Please fill in all fields
+        </Alert>
+      )}
 
       <form className="employeeform__form form form--small" onSubmit={submitHandler}>
         <div className="employeeform__form-group">
@@ -87,9 +103,9 @@ export default function EmployeeForm() {
             />
           </div>
         </div>
-        <div className="employeeform__form-group">
+        <div className="employeeform__form-group form__group-2">
           <div className="form__group">
-            <label htmlFor="price" className="employeeform__label form__label">
+            <label htmlFor="staffid" className="employeeform__label form__label">
               Staff ID
             </label>
             <input
@@ -101,6 +117,20 @@ export default function EmployeeForm() {
               value={staffId}
               onChange={(e) => setStaffId(e.target.value)}
               required
+            />
+          </div>
+          <div className="form__group">
+            <label htmlFor="password" className="employeeform__label form__label">
+              Password
+            </label>
+            <input
+              type="text"
+              name="password"
+              id="password"
+              className="employeeform__input form__control"
+              placeholder="New password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         </div>

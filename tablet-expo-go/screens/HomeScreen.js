@@ -14,7 +14,7 @@ export default function HomeScreen() {
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.employee);
 
   useEffect(() => {
     socketServcies.initializeSocket(token);

@@ -22,7 +22,6 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
         easing: Easing.inOut(Easing.ease),
       }),
       zIndex: 2,
-      paddingHorizontal: 0,
       paddingBottom: 20,
     };
   });
@@ -38,12 +37,7 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   };
 
   return (
-    <Animated.View
-      style={listStyle}
-      onTouchStart={() => {
-        setMenuIsOpen(false);
-      }}
-    >
+    <Animated.View style={listStyle}>
       <FlatList
         horizontal={true}
         style={styles.cardList}
@@ -64,6 +58,5 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
 const styles = StyleSheet.create({
   cardList: {
     paddingTop: 10,
-    paddingHorizontal: 10,
   },
 });

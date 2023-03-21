@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RESTAURANT_LOGOUT } from '../constants';
+import { EMPLOYEE_LOGOUT } from '../constants';
 import { api_url } from './variables';
 import { store } from './store';
 
@@ -13,7 +13,7 @@ instance.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401 && error.response?.data.message === 'Unauthorized') {
-      store.dispatch({ type: RESTAURANT_LOGOUT });
+      store.dispatch({ type: EMPLOYEE_LOGOUT });
     }
     return Promise.reject(error);
   }

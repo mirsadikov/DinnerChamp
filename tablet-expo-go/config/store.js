@@ -4,22 +4,24 @@ import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 // reducers
-import { loginReducer } from '../reducers/loginReducer';
+import { loginReducer, employeeLoginReducer } from '../reducers/loginReducer';
 import { ordersReducer } from '../reducers/ordersReducer';
 
 // persist config
-const persistConfig = {
-  key: 'auth',
+const persistConfig = (key) => ({
+  key,
   storage: AsyncStorage,
-};
+});
 
 // persist reducer
-const persistedReducer = persistReducer(persistConfig, loginReducer);
+const persistedRestaurantReducer = persistReducer(persistConfig('restaurant'), loginReducer);
+const persistedEmployeeReducer = persistReducer(persistConfig('employee'), employeeLoginReducer);
 
 // store
 const store = configureStore({
   reducer: {
-    auth: persistedReducer,
+    restaurant: persistedRestaurantReducer,
+    employee: persistedEmployeeReducer,
     orders: ordersReducer,
   },
   middleware: [thunk],

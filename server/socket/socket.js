@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { Restaurant } from '../config/sequelize.js';
 import { getOrders, updateOrder } from '../controllers/order.controller.js';
 
 class IO {
@@ -10,18 +11,30 @@ class IO {
 
   // middlewares
   applyMiddlewares() {
-    this.io.use((socket, next) => {
+    this.io.use(async (socket, next) => {
       const bearerToken = socket.handshake.auth.token;
       const token = bearerToken && bearerToken.split(' ')[1];
 
+      // no token
       if (!token) {
         return next(new Error('Authentication error: no token provided'));
       }
 
       try {
-        const restaurant = jwt.verify(token, process.env.JWT_SECRET);
+        // verify token
+        const restaurantSocket = jwt.verify(token, process.env.JWT_SECRET);
 
-        socket.restaurantId = restaurant.id;
+        const restaurant = await Restaurant.findByPk(restaurantSocket.restaurantId, {
+          attributes: { exclude: ['password'] },
+        });
+
+        // no restaurant
+        if (!restaurant) {
+          return next(new Error('Restaurant not found'));
+        }
+
+        // add restaurantId to socket
+        socket.restaurantId = restaurantSocket.restaurantId;
         next();
       } catch (err) {
         return next(new Error('Authentication error: invalid token'));

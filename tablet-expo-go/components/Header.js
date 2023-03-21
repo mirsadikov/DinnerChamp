@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { RESTAURANT_LOGOUT, SET_SELECTED_ORDER } from '../constants.js';
+import { EMPLOYEE_LOGOUT, SET_SELECTED_ORDER } from '../constants.js';
 
 const Header = ({ menuIsOpen, setMenuIsOpen }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Header = ({ menuIsOpen, setMenuIsOpen }) => {
         title="Logout"
         color='#fff' 
         onPress={() => {
-          dispatch({ type: RESTAURANT_LOGOUT });
+          dispatch({ type: EMPLOYEE_LOGOUT });
         }}
       />
     </View>
