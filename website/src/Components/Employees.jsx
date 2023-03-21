@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { deleteEmployee, getAllEmployees } from '../Actions/employeeActions';
 
 export default function Employees() {
+  const [pageSize, setPageSize] = useState(20);
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({
     id: true,
     staffId: true,
@@ -121,8 +122,10 @@ export default function Employees() {
             rows={employees}
             columns={columns}
             autoHeight
-            pageSize={10}
+            pagination
+            pageSize={pageSize}
             rowsPerPageOptions={[10, 20, 50]}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             disableSelectionOnClick
             getRowHeight={() => 50}
             components={{

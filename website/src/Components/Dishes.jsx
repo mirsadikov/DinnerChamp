@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import defaultImg from '../Images/default-img.png';
 
 export default function Dishes() {
+  const [pageSize, setPageSize] = useState(20);
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({
     id: true,
     name: true,
@@ -173,8 +174,10 @@ export default function Dishes() {
             rows={dishes}
             columns={columns}
             autoHeight
-            pageSize={10}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             rowsPerPageOptions={[10, 20, 50]}
+            pagination
             disableSelectionOnClick
             rowHeight={100}
             getRowHeight={() => 'auto'}
