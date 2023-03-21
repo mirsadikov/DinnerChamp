@@ -223,7 +223,7 @@ export async function removeRestaurantImage(req, res, next) {
 
 export async function getStatistics(req, res, next) {
   try {
-    const { time: timeQuery } = req.query;
+    const { time: timeQuery, offset } = req.query;
 
     let time;
     let periodUnit;
@@ -288,13 +288,13 @@ export async function getStatistics(req, res, next) {
       attributes: [
         [
           Sequelize.literal(
-            `date_trunc('${periodUnit}', "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '+5') AT TIME ZONE 'UTC'`
+            `date_trunc('${periodUnit}', "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '${offset}') AT TIME ZONE 'UTC'`
           ),
           'period',
         ],
         [
           Sequelize.literal(
-            `EXTRACT(${periodName} FROM "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '+5')`
+            `EXTRACT(${periodName} FROM "createdAt" AT TIME ZONE 'UTC' AT TIME ZONE '${offset}')`
           ),
           'periodName',
         ],

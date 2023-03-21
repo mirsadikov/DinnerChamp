@@ -1,4 +1,5 @@
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import moment from 'moment';
 import { View, Text } from 'react-native';
 
 export default function OrderCard({ order, onPress, isSelected }) {
@@ -18,9 +19,19 @@ export default function OrderCard({ order, onPress, isSelected }) {
       >
         <TouchableWithoutFeedback onPress={onPress}>
           <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
-            <Text style={styles.title}>{order.ordererName}</Text>
-            <Text>{order.ordererPhone}</Text>
-            <Text>{new Date(order.createdAt).toLocaleTimeString()}</Text>
+            <View style={styles.row}>
+              <Text style={styles.id}>#{order.id}</Text>
+              <Text>
+                {moment(order.createdAt).calendar(null, {
+                  sameDay: 'HH:mm',
+                  lastDay: '[Yesterday] HH:mm',
+                })}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.title}>{order.ordererName}</Text>
+              <Text>+{order.ordererPhone}</Text>
+            </View>
             <View style={styles.divider} />
             {order.orderDishes.map((orderDish) => (
               <View key={orderDish.id} style={styles.dishRow}>
@@ -65,7 +76,13 @@ const styles = StyleSheet.create({
     shadowRadius: 7,
     elevation: 5,
   },
-  title: {
+  row: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  id: {
     fontSize: 24,
   },
   divider: {

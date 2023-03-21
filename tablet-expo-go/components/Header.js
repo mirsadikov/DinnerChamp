@@ -13,24 +13,22 @@ const Header = ({ menuIsOpen, setMenuIsOpen }) => {
 
   return (
     <View style={styles.header}>
-      <Button title="Options" onPress={handleToggle} color='#fff' />
-      <Button
-        title="Logout"
-        color='#fff' 
-        onPress={() => {
-          dispatch({ type: EMPLOYEE_LOGOUT });
-        }}
-      />
+      <View style={styles.headerContainer}>
+        <Button title="Options" onPress={handleToggle} color="#fff" />
+        <Button
+          title="Logout"
+          color="#fff"
+          onPress={() => {
+            dispatch({ type: EMPLOYEE_LOGOUT });
+          }}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
     backgroundColor: '#ff4b00',
     paddingTop: 24,
     shadowColor: '#666',
@@ -42,6 +40,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     zIndex: 2,
+  },
+  headerContainer: {
+    height: 50,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

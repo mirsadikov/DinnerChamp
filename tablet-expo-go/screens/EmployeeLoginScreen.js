@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { employeeLogin } from '../actions/login';
-import { RESET_ERRORS } from '../constants';
+import { RESET_ERRORS, RESTAURANT_LOGOUT } from '../constants';
 
 export default function EmployeeLoginScreen() {
   const [employeeId, setEmployeeId] = useState('');
@@ -10,6 +10,7 @@ export default function EmployeeLoginScreen() {
 
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.employee);
+  const { name: restaurantName } = useSelector((state) => state.restaurant);
 
   const handleLogin = () => {
     dispatch(employeeLogin(employeeId, password));
@@ -24,6 +25,10 @@ export default function EmployeeLoginScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.titleBox}>
+        <Text style={styles.title}>{restaurantName}</Text>
+        <Button title="Exit restaurant" onPress={() => dispatch({ type: RESTAURANT_LOGOUT })} />
+      </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Employee ID</Text>
@@ -59,13 +64,23 @@ export default function EmployeeLoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  titleBox: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 46,
+    color: '#ff4b00',
+    fontWeight: '500',
   },
   inputContainer: {
     width: '80%',
     maxWidth: 450,
+    flex: 2,
   },
   inputGroup: {
     marginBottom: 20,

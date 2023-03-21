@@ -24,7 +24,7 @@ const periodIntervals = {
 };
 
 const intervals = {
-  day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  day: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 };
 
@@ -48,7 +48,7 @@ function getChartData(data, period) {
         break;
       case 'day':
         // days of week
-        unit = intervals[interval][item.periodName];
+        unit = intervals[interval][item.periodName - 1];
         break;
       default:
         unit = item.periodName;
@@ -56,6 +56,7 @@ function getChartData(data, period) {
     labels.push(unit);
     values.push(item.count);
   });
+
   return {
     labels,
     datasets: [

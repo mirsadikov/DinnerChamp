@@ -44,34 +44,40 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
       <View style={styles.container}>
         <View style={styles.main}>
           {selectedOrder && (
-            <View style={styles.statusButtons}>
-              <TouchableWithoutFeedback
-                style={styles.statusButtonPress}
-                onPress={() => setStatus('pending')}
-              >
-                <View style={[styles.statusButton, status === 'pending' && styles.statusPending]}>
-                  <Text style={styles.statusButtonText}>Pending</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                style={styles.statusButtonPress}
-                onPress={() => setStatus('preparing')}
-              >
-                <View
-                  style={[styles.statusButton, status === 'preparing' && styles.statusPreparing]}
+            <>
+              <View style={styles.orderInfo}>
+                <Text style={styles.orderInfoId}>#{selectedOrder.id}</Text>
+                <Text style={styles.orderInfoName}>{selectedOrder.ordererName}</Text>
+              </View>
+              <View style={styles.statusButtons}>
+                <TouchableWithoutFeedback
+                  style={styles.statusButtonPress}
+                  onPress={() => setStatus('pending')}
                 >
-                  <Text style={styles.statusButtonText}>Preparing</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                style={styles.statusButtonPress}
-                onPress={() => setStatus('ready')}
-              >
-                <View style={[styles.statusButton, status === 'ready' && styles.statusReady]}>
-                  <Text style={styles.statusButtonText}>Ready</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
+                  <View style={[styles.statusButton, status === 'pending' && styles.statusPending]}>
+                    <Text style={styles.statusButtonText}>Pending</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  style={styles.statusButtonPress}
+                  onPress={() => setStatus('preparing')}
+                >
+                  <View
+                    style={[styles.statusButton, status === 'preparing' && styles.statusPreparing]}
+                  >
+                    <Text style={styles.statusButtonText}>Preparing</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  style={styles.statusButtonPress}
+                  onPress={() => setStatus('ready')}
+                >
+                  <View style={[styles.statusButton, status === 'ready' && styles.statusReady]}>
+                    <Text style={styles.statusButtonText}>Ready</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </>
           )}
         </View>
         <View style={styles.bottomBar}>
@@ -131,6 +137,21 @@ const styles = StyleSheet.create({
     // backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  orderInfo: {
+    width: '100%',
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  orderInfoId: {
+    fontSize: 34,
+    fontWeight: 'bold',
+  },
+  orderInfoName: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   bottomButtonPress: {
     flex: 1,

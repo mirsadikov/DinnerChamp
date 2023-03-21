@@ -13,15 +13,26 @@ export const getStatistics = (time) => async (dispatch, getState) => {
 
     const { info } = getState().auth;
 
+    const offset = new Date().getTimezoneOffset();
+    const offsetHours = Math.floor(Math.abs(offset / 60));
+    const offsetMinutes = Math.abs(offset % 60);
+    const offsetString = `${offset < 0 ? '+' : '-'}${offsetHours
+      .toString()
+      .padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')}`;
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: info.token,
       },
+      params: {
+        time: time,
+        offset: offsetString,
+      },
     };
 
     // time as query param
-    const { data } = await axios.get(`/api/restaurant/statistics?time=${time}`, config);
+    const { data } = await axios.get(`/api/restaurant/statistics`, config);
 
     dispatch({
       type: GET_STATISTICS_SUCCESS,

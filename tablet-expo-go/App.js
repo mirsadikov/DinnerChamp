@@ -35,7 +35,11 @@ const RootComponent = () => {
             />
           )
         ) : (
-          <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
+          <Stack.Screen
+            name={LOGIN_SCREEN}
+            options={{ headerTitle: 'Restaurant login' }}
+            component={LoginScreen}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

@@ -8,6 +8,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import OrderCard from './OrderCard.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_ORDER } from '../constants.js';
+import { useRef } from 'react';
 
 export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   // styles
@@ -27,13 +28,15 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   });
   // end styles
 
+  const listRef = useRef(null);
   const dispatch = useDispatch();
   const { orders, selectedOrder } = useSelector((state) => state.orders);
 
-  const handleCardClick = (order) => {
+  const handleCardClick = (order, index) => {
     if (selectedOrder?.id === order.id) setMenuIsOpen(!menuIsOpen);
     else setMenuIsOpen(true);
     dispatch({ type: SET_SELECTED_ORDER, payload: order });
+    listRef.current.scrollToIndex({ index, viewPosition: 0.5 });
   };
 
   return (
@@ -42,11 +45,12 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
         horizontal={true}
         style={styles.cardList}
         data={orders}
-        renderItem={({ item }) => (
+        ref={listRef}
+        renderItem={({ item, index }) => (
           <OrderCard
             order={item}
             isSelected={menuIsOpen && selectedOrder?.id === item.id}
-            onPress={() => handleCardClick(item)}
+            onPress={() => handleCardClick(item, index)}
           />
         )}
         keyExtractor={(item) => item.id}

@@ -1,5 +1,10 @@
 import axios from '../config/axios';
-import { EMPLOYEE_LOGIN_FAIL, EMPLOYEE_LOGIN_SUCCESS, RESTAURANT_LOGIN_FAIL, RESTAURANT_LOGIN_SUCCESS } from '../constants';
+import {
+  EMPLOYEE_LOGIN_FAIL,
+  EMPLOYEE_LOGIN_SUCCESS,
+  RESTAURANT_LOGIN_FAIL,
+  RESTAURANT_LOGIN_SUCCESS,
+} from '../constants';
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -10,12 +15,12 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const {
-      data: { id, token },
+      data: { id, token, name },
     } = await axios.post('/api/restaurant/login', { email, password, tablet: true }, config);
 
     dispatch({
       type: RESTAURANT_LOGIN_SUCCESS,
-      payload: { id, token },
+      payload: { id, token, name },
     });
   } catch (error) {
     dispatch({
