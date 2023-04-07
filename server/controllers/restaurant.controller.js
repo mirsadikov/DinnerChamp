@@ -3,6 +3,7 @@ import Sequelize, { Op } from 'sequelize';
 import { Order, Restaurant } from '../config/sequelize.js';
 import generateToken from '../utils/tokenGenerator.js';
 import { removeS3, uploadS3 } from '../utils/imgStorage.js';
+import io from '../socket/socket.js';
 
 export async function registerRestaurant(req, res, next) {
   try {
@@ -314,4 +315,20 @@ export async function getStatistics(req, res, next) {
   } catch (error) {
     next(error);
   }
+}
+
+export async function switchRestaurant(restaurantId, newStatus) {
+  try {
+    const restaurant = await Restaurant.findOne({
+      where: { id: restaurantId },
+    });
+
+    if (restaurant) {
+      restaurant.running = newStatus.isOnline;
+      await restaurant.save();
+    }
+  } catch (err) {
+    return io.emit('error', err);
+  }
+
 }

@@ -5,6 +5,7 @@ import {
   RESTAURANT_LOGIN_FAIL,
   RESTAURANT_LOGIN_SUCCESS,
   RESTAURANT_LOGOUT,
+  RESTAURANT_SET_STATUS,
   RESET_ERRORS,
 } from '../constants';
 
@@ -14,6 +15,8 @@ export const loginReducer = (state = {}, action) => {
       return { ...action.payload };
     case RESTAURANT_LOGIN_FAIL:
       return { error: action.payload };
+    case RESTAURANT_SET_STATUS:
+      return { ...state, status: action.payload };
     case RESTAURANT_LOGOUT:
       return {};
     case RESET_ERRORS:

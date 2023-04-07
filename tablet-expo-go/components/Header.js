@@ -1,20 +1,39 @@
 import React from 'react';
-import { StyleSheet, Button, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { EMPLOYEE_LOGOUT, SET_SELECTED_ORDER } from '../constants.js';
+import { StyleSheet, Switch, Button, View, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { EMPLOYEE_LOGOUT, RESTAURANT_SET_STATUS, SET_SELECTED_ORDER } from '../constants.js';
+import socketServcies from '../config/socket';
 
 const Header = ({ menuIsOpen, setMenuIsOpen }) => {
   const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.restaurant);
 
   const handleToggle = () => {
     if (!menuIsOpen) dispatch({ type: SET_SELECTED_ORDER });
     setMenuIsOpen((v) => !v);
   };
 
+  const handleRestaurantToggle = () => {
+    dispatch({ type: RESTAURANT_SET_STATUS, payload: !status });
+    socketServcies.emit('restaurant:switch', { isOnline: !status });
+  };
+
   return (
     <View style={styles.header}>
       <View style={styles.headerContainer}>
         <Button title="Options" onPress={handleToggle} color="#fff" />
+        <View style={styles.switch}>
+          <Text style={styles.text}>Offline</Text>
+          <Switch
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={status ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={handleRestaurantToggle}
+            value={status}
+          />
+          <Text style={styles.text}>Online</Text>
+        </View>
+
         <Button
           title="Logout"
           color="#fff"
@@ -47,6 +66,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  switch: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  text: {
+    color: '#fff',
   },
 });
 

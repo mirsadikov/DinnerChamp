@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_ORDERS, UPDATE_ORDER } from '../constants.js';
+import { RESTAURANT_SET_STATUS, SET_ORDERS, UPDATE_ORDER } from '../constants.js';
 import socketServcies from '../config/socket.js';
 import ControlMenu from '../components/ControlMenu.js';
 import Dashboard from '../components/Dashboard.js';
@@ -25,6 +25,10 @@ export default function HomeScreen() {
 
     socketServcies.on('order:update', (updatedOrder) => {
       dispatch({ type: UPDATE_ORDER, payload: updatedOrder });
+    });
+
+    socketServcies.on('restaurant:read', (status) => {
+      dispatch({ type: RESTAURANT_SET_STATUS, payload: status.running });
     });
 
     return () => {

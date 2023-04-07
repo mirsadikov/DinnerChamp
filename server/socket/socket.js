@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Restaurant } from '../config/sequelize.js';
 import { getOrders, updateOrder } from '../controllers/order.controller.js';
+import { switchRestaurant } from '../controllers/restaurant.controller.js';
 
 class IO {
   init(io) {
@@ -49,8 +50,18 @@ class IO {
 
       // initial data
       socket.emit('order:read', await getOrders(socket.restaurantId, 24));
+      // send resturant running property only
+      socket.emit(
+        'restaurant:read',
+        await Restaurant.findByPk(socket.restaurantId, {
+          attributes: ['running'],
+        })
+      );
 
       socket.on('order:update', updateOrder);
+      socket.on('restaurant:switch', (newStatus) =>
+        switchRestaurant(socket.restaurantId, newStatus)
+      );
       socket.on('disconnect', () => console.log('Socket disconnected'.bgRed));
     });
 
