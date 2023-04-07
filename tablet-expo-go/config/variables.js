@@ -1,1 +1,3 @@
-export const api_url = 'http://192.168.1.12:5001';
+import Constants from 'expo-constants';
+
+export const api_url = Constants.manifest.extra.apiUrl;

@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
-const SOCKET_URL = 'http://192.168.1.12:5001/';
+import { api_url } from './variables';
 
 class WSService {
   initializeSocket = async (token) => {
     try {
-      this.socket = io(SOCKET_URL, {
+      this.socket = io(api_url, {
         auth: {
           token,
         },
