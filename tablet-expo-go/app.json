@@ -30,10 +30,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.zeyd.dinnerchamptablet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "20ba3606-fb43-4135-92b3-2618b145218a"
+      }
     }
   }
 }
