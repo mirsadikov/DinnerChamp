@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Switch, Button, View, Text } from 'react-native';
+import { StyleSheet, Switch, Button, View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { EMPLOYEE_LOGOUT, RESTAURANT_SET_STATUS, SET_SELECTED_ORDER } from '../constants.js';
 import socketServcies from '../config/socket';
@@ -21,7 +21,14 @@ const Header = ({ menuIsOpen, setMenuIsOpen }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerContainer}>
-        <Button title="Options" onPress={handleToggle} color="#fff" />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleToggle}
+          underlayColor="#fff"
+        >
+          <Text style={styles.buttonText}>Options</Text>
+        </TouchableOpacity>
+        {/* <Button title="Options" onPress={handleToggle} color="#fff" /> */}
         <View style={styles.switch}>
           <Text style={styles.text}>Offline</Text>
           <Switch
@@ -34,13 +41,23 @@ const Header = ({ menuIsOpen, setMenuIsOpen }) => {
           <Text style={styles.text}>Online</Text>
         </View>
 
-        <Button
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            dispatch({ type: EMPLOYEE_LOGOUT });
+          }}
+          underlayColor="#fff"
+        >
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+
+        {/* <Button
           title="Logout"
           color="#fff"
           onPress={() => {
             dispatch({ type: EMPLOYEE_LOGOUT });
           }}
-        />
+        /> */}
       </View>
     </View>
   );
@@ -66,6 +83,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#ff4b00',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 500,
   },
   switch: {
     flexDirection: 'row',
