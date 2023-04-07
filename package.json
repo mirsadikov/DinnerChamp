@@ -1,0 +1,26 @@
+{
+  "name": "bis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm run dev",
+    "orders": "cd client && npm run dev",
+    "business": "cd website && npm start",
+    "start": "concurrently \"npm run server\" \"npm run orders\" \"npm run business\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirsadikov/DinnerChamp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mirsadikov/DinnerChamp/issues"
+  },
+  "homepage": "https://github.com/mirsadikov/DinnerChamp#readme",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
+}

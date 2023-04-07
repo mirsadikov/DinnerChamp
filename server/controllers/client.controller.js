@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import twillio from 'twilio';
 import { Orderer, Order, Restaurant, OrderDish, Dish } from '../config/sequelize.js';
 
 export const sendCode = async (req, res, next) => {
@@ -30,7 +31,18 @@ export const sendCode = async (req, res, next) => {
     });
 
     // TODO
-    // send to phone number with twilio
+    // send to phone number with twillio
+    const accountSid = process.env.TWILLO_SID;
+    const authToken = process.env.TWILLO_TOKEN;
+    const phoneFrom = process.env.TWILLO_PHONE_NUMBER;
+    const client = twillio(accountSid, authToken);
+
+    client.messages
+      .create({
+        body: `Your code for DinnerChamp is: ${code}`,
+        from: phoneFrom,
+        to: `+${newPhone}`,
+      })
 
     console.log(`CODE for ${phone}: `, code);
 
