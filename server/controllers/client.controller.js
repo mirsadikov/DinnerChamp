@@ -43,16 +43,14 @@ export const sendCode = async (req, res, next) => {
         from: phoneFrom,
         to: `+${newPhone}`,
       })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json({
-          message: 'Error sending code',
-        });
+      .then(() => {
+        console.log(`CODE for ${phone}: `, code);
+        res.status(200).json();
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json({ message: 'Error sending code' });
       });
-
-    console.log(`CODE for ${phone}: `, code);
-
-    return res.status(200).json();
   } catch (error) {
     next(error);
   }

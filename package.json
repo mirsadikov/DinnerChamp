@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "cd server && npm run dev",
-    "orders": "cd client && npm run dev",
-    "business": "cd website && npm start",
+    "server:dev": "cd server && npm run dev",
+    "orders:dev": "cd client && npm run dev",
+    "business:dev": "cd website && npm start",
+    "server": "cd server && npm start",
+    "orders": "cd client && npm start",
+    "business": "cd website && npm run static",
+    "dev": "concurrently \"npm run server:dev\" \"npm run orders:dev\" \"npm run business:dev\"",
     "start": "concurrently \"npm run server\" \"npm run orders\" \"npm run business\""
   },
   "repository": {
