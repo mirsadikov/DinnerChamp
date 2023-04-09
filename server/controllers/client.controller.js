@@ -43,6 +43,12 @@ export const sendCode = async (req, res, next) => {
         from: phoneFrom,
         to: `+${newPhone}`,
       })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+          message: 'Error sending code',
+        });
+      });
 
     console.log(`CODE for ${phone}: `, code);
 
