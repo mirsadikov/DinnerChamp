@@ -37,9 +37,9 @@
   }
 
   &__main {
+    height: max-content;
     min-width: 25rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1rem;
   }
 
@@ -49,6 +49,45 @@
 
   a.active {
     color: $color-primary;
+  }
+
+  @media screen and (max-width: 1024px) {
+    &__container {
+      grid-template-columns: 1fr;
+      padding: 0 1.5rem;
+    }
+
+    &__main {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      gap: 1rem 3rem;
+      grid-auto-flow: dense;
+      margin-bottom: 2rem;
+    }
+
+    & .profile {
+      grid-column: 2 / 3;
+      grid-row: 1 / 6;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__container {
+      padding: 0 1rem;
+    }
+
+    &__main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__block {
+      overflow: auto;
+    }
+
+    &__block > &__card {
+      min-width: 90rem;
+    }
   }
 }
 

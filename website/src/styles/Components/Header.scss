@@ -6,16 +6,25 @@
     height: 6rem;
     width: 100%;
     background-color: transparent;
-    backdrop-filter: saturate(1.8) blur(5px);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
     display: flex;
+    border-bottom: 1px solid transparent;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: saturate(1.8) blur(5px);
+      z-index: -1;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
     &--sticky {
       background-color: #fff8;
-      box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.11);
     }
 
     .container {
@@ -51,6 +60,93 @@
 
     .active {
       color: $color-primary;
+    }
+  }
+
+  &__hamburger {
+    display: none;
+    cursor: pointer;
+    height: 3rem;
+    width: 3.4rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid $color-primary;
+    border-radius: 5px;
+    user-select: none;
+  }
+
+  &__hamburger-line {
+    width: 23px;
+    height: 2px;
+    display: none;
+    margin-bottom: 4px;
+    border-radius: 2px;
+    transition: all 200ms ease;
+    background-color: $color-secondary;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &__nav {
+      height: 5rem;
+    }
+
+    .header__title {
+      font-size: 3.2rem;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__nav .container {
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    &__hamburger {
+      display: flex;
+    }
+
+    &__hamburger-line {
+      display: block;
+    }
+
+    &__links {
+      position: absolute;
+      top: 5rem;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 500ms ease;
+      max-height: 0;
+      z-index: 100;
+      overflow: hidden;
+      pointer-events: none;
+      visibility: hidden;
+      gap: 0;
+      backdrop-filter: saturate(1.8) blur(5px);
+      background-color: #fff8;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+      & > li {
+        margin-bottom: 3rem;
+        font-size: 2.5rem;
+
+        &:first-child {
+          margin-top: 3rem;
+        }
+      }
+    }
+
+    &--open .header__links {
+      max-height: 20rem;
+      pointer-events: all;
+      visibility: visible;
     }
   }
 }

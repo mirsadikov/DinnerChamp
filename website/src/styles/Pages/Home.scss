@@ -72,7 +72,7 @@
     display: grid;
     grid-template-columns: 4fr 3fr;
     gap: 5rem;
-    margin-top: 3rem
+    margin-top: 3rem;
   }
 
   &__desc {
@@ -83,16 +83,118 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    
+
     p {
       letter-spacing: -0.7px;
-
     }
   }
-
 
   &__image {
     border-radius: 2rem;
     max-height: 38rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .hero {
+    &__container {
+      padding-top: 2rem;
+      max-height: 70rem;
+      min-height: 40rem;
+    }
+
+    &__title {
+      font-size: 5.2rem;
+    }
+
+    &__description {
+      font-size: 1.8rem;
+      margin-top: 1.5rem;
+      line-height: 3.2rem;
+    }
+
+    &__buttons {
+      margin-top: 3rem;
+    }
+  }
+
+  .about {
+    &__subtitle {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+    }
+
+    &__container {
+      padding: 0 3rem;
+      grid-template-columns: 56% 1fr;
+    }
+
+    &__desc {
+      font-size: 1.8rem;
+      line-height: 3.2rem;
+    }
+
+    &__image {
+      max-height: 30rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    &__container {
+      max-height: 55rem;
+      min-height: 35rem;
+    }
+    
+    &__title {
+      text-align: center;
+    }
+
+    &__description {
+      font-size: 1.6rem;
+      line-height: 3rem;
+    }
+
+    &__buttons {
+      margin-top: 2rem;
+    }
+  }
+
+  .about {
+    &__subtitle {
+      font-size: 2rem;
+    }
+
+    &__container {
+      grid-template-columns: 1fr;
+    }
+
+    &__desc {
+      font-size: 1.6rem;
+      line-height: 3rem;
+    }
+
+    &__image {
+      max-height: 25rem;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .hero {
+    &__title {
+      text-align: center;
+      font-size: 4.4rem;
+    }
+
+    &__container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    &__divider {
+      display: none;
+    }
   }
 }

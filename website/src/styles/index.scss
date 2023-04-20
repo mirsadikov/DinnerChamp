@@ -28,3 +28,9 @@ a {
 body {
   color: $color-text;
 }
+
+@media only screen and (max-width: 1024px) {
+  html {
+    font-size: 56.25%;
+  }
+}

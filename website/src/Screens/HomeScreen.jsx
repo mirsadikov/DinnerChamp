@@ -10,7 +10,7 @@ export default function HomeScreen() {
             Make your business <span className="hero__title--highlight">online.</span>
           </h2>
           <p className="hero__description">
-            DinnerChamp is a platform that helps you to grow your business online. <br />
+            DinnerChamp is a platform that helps you to grow your business online. <br className='hero__divider' />
             Restaurants, cafes, and others are happy with us.
           </p>
           <div className="hero__buttons">

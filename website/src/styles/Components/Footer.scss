@@ -34,4 +34,16 @@
     color: #aaa;
     margin-bottom: 1rem;
   }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 12rem;
+
+    &__title {
+      font-size: 4rem;
+    }
+
+    &__text {
+      font-size: 1.2rem;
+    }
+  }
 }

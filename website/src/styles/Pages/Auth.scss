@@ -57,4 +57,40 @@
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    &__container {
+      flex-direction: column;
+      margin: 2rem 0 0;
+    }
+
+    &__column {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      margin-bottom: 3rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__title {
+      font-size: 4.2rem;
+    }
+
+    &__subtitle {
+      font-size: 1.6rem;
+    }
+
+    &__form {
+      padding: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__column {
+      padding: 0rem;
+    }
+  }
 }

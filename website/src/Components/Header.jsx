@@ -5,6 +5,7 @@ import { logout } from '../Actions/restaurantActions';
 
 export default function Header() {
   const [sticky, setSticky] = useState(false);
+  const [hamburger, setHamburger] = useState(false);
 
   const dispatch = useDispatch();
   const { info } = useSelector((state) => state.auth);
@@ -24,7 +25,7 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${hamburger ? 'header--open' : ''}`}>
       <nav className={`header__nav ${sticky ? 'header__nav--sticky' : ''}`}>
         <div className="container">
           <div className="header__logo">
@@ -33,7 +34,12 @@ export default function Header() {
             </h1>
             <span className="header__logo-badge mini-badge">Business</span>
           </div>
-          <ul className="header__links">
+          <div className="header__hamburger" onClick={() => setHamburger(!hamburger)}>
+            <div className="header__hamburger-line"></div>
+            <div className="header__hamburger-line"></div>
+            <div className="header__hamburger-line"></div>
+          </div>
+          <ul className="header__links" onClick={() => setHamburger(false)}>
             {info ? (
               <>
                 <li>
