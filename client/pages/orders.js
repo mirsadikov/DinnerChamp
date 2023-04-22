@@ -3,6 +3,7 @@ import dateFormat from 'dateformat';
 import axios from '@/config/axios.js';
 import { GlobalContext } from '@/globalContext';
 import { img_endpoint } from '@/config/variables.js';
+import Image from 'next/image';
 
 function Orders() {
   const { auth, setAuthModalOpen, setOrders, orders } = useContext(GlobalContext);
@@ -93,10 +94,17 @@ function Orders() {
                         .filter((item, index) => order.orderDishes.indexOf(item) === index)
                         .map((item) => (
                           <div className="orders__item__product" key={item.id}>
-                            <img
+                            {/* <img
                               className="orders__item__product__img"
                               src={`${img_endpoint}${item.dish.image}`}
                               alt={item.dish.name}
+                            /> */}
+                            <Image
+                              className="orders__item__product__img"
+                              src={`${img_endpoint}${item.dish.image}`}
+                              alt={item.dish.name}
+                              width={30}
+                              height={30}
                             />
                           </div>
                         ))}

@@ -29,7 +29,7 @@
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
   }
 
@@ -90,6 +90,13 @@
         border-radius: 1rem;
         border: 0.5px solid #ccc;
       }
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__list {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

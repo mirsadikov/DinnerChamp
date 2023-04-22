@@ -17,3 +17,21 @@
   --max-width: 120rem;
   --gutter: 3rem;
 }
+
+@media screen and (max-width: 768px) {
+  :root {
+    --font-size-h1: 3.2rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  :root {
+    --gutter: 1rem;
+  }
+}

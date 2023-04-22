@@ -1,6 +1,4 @@
-import { img_endpoint } from '@/config/variables';
 import axios from '../config/axios';
-import defaultImage from '@/images/default-img.png';
 import RestaurantSlider from '@/components/RestaurantSlider';
 import { GlobalContext } from '@/globalContext';
 import { useContext } from 'react';
@@ -51,10 +49,7 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        restaurants: data.map((restaurant) => ({
-          ...restaurant,
-          img: restaurant.img ? `${img_endpoint}/${restaurant.img}` : defaultImage.src,
-        })),
+        restaurants: data
       },
     };
   } catch (error) {

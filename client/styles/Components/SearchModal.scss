@@ -131,4 +131,19 @@
       text-overflow: ellipsis;
     }
   }
+
+  @media screen and (max-width: 550px) {
+    &__container {
+      width: 95%;
+    }
+    
+    &__card {
+      gap: 1.5rem;
+      height: 12rem;
+    }
+
+    &__card-info {
+      padding-right: 1rem;
+    }
+  }
 }

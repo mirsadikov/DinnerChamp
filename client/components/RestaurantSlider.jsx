@@ -1,3 +1,5 @@
+import { img_endpoint } from '@/config/variables';
+import defaultImage from '@/images/default-img.png';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
@@ -6,6 +8,7 @@ import Link from 'next/link';
 import PlaceIcon from '@mui/icons-material/Place';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Image from 'next/image';
 
 export default function RestaurantSlider({ restaurants }) {
   const [slidesPerView, setSlidesPerView] = useState(2);
@@ -15,18 +18,18 @@ export default function RestaurantSlider({ restaurants }) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 450) {
+      if (window.innerWidth < 551) {
         setSlidesPerView(2);
-        setSpaceBetween(20);
-      } else if (window.innerWidth < 768) {
+        setSpaceBetween(5);
+      } else if (window.innerWidth < 769) {
         setSlidesPerView(3);
-        setSpaceBetween(20);
-      } else if (window.innerWidth < 1024) {
+        setSpaceBetween(15);
+      } else if (window.innerWidth < 1025) {
         setSlidesPerView(4);
-        setSpaceBetween(20);
+        setSpaceBetween(10);
       } else {
         setSlidesPerView(5);
-        setSpaceBetween(20);
+        setSpaceBetween(10);
       }
     };
 
@@ -63,16 +66,22 @@ export default function RestaurantSlider({ restaurants }) {
           {...swiperConfig}
           slidesPerView={slidesPerView}
           spaceBetween={spaceBetween}
+          autoHeight={true}
         >
           {restaurants.map((restaurant) => (
             <SwiperSlide key={restaurant.id}>
               <Link className="restaurant-card" href={`/r/${restaurant.id}`}>
                 <div className="restaurant-card__img">
-                  <img src={restaurant.img} alt={restaurant.name} />
+                  <Image
+                    src={restaurant.img ? `${img_endpoint}/${restaurant.img}` : defaultImage.src}
+                    alt={restaurant.name}
+                    width={200}
+                    height={180}
+                  />
                 </div>
                 <div className="restaurant-card__info">
                   <h3 className="restaurant-card__name">{restaurant.name}</h3>
-                  {restaurant.running && (
+                  {restaurant.city && (
                     <p className="restaurant-card__city">
                       <PlaceIcon />
                       <span>{restaurant.city}</span>

@@ -102,4 +102,12 @@
     font-weight: 500;
     color: var(--color-primary);
   }
+
+  @media screen and (max-width: 550px) {
+    padding: 0.5rem;
+    
+    &__details {
+      padding: 0 0.5rem;
+    }
+  }
 }

@@ -2,11 +2,22 @@ import { GlobalContext } from '@/globalContext';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Tooltip } from '@mui/material';
+import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 
 export default function DishCard({ dish }) {
   const { setCartIsOpen, cart, setCart } = useContext(GlobalContext);
   const [quantity, setQuantity] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const initialQuantity = cart?.find((item) => item.id === dish.id)?.quantity || 0;
@@ -14,7 +25,9 @@ export default function DishCard({ dish }) {
   }, [cart, dish]);
 
   const increaseQuantity = () => {
-    setCartIsOpen(true);
+    if (windowWidth > 1024) {
+      setCartIsOpen(true);
+    }
     setQuantity(quantity + 1);
 
     // add dish to cart
@@ -32,7 +45,9 @@ export default function DishCard({ dish }) {
   };
 
   const reduceQuantity = () => {
-    setCartIsOpen(true);
+    if (windowWidth >= 1024) {
+      setCartIsOpen(true);
+    }
     if (quantity > 0) {
       setQuantity(quantity - 1);
 
@@ -64,7 +79,8 @@ export default function DishCard({ dish }) {
 
   return (
     <div className="dish-card" key={dish.id}>
-      <img src={dish.img} alt={dish.name} className="dish-card__img" />
+      {/* <img src={dish.img} alt={dish.name} className="dish-card__img" /> */}
+      <Image src={dish.img} alt={dish.name} className="dish-card__img" width={150} height={100} />
       <div className="dish-card__details">
         <h3 className="dish-card__title">{dish.name}</h3>
         <p className="dish-card__price">

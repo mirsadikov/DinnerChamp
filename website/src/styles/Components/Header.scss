@@ -67,7 +67,7 @@
     display: none;
     cursor: pointer;
     height: 3rem;
-    width: 3.4rem;
+    width: 3.5rem;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -91,10 +91,6 @@
   }
 
   @media screen and (max-width: 768px) {
-    &__nav {
-      height: 5rem;
-    }
-
     .header__title {
       font-size: 3.2rem;
     }
@@ -102,7 +98,7 @@
 
   @media screen and (max-width: 550px) {
     &__nav .container {
-      padding: 0 2rem;
+      padding: 0 1rem;
       position: relative;
     }
 
@@ -116,7 +112,7 @@
 
     &__links {
       position: absolute;
-      top: 5rem;
+      top: 6rem;
       left: 0;
       width: 100%;
       display: flex;

@@ -8,6 +8,7 @@ import { LoadingButton } from '@mui/lab';
 import axios from '@/config/axios.js';
 import { img_endpoint } from '@/config/variables.js';
 import defaultImage from '@/images/default-img.png';
+import Image from 'next/image';
 
 export default function Checkout({ restaurant }) {
   const [error, setError] = useState(null);
@@ -88,7 +89,8 @@ export default function Checkout({ restaurant }) {
                 {currentCart.map((item) => (
                   <div className="cart__item" key={item.id}>
                     <div className="cart__item__image">
-                      <img src={item.img} alt={item.name} />
+                      {/* <img src={item.img} alt={item.name} /> */}
+                      <Image height={70} width={80} src={item.img} alt={item.name} />
                     </div>
                     <div className="cart__item__details">
                       <h4 className="cart__item__name">{item.name}</h4>

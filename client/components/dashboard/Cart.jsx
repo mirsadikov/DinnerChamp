@@ -5,19 +5,24 @@ import { useContext, useEffect, useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useRouter } from 'next/router';
 import { Button, IconButton } from '@mui/material';
+import Image from 'next/image';
 
 export default function Cart({ restaurant }) {
   const [currentCart, setCurrentCart] = useState([]);
   const { cartIsOpen, setCartIsOpen, cart, reduceItem } = useContext(GlobalContext);
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect(() => { 
     const currentCart = cart?.filter((item) => item.restaurantId === restaurant.id);
     setCurrentCart(currentCart || []);
-  }, [cart, restaurant]);
+
+    if (currentCart?.length === 0) {
+      setCartIsOpen(false);
+    }
+  }, [cart, restaurant, setCartIsOpen]);
 
   return (
-    <Slide direction="left" in={cartIsOpen} mountOnEnter unmountOnExit>
+    <Slide direction="left" in={cartIsOpen} >
       <div className="cart">
         <div className="cart__container">
           <div className="cart__header">
@@ -35,7 +40,7 @@ export default function Cart({ restaurant }) {
               currentCart.map((item) => (
                 <div className="cart__item" key={item.id}>
                   <div className="cart__item__image">
-                    <img src={item.img} alt={item.name} />
+                    <Image src={item.img} alt={item.name} height={50} width={50} />
                   </div>
                   <div className="cart__item__details">
                     <h4 className="cart__item__name">

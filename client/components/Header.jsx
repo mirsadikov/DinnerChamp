@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
 import { Inter, Oleo_Script_Swash_Caps } from '@next/font/google';
 import { GlobalContext } from '@/globalContext';
 import SearchModal from './SearchModal';
@@ -20,6 +21,7 @@ export default function Header() {
   const { setSearchModalOpen, setAuthModalOpen, auth, setAuth } = useContext(GlobalContext);
   const [sticky, setSticky] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [hamburger, setHamburger] = useState(false);
   const open = Boolean(anchorEl);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${hamburger ? 'header--open' : ''}`}>
       <nav className={`header__nav ${sticky ? 'header__nav--sticky' : ''}`}>
         <div className="container">
           <div className="header__logo">
@@ -57,7 +59,7 @@ export default function Header() {
             <span className="header__logo-badge mini-badge">Orders</span>
           </div>
           <ul className="header__links">
-            <li>
+            <li className="header__search">
               <button
                 className="header__search-btn button button--small"
                 onClick={() => setSearchModalOpen(true)}
@@ -65,37 +67,51 @@ export default function Header() {
                 Search
               </button>
             </li>
-            <li>
-              <Link href="/orders">Orders</Link>
-            </li>
-            <li>
-              <button
-                className={`header__profile-btn button button--small ${
-                  auth?.token ? 'button--secondary' : ''
-                }`}
-                onClick={handleProfileClick}
+            <button
+              className="header__search-btn header__search--mobile button button--small"
+              onClick={() => setSearchModalOpen(true)}
+            >
+              <SearchIcon />
+            </button>
+            <div className="header__separate-menu" onClick={() => setHamburger(false)}>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/orders">Orders</Link>
+              </li>
+            </div>
+            <button
+              className={`header__profile-btn button button--small ${
+                auth?.token ? 'button--secondary' : ''
+              }`}
+              onClick={handleProfileClick}
+            >
+              <PersonIcon />
+            </button>
+            {auth?.token && (
+              <Popper
+                className={`${inter.className} header__profile-popup`}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+                anchorEl={anchorEl}
+                placement="bottom-end"
               >
-                <PersonIcon />
-              </button>
-              {auth?.token && (
-                <Popper
-                  className={`${inter.className} header__profile-popup`}
-                  open={open}
-                  onClose={() => setAnchorEl(null)}
-                  anchorEl={anchorEl}
-                  placement="bottom-end"
-                >
-                  <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
-                    <div className="header__profile-popup-box">
-                      <h3>+{auth.number}</h3>
-                      <button onClick={logout} className="button button--small button--secondary">
-                        Logout
-                      </button>
-                    </div>
-                  </ClickAwayListener>
-                </Popper>
-              )}
-            </li>
+                <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
+                  <div className="header__profile-popup-box">
+                    <h3>+{auth.number}</h3>
+                    <button onClick={logout} className="button button--small button--secondary">
+                      Logout
+                    </button>
+                  </div>
+                </ClickAwayListener>
+              </Popper>
+            )}
+            <div className="header__hamburger" onClick={() => setHamburger(!hamburger)}>
+              <div className="header__hamburger-line"></div>
+              <div className="header__hamburger-line"></div>
+              <div className="header__hamburger-line"></div>
+            </div>
           </ul>
         </div>
       </nav>

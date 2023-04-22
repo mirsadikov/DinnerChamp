@@ -1,7 +1,9 @@
 @import './variables.scss', './utils.scss';
 @import './Components/Mini.scss', './Components/Header.scss', './Components/RestaurantCard.scss',
-  './Components/SearchModal.scss', './Components/DishCard.scss', './Components/Cart.scss', './Components/AuthModal.scss', './Components/Footer.scss';
-@import './Pages/Home.scss', './Pages/Restaurant.scss', './Pages/Checkout.scss', './Pages/Orders.scss';
+  './Components/SearchModal.scss', './Components/DishCard.scss', './Components/Cart.scss',
+  './Components/AuthModal.scss', './Components/Footer.scss';
+@import './Pages/Home.scss', './Pages/Restaurant.scss', './Pages/Checkout.scss',
+  './Pages/Orders.scss';
 
 * {
   margin: 0px;
@@ -29,4 +31,10 @@ body {
   margin: 0 auto;
   max-width: calc(var(--max-width) + 2 * var(--gutter));
   padding: 0 var(--gutter);
+}
+
+@media only screen and (max-width: 1024px) {
+  html {
+    font-size: 56.25%;
+  }
 }

@@ -2,11 +2,12 @@ import { img_endpoint } from '@/config/variables';
 import PlaceIcon from '@mui/icons-material/Place';
 import PhoneIcon from '@mui/icons-material/Phone';
 import defaultImage from '@/images/default-img.png';
-import { Alert, Skeleton } from '@mui/material';
+import { Alert } from '@mui/material';
 import { useContext, useState } from 'react';
 import { GlobalContext } from '@/globalContext';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 export default function RestaurantProfile({ restaurantData }) {
   const [cartCount, setCartCount] = useState(0);
@@ -35,7 +36,7 @@ export default function RestaurantProfile({ restaurantData }) {
   return (
     <div className="restaurant-info">
       <div className="restaurant-info__img-container">
-        <img src={img} alt={name} className="restaurant-info__img" />
+        <Image src={img} alt={name} className="restaurant-info__img" height={230} width={230} />
         <button onClick={toggleCart} className="restaurant-info__cart-btn">
           <ShoppingCartIcon />
           {cartCount > 0 && <div>{cartCount}</div>}

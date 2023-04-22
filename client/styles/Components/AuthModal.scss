@@ -65,7 +65,7 @@
     transition: all 0.2s;
 
     &:active {
-      transform: scale(0.95)
+      transform: scale(0.95);
     }
 
     svg {
@@ -78,7 +78,20 @@
 
     &--inline {
       position: absolute;
-    right: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    &__container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      width: 95%;
+      margin-bottom: 5rem;
+    }
+
+    &__input-container {
+      width: 100%;
     }
   }
 }

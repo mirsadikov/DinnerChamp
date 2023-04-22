@@ -9,6 +9,7 @@ import defaultImage from '@/images/default-img.png';
 import { img_endpoint } from '@/config/variables';
 import { Inter } from '@next/font/google';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -99,10 +100,12 @@ export default function SearchModal() {
                     className="search-modal__card"
                     onClick={handleLinkClick}
                   >
-                    <img
+                    <Image
                       className="search-modal__card-img"
                       src={restaurant.img}
                       alt={restaurant.name}
+                      width={140}
+                      height={140}
                     />
                     <div className="search-modal__card-info">
                       <h3 className="search-modal__card-title">
