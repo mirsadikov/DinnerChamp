@@ -4,6 +4,7 @@ import axios from '@/config/axios.js';
 import { GlobalContext } from '@/globalContext';
 import { img_endpoint } from '@/config/variables.js';
 import Image from 'next/image';
+import defaultImage from '@/images/default-img.png';
 
 function Orders() {
   const { auth, setAuthModalOpen, setOrders, orders } = useContext(GlobalContext);
@@ -101,7 +102,7 @@ function Orders() {
                             /> */}
                             <Image
                               className="orders__item__product__img"
-                              src={`${img_endpoint}${item.dish.image}`}
+                              src={item.dish.image ? `${img_endpoint}${item.dish.image}` : defaultImage.src}
                               alt={item.dish.name}
                               width={30}
                               height={30}

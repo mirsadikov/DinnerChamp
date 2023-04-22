@@ -31,6 +31,7 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
   }, [selectedOrder, isOpen]);
 
   const handleConfirm = () => {
+    if (!selectedOrder) return;
     if (status !== selectedOrder.status)
       socketServcies.emit('order:update', selectedOrder.id, status);
   };

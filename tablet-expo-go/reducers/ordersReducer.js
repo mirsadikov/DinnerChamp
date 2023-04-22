@@ -1,4 +1,4 @@
-import { SET_ORDERS, UPDATE_ORDER, SET_SELECTED_ORDER } from '../constants';
+import { SET_ORDERS, UPDATE_ORDER, SET_SELECTED_ORDER, RESTAURANT_LOGOUT } from '../constants';
 
 export const ordersReducer = (state = {}, action) => {
   switch (action.type) {
@@ -26,6 +26,8 @@ export const ordersReducer = (state = {}, action) => {
         ...state,
         selectedOrder: action.payload ? action.payload : state.orders[0],
       };
+    case RESTAURANT_LOGOUT:
+      return {};
     default:
       return state;
   }
