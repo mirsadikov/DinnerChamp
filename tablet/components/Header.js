@@ -21,7 +21,7 @@ const Header = ({ connectionStatus }) => {
   };
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, connectionStatus != 'Connected' && styles.headerDisconnected]}>
       <View style={styles.headerContainer}>
         {connectionStatus == 'Connected' ? (
           <TouchableOpacity style={styles.button} onPress={refresh} underlayColor="#fff">
@@ -48,8 +48,7 @@ const Header = ({ connectionStatus }) => {
           onPress={() => {
             dispatch({ type: EMPLOYEE_LOGOUT });
           }}
-          underlayColor="#fff"
-        >
+          underlayColor="#fff">
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
 
@@ -78,6 +77,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     zIndex: 2,
+  },
+  headerDisconnected: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#000',
   },
   headerContainer: {
     height: 50,
