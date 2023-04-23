@@ -58,10 +58,21 @@ class IO {
         })
       );
 
+      // listen to events
+      socket.on('refresh', async () => {
+        socket.emit(
+          'restaurant:read',
+          await Restaurant.findByPk(socket.restaurantId, {
+            attributes: ['running'],
+          })
+        );
+        socket.emit('order:read', await getOrders(socket.restaurantId, 24));
+      });
       socket.on('order:update', updateOrder);
-      socket.on('restaurant:switch', (newStatus) =>
-        switchRestaurant(socket.restaurantId, newStatus)
-      );
+      socket.on('restaurant:switch', async (newStatus) => {
+        const restaurant = await switchRestaurant(socket.restaurantId, newStatus);
+        socket.emit('restaurant:read', restaurant);
+      });
       socket.on('disconnect', () => console.log('Socket disconnected'.bgRed));
     });
 

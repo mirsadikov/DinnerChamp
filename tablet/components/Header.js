@@ -1,34 +1,36 @@
 import React from 'react';
-import { StyleSheet, Switch, Button, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Switch, View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { EMPLOYEE_LOGOUT, RESTAURANT_SET_STATUS, SET_SELECTED_ORDER } from '../constants.js';
+import { EMPLOYEE_LOGOUT, RESTAURANT_SET_STATUS } from '../constants.js';
 import socketServcies from '../config/socket';
 
-const Header = ({ menuIsOpen, setMenuIsOpen }) => {
+const Header = ({ connectionStatus }) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.restaurant);
 
-  const handleToggle = () => {
-    if (!menuIsOpen) dispatch({ type: SET_SELECTED_ORDER });
-    setMenuIsOpen((v) => !v);
+  const handleRestaurantToggle = () => {
+    // dispatch({ type: RESTAURANT_SET_STATUS, payload: !status });
+    socketServcies.emit('restaurant:switch', { isOnline: !status });
   };
 
-  const handleRestaurantToggle = () => {
-    dispatch({ type: RESTAURANT_SET_STATUS, payload: !status });
-    socketServcies.emit('restaurant:switch', { isOnline: !status });
+  const refresh = () => {
+    if (connectionStatus == 'Connected') {
+      // refresh orders and status
+      socketServcies.emit('refresh');
+    }
   };
 
   return (
     <View style={styles.header}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleToggle}
-          underlayColor="#fff"
-        >
-          <Text style={styles.buttonText}>Options</Text>
-        </TouchableOpacity>
-        {/* <Button title="Options" onPress={handleToggle} color="#fff" /> */}
+        {connectionStatus == 'Connected' ? (
+          <TouchableOpacity style={styles.button} onPress={refresh} underlayColor="#fff">
+            <Text style={styles.buttonText}>Refresh</Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={styles.text}>{connectionStatus}</Text>
+        )}
+
         <View style={styles.switch}>
           <Text style={styles.text}>Offline</Text>
           <Switch

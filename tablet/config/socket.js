@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { api_url } from './variables';
 
 class WSService {
-  initializeSocket = async (token) => {
+  initializeSocket = async (token, cb) => {
     try {
       this.socket = io(api_url, {
         auth: {
@@ -12,14 +12,17 @@ class WSService {
 
       this.socket.on('connect', () => {
         console.log('=== socket connected ===');
+        cb("Connected");
       });
 
       this.socket.on('disconnect', () => {
         console.log('=== socket disconnected ===');
+        cb("Disconnected");
       });
 
       this.socket.on('error', (data) => {
         console.log('=== socket error ===', data);
+        cb("Error");
       });
     } catch (error) {
       console.log('socket is not initialized', error);

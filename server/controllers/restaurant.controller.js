@@ -321,14 +321,16 @@ export async function switchRestaurant(restaurantId, newStatus) {
   try {
     const restaurant = await Restaurant.findOne({
       where: { id: restaurantId },
+      attrubutes: ['running'],
     });
 
     if (restaurant) {
       restaurant.running = newStatus.isOnline;
       await restaurant.save();
     }
+
+    return restaurant;
   } catch (err) {
     return io.emit('error', err);
   }
-
 }

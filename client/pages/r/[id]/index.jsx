@@ -4,18 +4,28 @@ import { img_endpoint } from '@/config/variables';
 import RestaurantProfile from '@/components/dashboard/RestaurantProfile';
 import Dishes from '@/components/dashboard/Dishes';
 import Cart from '@/components/dashboard/Cart';
-import { useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Alert } from '@mui/material';
+import { GlobalContext } from '@/globalContext';
 
 export default function R({ dishesData, restaurantData }) {
   const sidebarRef = useRef(null);
+  const { setCartIsOpen } = useContext(GlobalContext);
+
+  useEffect(() => {
+    return () => {
+      setCartIsOpen(false);
+    };
+  }, []);
 
   return (
     <div className="restaurant-page">
       <div className="container restaurant-page__container">
         <div className="dishes-list">
           {restaurantData.restaurant.running === false && (
-            <Alert className='restaurant-page__closed' severity="error">Restaurant is not operating right now!</Alert>
+            <Alert className="restaurant-page__closed" severity="error">
+              Restaurant is not operating right now!
+            </Alert>
           )}
           <Dishes dishesData={dishesData} />
         </div>
