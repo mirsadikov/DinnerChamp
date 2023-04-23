@@ -1,14 +1,15 @@
+import { useRef } from 'react';
+import { StyleSheet, FlatList } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { StyleSheet, FlatList } from 'react-native';
-import OrderCard from './OrderCard.js';
 import { useDispatch, useSelector } from 'react-redux';
+
+import OrderCard from './OrderCard.js';
 import { SET_SELECTED_ORDER } from '../constants.js';
-import { useRef } from 'react';
 
 export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   // styles
@@ -42,7 +43,7 @@ export default function Dashboard({ setMenuIsOpen, menuIsOpen }) {
   return (
     <Animated.View style={listStyle}>
       <FlatList
-        horizontal={true}
+        horizontal
         style={styles.cardList}
         data={orders}
         ref={listRef}

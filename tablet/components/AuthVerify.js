@@ -1,12 +1,13 @@
+import jwt_decode from 'jwt-decode';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import jwt_decode from 'jwt-decode';
+
 import { EMPLOYEE_LOGOUT } from '../constants.js';
 
 const parseJwt = (token) => {
   try {
     return jwt_decode(token);
-  } catch (e) {
+  } catch {
     return null;
   }
 };
@@ -24,8 +25,6 @@ const AuthVerify = () => {
       }
     }
   }, [dispatch, token]);
-
-  return;
 };
 
 export default AuthVerify;

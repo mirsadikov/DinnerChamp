@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { EMPLOYEE_LOGOUT } from '../constants';
-import { api_url } from './variables';
+
 import { store } from './store';
+import { api_url } from './variables';
+import { EMPLOYEE_LOGOUT } from '../constants';
 
 const instance = axios.create({
   baseURL: api_url,

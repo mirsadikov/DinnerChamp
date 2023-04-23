@@ -1,6 +1,7 @@
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useEffect, useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { employeeLogin } from '../actions/login';
 import { RESET_ERRORS, RESTAURANT_LOGOUT } from '../constants';
 
@@ -21,7 +22,7 @@ export default function EmployeeLoginScreen() {
     return () => {
       dispatch({ type: RESET_ERRORS });
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -47,7 +48,7 @@ export default function EmployeeLoginScreen() {
             placeholder="Password"
             onChangeText={(text) => setPassword(text)}
             value={password}
-            secureTextEntry={true}
+            secureTextEntry
           />
         </View>
 

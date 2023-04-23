@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import socketServcies from '../config/socket';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+
+import socketServcies from '../config/socket';
 
 const ControlMenu = ({ setIsOpen, isOpen }) => {
   // styles
@@ -53,26 +54,22 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
               <View style={styles.statusButtons}>
                 <TouchableWithoutFeedback
                   style={styles.statusButtonPress}
-                  onPress={() => setStatus('pending')}
-                >
+                  onPress={() => setStatus('pending')}>
                   <View style={[styles.statusButton, status === 'pending' && styles.statusPending]}>
                     <Text style={styles.statusButtonText}>Pending</Text>
                   </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
                   style={styles.statusButtonPress}
-                  onPress={() => setStatus('preparing')}
-                >
+                  onPress={() => setStatus('preparing')}>
                   <View
-                    style={[styles.statusButton, status === 'preparing' && styles.statusPreparing]}
-                  >
+                    style={[styles.statusButton, status === 'preparing' && styles.statusPreparing]}>
                     <Text style={styles.statusButtonText}>Preparing</Text>
                   </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
                   style={styles.statusButtonPress}
-                  onPress={() => setStatus('ready')}
-                >
+                  onPress={() => setStatus('ready')}>
                   <View style={[styles.statusButton, status === 'ready' && styles.statusReady]}>
                     <Text style={styles.statusButtonText}>Ready</Text>
                   </View>
@@ -85,8 +82,7 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={closeMenu}
-            style={styles.bottomButtonPress}
-          >
+            style={styles.bottomButtonPress}>
             <Text style={styles.bottomButtonText}>Close</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} onPress={() => {}} style={styles.bottomButtonPress}>
@@ -95,8 +91,7 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={handleConfirm}
-            style={styles.bottomButtonPress}
-          >
+            style={styles.bottomButtonPress}>
             <Text style={styles.bottomButtonText}>Confirm</Text>
           </TouchableOpacity>
         </View>

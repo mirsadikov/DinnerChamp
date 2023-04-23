@@ -1,6 +1,5 @@
-import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import moment from 'moment';
-import { View, Text } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View, Text } from 'react-native';
 
 export default function OrderCard({ order, onPress, isSelected }) {
   const cardStatusStyle =
@@ -15,8 +14,7 @@ export default function OrderCard({ order, onPress, isSelected }) {
       <View
         onTouchStart={(e) => {
           e.stopPropagation();
-        }}
-      >
+        }}>
         <TouchableWithoutFeedback onPress={onPress}>
           <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
             <View style={styles.row}>

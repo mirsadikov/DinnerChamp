@@ -1,14 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { useEffect, useState } from 'react';
-import * as ScreenOrientation from 'expo-screen-orientation';
-import { useDispatch, useSelector } from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
-import { RESTAURANT_SET_STATUS, SET_ORDERS, UPDATE_ORDER } from '../constants.js';
-import socketServcies from '../config/socket.js';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
 import ControlMenu from '../components/ControlMenu.js';
 import Dashboard from '../components/Dashboard.js';
 import Header from '../components/Header.js';
+import socketServcies from '../config/socket.js';
+import { RESTAURANT_SET_STATUS, SET_ORDERS, UPDATE_ORDER } from '../constants.js';
 
 export default function HomeScreen() {
   ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -47,7 +48,7 @@ export default function HomeScreen() {
       unsubscribe();
       socketServcies.disconnect();
     };
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <View style={styles.container}>

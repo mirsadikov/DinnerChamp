@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+
 import { api_url } from './variables';
 
 class WSService {
@@ -12,17 +13,17 @@ class WSService {
 
       this.socket.on('connect', () => {
         console.log('=== socket connected ===');
-        cb("Connected");
+        cb('Connected');
       });
 
       this.socket.on('disconnect', () => {
         console.log('=== socket disconnected ===');
-        cb("Disconnected");
+        cb('Disconnected');
       });
 
       this.socket.on('error', (data) => {
         console.log('=== socket error ===', data);
-        cb("Error");
+        cb('Error');
       });
     } catch (error) {
       console.log('socket is not initialized', error);

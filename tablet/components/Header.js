@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Switch, View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { EMPLOYEE_LOGOUT, RESTAURANT_SET_STATUS } from '../constants.js';
+
 import socketServcies from '../config/socket';
+import { EMPLOYEE_LOGOUT } from '../constants.js';
 
 const Header = ({ connectionStatus }) => {
   const dispatch = useDispatch();
@@ -14,16 +15,16 @@ const Header = ({ connectionStatus }) => {
   };
 
   const refresh = () => {
-    if (connectionStatus == 'Connected') {
+    if (connectionStatus === 'Connected') {
       // refresh orders and status
       socketServcies.emit('refresh');
     }
   };
 
   return (
-    <View style={[styles.header, connectionStatus != 'Connected' && styles.headerDisconnected]}>
+    <View style={[styles.header, connectionStatus !== 'Connected' && styles.headerDisconnected]}>
       <View style={styles.headerContainer}>
-        {connectionStatus == 'Connected' ? (
+        {connectionStatus === 'Connected' ? (
           <TouchableOpacity style={styles.button} onPress={refresh} underlayColor="#fff">
             <Text style={styles.buttonText}>Refresh</Text>
           </TouchableOpacity>

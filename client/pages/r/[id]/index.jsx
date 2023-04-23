@@ -16,7 +16,7 @@ export default function R({ dishesData, restaurantData }) {
     return () => {
       setCartIsOpen(false);
     };
-  }, []);
+  }, [setCartIsOpen]);
 
   return (
     <div className="restaurant-page">

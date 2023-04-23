@@ -3,12 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './config/store';
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
-import { EMP_LOGIN_SCREEN, HOME_SCREEN, LOGIN_SCREEN } from './constants';
+
 import AuthVerify from './components/AuthVerify';
+import { persistor, store } from './config/store';
+import { EMP_LOGIN_SCREEN, HOME_SCREEN, LOGIN_SCREEN } from './constants';
 import EmployeeLoginScreen from './screens/EmployeeLoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 

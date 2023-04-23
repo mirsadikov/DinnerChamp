@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { login } from '../actions/login';
 
 export default function LoginScreen() {
@@ -34,7 +35,7 @@ export default function LoginScreen() {
             placeholder="Password"
             onChangeText={(text) => setPassword(text)}
             value={password}
-            secureTextEntry={true}
+            secureTextEntry
           />
         </View>
 
