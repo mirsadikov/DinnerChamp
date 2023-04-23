@@ -4,16 +4,22 @@ const apiURL = process.env.API_URL;
 
 export default {
   expo: {
-    name: "tablet-expo-go",
-    slug: "tablet-expo-go",
-    version: "1.0.0",
+    name: 'DinnerChamp Tablet',
+    slug: 'dinnerchamp-tablet',
+    orientation: 'landscape',
+    icon: './assets/icon.png',
+    version: '1.0.0',
     android: {
-      package: "com.zeyd.dinnerchamptablet"
+      package: 'com.zeyd.dinnerchamptablet',
+      adaptiveIcon: {
+        foregroundImage: './assets/adaptive-icon.png',
+        backgroundColor: '#FFFFFF',
+      },
     },
     extra: {
       apiUrl: apiURL,
       eas: {
-        projectId: 'fb2cf6b4-056f-41c5-9566-82451d69ab23',
+        projectId: '3ddd682b-80cc-4cbb-a441-fa5dc7810996',
       },
     },
   },

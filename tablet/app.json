@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "tablet-expo-go",
-    "slug": "tablet-expo-go",
+    "name": "DinnerChamp Tablet",
+    "slug": "dinnerchamp-tablet",
     "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
@@ -38,7 +38,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "fb2cf6b4-056f-41c5-9566-82451d69ab23"
+        "projectId": "3ddd682b-80cc-4cbb-a441-fa5dc7810996"
       }
     }
   }
