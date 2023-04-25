@@ -8,10 +8,10 @@ import OrdererModel from '../models/Orderer.js';
 import EmployeeModel from '../models/Employee.js';
 
 const dbConfig = {
-  HOST: 'localhost',
+  HOST: process.env.POSTGRESQL_HOST,
   USER: process.env.POSTGRESQL_USER,
   PASSWORD: process.env.POSTGRESQL_PASSWORD,
-  DB: process.env.POSGRESQL_DB,
+  DB: process.env.POSTGRESQL_DB,
   dialect: 'postgres',
   pool: {
     max: 5,

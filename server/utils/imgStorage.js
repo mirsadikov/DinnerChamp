@@ -2,7 +2,6 @@ import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import aws from 'aws-sdk';
 import multerS3 from 'multer-s3';
-import { v2 as cloudinary } from 'cloudinary';
 
 // store to DigitalOcean Spaces S3
 const s3 = new aws.S3({
@@ -35,8 +34,7 @@ export const uploadS3 = async (image) => {
     if (!image.name.match(/\.(jpg|jpeg|png|webp)$/i))
       return { error: 'Only image files are allowed!' };
 
-    if (image.size > 2 * 1024 * 1024)
-      return { error: 'Image size must be less than 2MB!' };
+    if (image.size > 2 * 1024 * 1024) return { error: 'Image size must be less than 2MB!' };
 
     const params = {
       Bucket: process.env.DIGITAL_OCEAN_SPACES_BUCKET_NAME,
@@ -60,35 +58,6 @@ export const removeS3 = async (key) => {
       Key: key,
     };
     await s3.deleteObject(params).promise();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// UPLOAD TO CLOUDINARY
-
-cloudinary.config({
-  URL: process.env.CLOUDINARY_URL,
-});
-
-export const uploadCloudinary = async (image, folder) => {
-  try {
-    const img = `data:${image.mimetype};base64,${image.data.toString(
-      'base64',
-    )}`;
-    const { public_id, secure_url } = await cloudinary.uploader.upload(img, {
-      folder: folder,
-    });
-
-    return { public_id, secure_url };
-  } catch (error) {
-    return { error };
-  }
-};
-
-export const removeCloudinary = async (asset_id) => {
-  try {
-    await cloudinary.uploader.destroy(asset_id);
   } catch (error) {
     console.error(error);
   }
