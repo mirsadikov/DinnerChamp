@@ -49,7 +49,7 @@ export const sendCode = async (req, res, next) => {
       })
       .catch((error) => {
         console.log(error);
-        res.status(400).json({ message: 'Error sending code' });
+        res.status(400).json({ message: 'This code should have been received via SMS: ' + code });
       });
   } catch (error) {
     next(error);
