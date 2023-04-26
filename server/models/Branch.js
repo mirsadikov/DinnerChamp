@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 export default function (sequelize, DataTypes) {
   const model = sequelize.define(
-    'restaurant',
+    'branch',
     {
       name: {
         type: DataTypes.STRING,
@@ -13,17 +13,26 @@ export default function (sequelize, DataTypes) {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: DataTypes.STRING(15),
+        allowNull: false,
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      img: {
+      address: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      orderNumber: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
       },
       running: {
         type: DataTypes.BOOLEAN,
@@ -32,6 +41,7 @@ export default function (sequelize, DataTypes) {
       }
     },
     {
+      timestamps: false,
       hooks: {
         beforeSave: async (restaurant) => {
           if (restaurant.changed('password')) {

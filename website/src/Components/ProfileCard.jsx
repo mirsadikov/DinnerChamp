@@ -43,17 +43,6 @@ export default function ProfileCard({ info }) {
                 <b>Email: </b>
                 {details.email}
               </p>
-              {details.phone && (
-                <p>
-                  <b>Phone: </b>+{details.phone}
-                </p>
-              )}
-              {details.city && (
-                <p>
-                  <b>City: </b>
-                  {details.city}
-                </p>
-              )}
             </div>
 
             <Link to="/dashboard/profileform" state={{ details }}>

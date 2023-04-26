@@ -15,6 +15,7 @@ import categoryRoute from './routes/category.route.js';
 import orderRoute from './routes/order.route.js';
 import clientRoute from './routes/client.route.js';
 import employeeRoute from './routes/employee.route.js';
+import branchRoute from './routes/branch.route.js';
 
 // config
 const app = express();
@@ -38,6 +39,7 @@ app.use('/api/category', categoryRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/client', clientRoute);
 app.use('/api/employee', employeeRoute);
+app.use('/api/branch', branchRoute);
 
 // error handler
 app.use(notFound);

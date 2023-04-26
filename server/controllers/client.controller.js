@@ -110,7 +110,7 @@ export const getOrders = async (req, res, next) => {
             {
               model: Restaurant,
               as: 'restaurant',
-              attributes: ['name', 'img', 'address', 'phone'],
+              attributes: ['name', 'img'],
             },
             {
               model: OrderDish,

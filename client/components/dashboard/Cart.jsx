@@ -9,10 +9,11 @@ import Image from 'next/image';
 
 export default function Cart({ restaurant }) {
   const [currentCart, setCurrentCart] = useState([]);
-  const { cartIsOpen, setCartIsOpen, cart, reduceItem } = useContext(GlobalContext);
+  const { cartIsOpen, setCartIsOpen, cart, reduceItem, openBranches, selectedBranch } =
+    useContext(GlobalContext);
   const router = useRouter();
 
-  useEffect(() => { 
+  useEffect(() => {
     const currentCart = cart?.filter((item) => item.restaurantId === restaurant.id);
     setCurrentCart(currentCart || []);
 
@@ -22,7 +23,7 @@ export default function Cart({ restaurant }) {
   }, [cart, restaurant, setCartIsOpen]);
 
   return (
-    <Slide direction="left" in={cartIsOpen} >
+    <Slide direction="left" in={cartIsOpen}>
       <div className="cart">
         <div className="cart__container">
           <div className="cart__header">
@@ -63,19 +64,26 @@ export default function Cart({ restaurant }) {
             )}
           </div>
           <div className="cart__actions">
-            <h3 className="cart__total">
-              {currentCart.reduce((acc, item) => {
-                return acc + item.price * item.quantity;
-              }, 0)}{' '}
-              so&apos;m
-            </h3>
-            <Button
-              className="cart__checkout-btn button button--small"
-              disabled={currentCart.length === 0 || !restaurant.running}
-              onClick={() => router.push(`/r/${restaurant.id}/checkout`)}
-            >
-              Checkout
-            </Button>
+            <h4>{selectedBranch?.name ? selectedBranch.name : 'Select branch'}</h4>
+            <div className="cart__actions-bottom">
+              <h3 className="cart__total">
+                {currentCart.reduce((acc, item) => {
+                  return acc + item.price * item.quantity;
+                }, 0)}{' '}
+                so&apos;m
+              </h3>
+              <Button
+                className="cart__checkout-btn button button--small"
+                disabled={
+                  currentCart.length === 0 ||
+                  openBranches.branches.length === 0 ||
+                  selectedBranch === null
+                }
+                onClick={() => router.push(`/r/${restaurant.id}/checkout`)}
+              >
+                Checkout
+              </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -18,9 +18,15 @@ export default function Checkout({ restaurant }) {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [submitTriggered, setSubmitTriggered] = useState(false);
-  const { cart, setCart, increaseItem, reduceItem, auth, setAuthModalOpen } =
+  const { cart, setCart, increaseItem, reduceItem, auth, setAuthModalOpen, selectedBranch } =
     useContext(GlobalContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!selectedBranch) {
+      router.push(`/r/${restaurant.id}`);
+    }
+  });
 
   useEffect(() => {
     const currentCart = cart?.filter((item) => item.restaurantId === parseInt(restaurant.id));
@@ -51,6 +57,7 @@ export default function Checkout({ restaurant }) {
         restaurantId: restaurant.id,
         ordererName: name,
         comment,
+        branchId: selectedBranch.id,
         orderDishes: currentCart.map((item) => ({
           id: item.id,
           quantity: item.quantity,
@@ -125,8 +132,8 @@ export default function Checkout({ restaurant }) {
           </div>
           <div className="checkout-page__sidebar sidebar">
             <h3 className="sidebar__header">
-              <p>Total:</p>
-              <p>{restaurant.name}</p>
+              <p>From:</p>
+              <p>{selectedBranch?.name}</p>
             </h3>
             {error && <Alert severity="error">{error}</Alert>}
             <form className="sidebar__form" onSubmit={handeSubmit}>

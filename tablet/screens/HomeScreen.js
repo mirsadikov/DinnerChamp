@@ -35,7 +35,7 @@ export default function HomeScreen() {
           dispatch({ type: UPDATE_ORDER, payload: updatedOrder });
         });
 
-        socketServcies.on('restaurant:read', (status) => {
+        socketServcies.on('branch:read', (status) => {
           dispatch({ type: RESTAURANT_SET_STATUS, payload: status.running });
         });
       } else {

@@ -4,13 +4,16 @@ import { img_endpoint } from '@/config/variables';
 import RestaurantProfile from '@/components/dashboard/RestaurantProfile';
 import Dishes from '@/components/dashboard/Dishes';
 import Cart from '@/components/dashboard/Cart';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { Alert } from '@mui/material';
 import { GlobalContext } from '@/globalContext';
 
-export default function R({ dishesData, restaurantData }) {
-  const sidebarRef = useRef(null);
-  const { setCartIsOpen } = useContext(GlobalContext);
+export default function R({ dishesData, restaurantData, branchesData }) {
+  const { setCartIsOpen, setOpenBranches } = useContext(GlobalContext);
+
+  useEffect(() => {
+    setOpenBranches(branchesData);
+  }, [branchesData, setOpenBranches]);
 
   useEffect(() => {
     return () => {
@@ -22,16 +25,16 @@ export default function R({ dishesData, restaurantData }) {
     <div className="restaurant-page">
       <div className="container restaurant-page__container">
         <div className="dishes-list">
-          {restaurantData.restaurant.running === false && (
+          {branchesData.branches.length === 0 && (
             <Alert className="restaurant-page__closed" severity="error">
               Restaurant is not operating right now!
             </Alert>
           )}
           <Dishes dishesData={dishesData} />
         </div>
-        <div className="restaurant-page__sidebar" ref={sidebarRef}>
+        <div className="restaurant-page__sidebar">
           <RestaurantProfile restaurantData={restaurantData} />
-          <Cart parentRef={sidebarRef} restaurant={restaurantData.restaurant} />
+          <Cart restaurant={restaurantData.restaurant} />
         </div>
       </div>
     </div>
@@ -41,6 +44,8 @@ export default function R({ dishesData, restaurantData }) {
 export async function getServerSideProps({ params }) {
   let dishes = {};
   let restaurant = {};
+  let branches = {};
+
   try {
     dishes.dishes = (await axios.get('/api/dish/' + params.id)).data;
   } catch (error) {
@@ -53,8 +58,15 @@ export async function getServerSideProps({ params }) {
     restaurant.error = error;
   }
 
+  try {
+    branches.branches = (await axios.get('/api/branch/getAllOpen/' + params.id)).data;
+  } catch (error) {
+    branches.error = error;
+  }
+
   return {
     props: {
+      branchesData: branches,
       dishesData: {
         ...dishes,
         dishes: dishes.dishes

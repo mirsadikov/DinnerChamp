@@ -6,6 +6,7 @@ import OrderModel from '../models/Order.js';
 import OrderDishModel from '../models/OrderDish.js';
 import OrdererModel from '../models/Orderer.js';
 import EmployeeModel from '../models/Employee.js';
+import BranchModel from '../models/Branch.js';
 
 const dbConfig = {
   HOST: process.env.POSTGRESQL_HOST,
@@ -33,7 +34,7 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-// (async () => await db.sync({ alter: true }))();
+// (async () => await db.sync({ alter: true }))(); 
 const Restaurant = RestaurantModel(db, DataTypes);
 const Dish = DishModel(db, DataTypes);
 const Category = CategoryModel(db, DataTypes);
@@ -41,6 +42,7 @@ const Order = OrderModel(db, DataTypes);
 const OrderDish = OrderDishModel(db, DataTypes);
 const Orderer = OrdererModel(db, DataTypes);
 const Employee = EmployeeModel(db, DataTypes);
+const Branch = BranchModel(db, DataTypes);
 
 Restaurant.hasMany(Dish, {
   foreignKey: 'restaurantId',
@@ -122,5 +124,25 @@ Employee.belongsTo(Restaurant, {
   as: 'restaurant',
 });
 
+Restaurant.hasMany(Branch, {
+  foreignKey: 'restaurantId',
+  as: 'branches',
+});
+
+Branch.belongsTo(Restaurant, {
+  foreignKey: 'restaurantId',
+  as: 'restaurant',
+});
+
+Branch.hasMany(Order, {
+  foreignKey: 'branchId',
+  as: 'orders',
+});
+
+Order.belongsTo(Branch, {
+  foreignKey: 'branchId',
+  as: 'branch',
+});
+
 export default db;
-export { Restaurant, Dish, Category, Order, OrderDish, Orderer, Employee };
+export { Restaurant, Dish, Category, Order, OrderDish, Orderer, Employee, Branch};

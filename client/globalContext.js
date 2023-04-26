@@ -10,6 +10,8 @@ const GlobalProvider = function ({ children }) {
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cart, setCart] = useState(null);
   const [orders, setOrders] = useState(null);
+  const [selectedBranch, setSelectedBranch] = useState(null);
+  const [openBranches, setOpenBranches] = useState({});
 
   // set initial cart state
   useEffect(() => {
@@ -84,6 +86,10 @@ const GlobalProvider = function ({ children }) {
         increaseItem,
         orders,
         setOrders,
+        selectedBranch,
+        setSelectedBranch,
+        openBranches,
+        setOpenBranches,
       }}
     >
       {children}

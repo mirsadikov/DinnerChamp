@@ -1,11 +1,12 @@
 import { Op } from 'sequelize';
-import { Order, OrderDish, Restaurant, Dish, Orderer } from '../config/sequelize.js';
+import { Order, OrderDish, Restaurant, Dish, Branch } from '../config/sequelize.js';
 import io from '../socket/socket.js';
 
-export const getOrders = async (restaurantId, ofTheLastHours) => {
+export const getOrders = async (restaurantId, branchId, ofTheLastHours) => {
   const orders = await Order.findAll({
     where: {
       restaurantId: restaurantId,
+      branchId: branchId,
       // if hour is not provided, get all orders
       ...(ofTheLastHours && {
         createdAt: {
@@ -51,7 +52,7 @@ export const updateOrder = async (id, status) => {
     await order.save();
 
     // emit to restaurant
-    io.emitTo(order.restaurantId, 'order:update', order);
+    io.emitTo(order.restaurantId, order.branchId, 'order:update', order);
   } catch (err) {
     return io.emit('error', err);
   }
@@ -59,10 +60,10 @@ export const updateOrder = async (id, status) => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { ordererName, restaurantId, orderDishes, comment } = req.body;
+    const { ordererName, restaurantId, orderDishes, comment, branchId } = req.body;
 
     // if missing required fields
-    if (!ordererName || !restaurantId || !orderDishes) {
+    if (!ordererName || !restaurantId || !orderDishes || !branchId) {
       return res.status(400).json({
         message: 'Missing required fields',
       });
@@ -84,10 +85,24 @@ export const createOrder = async (req, res, next) => {
       });
     }
 
-    // if restaurant is closed
-    if (!restaurant.running) {
+    // check if branch exists
+    const branch = await Branch.findOne({
+      where: {
+        id: branchId,
+        restaurantId: restaurant.id,
+      },
+    });
+
+    if (!branch) {
+      return res.status(404).json({
+        message: 'Branch not found',
+      });
+    }
+
+    // if branch is closed
+    if (!branch.running) {
       return res.status(400).json({
-        message: 'Restaurant is closed',
+        message: 'Branch is closed',
       });
     }
 
@@ -120,9 +135,11 @@ export const createOrder = async (req, res, next) => {
 
     // create order
     const order = await Order.create({
+      number: branch.orderNumber,
       ordererName: ordererName,
       ordererPhone: req.orderer.number,
       restaurantId,
+      branchId,
       total: dishesWithQuantity.reduce((total, dish) => total + dish.price * dish.quantity, 0),
       comment,
     });
@@ -135,8 +152,12 @@ export const createOrder = async (req, res, next) => {
 
     await OrderDish.bulkCreate(orderDishesToCreate);
 
+    // update order number
+    branch.orderNumber++;
+    await branch.save();
+
     // emit new order to restaurant
-    io.emitTo(restaurantId, 'order:read', await getOrders(restaurantId, 24));
+    io.emitTo(restaurantId, branchId, 'order:read', await getOrders(restaurantId, branchId, 24));
 
     return res.status(201).json(order);
   } catch (error) {

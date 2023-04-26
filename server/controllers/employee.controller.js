@@ -15,6 +15,7 @@ export const createEmployee = async (req, res, next) => {
     const employeeExist = await Employee.findOne({
       where: {
         staffId,
+        restaurantId: req.restaurant.id,
       },
     });
     if (employeeExist) {
@@ -74,6 +75,7 @@ export const updateEmployee = async (req, res, next) => {
     const employeeExist = await Employee.findOne({
       where: {
         staffId,
+        restaurantId: req.restaurant.id,
       },
     });
 
@@ -126,7 +128,7 @@ export const loginEmployee = async (req, res, next) => {
     }
 
     const employee = await Employee.findOne({
-      where: { staffId, restaurantId: req.restaurant.id },
+      where: { staffId, restaurantId: req.branch.restaurantId },
     });
 
     if (employee) {
@@ -135,6 +137,7 @@ export const loginEmployee = async (req, res, next) => {
           id: employee.id,
           staffId: employee.staffId,
           restaurantId: employee.restaurantId,
+          branchId: req.branch.id,
         };
 
         res.status(200).json({

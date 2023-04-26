@@ -74,7 +74,7 @@ function Orders() {
               .map((order) => (
                 <div className="orders__item" key={order.id}>
                   <div className="orders__item__row">
-                    <p className="orders__item__id"># {order.id}</p>
+                    <p className="orders__item__id"># {order.id}-{order.number}</p>
                     <p className="orders__item__date">
                       {dateFormat(order.createdAt, 'dd mmmm HH:MM')}
                     </p>

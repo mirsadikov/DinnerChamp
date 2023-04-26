@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { Restaurant } from '../config/sequelize.js';
+import { Branch, Restaurant } from '../config/sequelize.js';
 import { getOrders, updateOrder } from '../controllers/order.controller.js';
-import { switchRestaurant } from '../controllers/restaurant.controller.js';
+import { resetOrderNumber, switchBranch } from '../controllers/branch.controller.js';
 
 class IO {
   init(io) {
@@ -23,9 +23,17 @@ class IO {
 
       try {
         // verify token
-        const restaurantSocket = jwt.verify(token, process.env.JWT_SECRET);
+        const restaurantToken = jwt.verify(token, process.env.JWT_SECRET);
 
-        const restaurant = await Restaurant.findByPk(restaurantSocket.restaurantId, {
+        const restaurant = await Restaurant.findByPk(restaurantToken.restaurantId, {
+          attributes: { exclude: ['password'] },
+        });
+
+        const branch = await Branch.findOne({
+          where: {
+            restaurantId: restaurantToken.restaurantId,
+            id: restaurantToken.branchId,
+          },
           attributes: { exclude: ['password'] },
         });
 
@@ -34,8 +42,14 @@ class IO {
           return next(new Error('Restaurant not found'));
         }
 
+        // no branch
+        if (!branch) {
+          return next(new Error('Branch not found'));
+        }
+
         // add restaurantId to socket
-        socket.restaurantId = restaurantSocket.restaurantId;
+        socket.restaurantId = restaurantToken.restaurantId;
+        socket.branchId = restaurantToken.branchId;
         next();
       } catch (err) {
         return next(new Error('Authentication error: invalid token'));
@@ -49,11 +63,11 @@ class IO {
       console.log('New socket'.bgYellow);
 
       // initial data
-      socket.emit('order:read', await getOrders(socket.restaurantId, 24));
+      socket.emit('order:read', await getOrders(socket.restaurantId, socket.branchId, 24));
       // send resturant running property only
       socket.emit(
-        'restaurant:read',
-        await Restaurant.findByPk(socket.restaurantId, {
+        'branch:read',
+        await Branch.findByPk(socket.branchId, {
           attributes: ['running'],
         })
       );
@@ -61,18 +75,19 @@ class IO {
       // listen to events
       socket.on('refresh', async () => {
         socket.emit(
-          'restaurant:read',
-          await Restaurant.findByPk(socket.restaurantId, {
+          'branch:read',
+          await Branch.findByPk(socket.branchId, {
             attributes: ['running'],
           })
         );
-        socket.emit('order:read', await getOrders(socket.restaurantId, 24));
+        socket.emit('order:read', await getOrders(socket.restaurantId, socket.branchId, 24));
       });
       socket.on('order:update', updateOrder);
-      socket.on('restaurant:switch', async (newStatus) => {
-        const restaurant = await switchRestaurant(socket.restaurantId, newStatus);
-        socket.emit('restaurant:read', restaurant);
+      socket.on('branch:switch', async (newStatus) => {
+        const branch = await switchBranch(socket.branchId, socket.restaurantId, newStatus);
+        socket.emit('branch:read', branch);
       });
+      socket.on('reset', () => resetOrderNumber(socket.branchId));
       socket.on('disconnect', () => console.log('Socket disconnected'.bgRed));
     });
 
@@ -83,10 +98,10 @@ class IO {
     this.io.emit(event, data);
   }
 
-  emitTo(clientId, event, data) {
-    // filter by restaurantId
+  emitTo(restaurantId, branchId, event, data) {
+    // filter by restaurantId and branchId
     this.io.sockets.sockets.forEach((socket) => {
-      if (socket.restaurantId === clientId) {
+      if (socket.restaurantId === restaurantId && socket.branchId === branchId) {
         socket.emit(event, data);
       }
     });

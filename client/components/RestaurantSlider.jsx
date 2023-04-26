@@ -81,12 +81,6 @@ export default function RestaurantSlider({ restaurants }) {
                 </div>
                 <div className="restaurant-card__info">
                   <h3 className="restaurant-card__name">{restaurant.name}</h3>
-                  {restaurant.city && (
-                    <p className="restaurant-card__city">
-                      <PlaceIcon />
-                      <span>{restaurant.city}</span>
-                    </p>
-                  )}
                 </div>
               </Link>
             </SwiperSlide>

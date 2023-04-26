@@ -16,7 +16,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const {
       data: { id, token, name },
-    } = await axios.post('/api/restaurant/login', { email, password, tablet: true }, config);
+    } = await axios.post('/api/branch/login', { email, password, tablet: true }, config);
 
     dispatch({
       type: RESTAURANT_LOGIN_SUCCESS,

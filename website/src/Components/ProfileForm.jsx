@@ -10,11 +10,8 @@ import { updateRestaurantDetails } from '../Actions/restaurantActions';
 export default function ProfileForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [description, setDescription] = useState('');
   const [running, setRunning] = useState(false);
-  const [city, setCity] = useState('');
-  const [address, setAddress] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,9 +36,6 @@ export default function ProfileForm() {
       setEmail(details.email);
       setDescription(details.description || '');
       setRunning(details.running);
-      setPhone(details.phone || '');
-      setAddress(details.address || '');
-      setCity(details.city || '');
     }
   }, [location.state, navigate]);
 
@@ -58,10 +52,7 @@ export default function ProfileForm() {
     let detailsToUpdate = {
       name,
       email,
-      phone,
       description,
-      address,
-      city,
       running,
     };
 
@@ -132,57 +123,6 @@ export default function ProfileForm() {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form__group-2 profileform__form-group">
-          <div className="form__group">
-            <label htmlFor="city" className="profileform__label form__label">
-              City
-            </label>
-            <input
-              type="text"
-              name="city"
-              id="city"
-              className="profileform__input form__control"
-              placeholder="Enter city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form__group">
-            <label htmlFor="phone" className="profileform__label form__label">
-              Phone
-            </label>
-            <input
-              name="phone"
-              id="phone"
-              type="text"
-              placeholder="Enter phone number"
-              className="profileform__input form__control"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-        </div>
-        
-        <div className="profileform__form-group">
-          <div className="form__group">
-            <label htmlFor="address" className="profileform__label form__label">
-              Address
-            </label>
-            <input
-              type="text"
-              name="address"
-              id="address"
-              className="profileform__input form__control"
-              placeholder="Enter address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
               required
             />
           </div>

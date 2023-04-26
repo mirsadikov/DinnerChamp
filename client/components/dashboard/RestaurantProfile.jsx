@@ -1,8 +1,6 @@
-import { img_endpoint } from '@/config/variables';
 import PlaceIcon from '@mui/icons-material/Place';
 import PhoneIcon from '@mui/icons-material/Phone';
-import defaultImage from '@/images/default-img.png';
-import { Alert } from '@mui/material';
+import { Alert, MenuItem, Select } from '@mui/material';
 import { useContext, useState } from 'react';
 import { GlobalContext } from '@/globalContext';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,9 +8,12 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 
 export default function RestaurantProfile({ restaurantData }) {
+  const { cartIsOpen, setCartIsOpen, cart, openBranches, setSelectedBranch, selectedBranch } =
+    useContext(GlobalContext);
   const [cartCount, setCartCount] = useState(0);
-  const { restaurant, error } = restaurantData;
-  const { cartIsOpen, setCartIsOpen, cart } = useContext(GlobalContext);
+  const [selectedBranchId, setSelectedBranchId] = useState('-1');
+  const { restaurant, error: restaurantError } = restaurantData;
+  const { branches, error: branchesError } = openBranches;
 
   useEffect(() => {
     const count = cart
@@ -23,14 +24,30 @@ export default function RestaurantProfile({ restaurantData }) {
     setCartCount(count || 0);
   }, [cart, restaurant.id]);
 
-  if (error) {
+  useEffect(() => {
+    if (selectedBranchId !== '-1') {
+      setSelectedBranch(branches?.find((branch) => branch.id === selectedBranchId));
+    } else {
+      setSelectedBranch(null);
+    }
+  }, [selectedBranchId, setSelectedBranch, branches]);
+
+  if (restaurantError) {
     return <Alert severity="error">Something went wrong while getting restaurant info!</Alert>;
   }
 
-  const { name, address, city, phone, description, img } = restaurant;
+  if (branchesError) {
+    return <Alert severity="error">Something went wrong while getting branches info!</Alert>;
+  }
+
+  const { name, description, img } = restaurant;
 
   const toggleCart = () => {
     setCartIsOpen(!cartIsOpen);
+  };
+
+  const handleBranchChange = (e) => {
+    setSelectedBranchId(e.target.value);
   };
 
   return (
@@ -44,47 +61,44 @@ export default function RestaurantProfile({ restaurantData }) {
       </div>
       <div className="restaurant-info__details">
         <h2 className="restaurant-info__title">{name}</h2>
-        {(address || city) && (
-          <a
-            target="_blank"
-            href={`https://www.google.com/maps/search/${
-              address && city ? `${city}, ${address}` : address ? address : city
-            }`}
-            rel="noopener noreferrer"
-            className="restaurant-info__address"
-          >
-            <PlaceIcon />
-            {address && city ? `${city} - ${address}` : address ? address : city}
-          </a>
+        <Select
+          className="restaurant-info__branches-list"
+          id="branches-list"
+          value={selectedBranchId}
+          onChange={handleBranchChange}
+          displayEmpty
+        >
+          <MenuItem value="-1" selected>
+            <em>Select branch</em>
+          </MenuItem>
+          {branches?.map((branch) => (
+            <MenuItem key={branch.id} value={branch.id}>
+              {branch.address}, {branch.city}
+            </MenuItem>
+          ))}
+        </Select>
+        {selectedBranch && (
+          <>
+            <a
+              target="_blank"
+              href={`https://www.google.com/maps/search/${selectedBranch.city}, ${selectedBranch.address}`}
+              rel="noopener noreferrer"
+              className="restaurant-info__address"
+            >
+              <PlaceIcon />
+              {`${selectedBranch.city} - ${selectedBranch.address}`}
+            </a>
+
+            {selectedBranch.phone && (
+              <a href={`tel:+${selectedBranch.phone}`} className="restaurant-info__phone">
+                <PhoneIcon />+{selectedBranch.phone}
+              </a>
+            )}
+          </>
         )}
-        {phone && (
-          <a href={`tel:+${phone}`} className="restaurant-info__phone">
-            <PhoneIcon />+{phone}
-          </a>
-        )}
+
         {description && <p className="restaurant-info__desc">{description}</p>}
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps({ params }) {
-  try {
-    const { data: restaurant } = await axios.get('/api/restaurant/' + params.id);
-
-    return {
-      props: {
-        restaurant: {
-          ...restaurant,
-          img: restaurant.img ? `${img_endpoint}/${restaurant.img}` : defaultImage.src,
-        },
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        error,
-      },
-    };
-  }
 }

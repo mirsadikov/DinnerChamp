@@ -48,7 +48,7 @@ const ControlMenu = ({ setIsOpen, isOpen }) => {
           {selectedOrder && (
             <>
               <View style={styles.orderInfo}>
-                <Text style={styles.orderInfoId}>#{selectedOrder.id}</Text>
+                <Text style={styles.orderInfoId}>#{selectedOrder.number}</Text>
                 <Text style={styles.orderInfoName}>{selectedOrder.ordererName}</Text>
               </View>
               <View style={styles.statusButtons}>

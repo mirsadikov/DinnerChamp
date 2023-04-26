@@ -45,6 +45,7 @@
 }
 
 .dishes,
+.branches,
 .employees {
   .MuiDataGrid-root {
     border: 1px solid transparent;
@@ -131,6 +132,7 @@
 }
 
 .dishform,
+.branchform,
 .employeeform {
   &__header {
     justify-content: flex-start !important;

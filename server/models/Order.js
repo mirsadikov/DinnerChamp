@@ -1,5 +1,9 @@
 export default function (sequelize, DataTypes) {
   const model = sequelize.define('order', {
+    number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,

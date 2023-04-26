@@ -18,7 +18,7 @@ export default function OrderCard({ order, onPress, isSelected }) {
         <TouchableWithoutFeedback onPress={onPress}>
           <View style={[styles.card, cardStatusStyle, isSelected && styles.selectedCard]}>
             <View style={styles.row}>
-              <Text style={styles.id}>#{order.id}</Text>
+              <Text style={styles.id}>#{order.number}</Text>
               <Text>
                 {moment(order.createdAt).calendar(null, {
                   sameDay: 'HH:mm',

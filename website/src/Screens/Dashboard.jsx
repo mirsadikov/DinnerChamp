@@ -9,6 +9,8 @@ import EmployeeForm from '../Components/EmployeeForm';
 import Employees from '../Components/Employees';
 import ProfileCard from '../Components/ProfileCard';
 import ProfileForm from '../Components/ProfileForm';
+import Branches from '../Components/Branches';
+import BranchForm from '../Components/BranchForm';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -38,6 +40,9 @@ export default function Dashboard() {
           <NavLink to="/dashboard/employees" className="dashboard__card">
             View Employees
           </NavLink>
+          <NavLink to="/dashboard/branches" className="dashboard__card">
+            View Branches
+          </NavLink>
         </div>
         <div className="dashboard__block dashboard__column">
           <Routes>
@@ -48,6 +53,8 @@ export default function Dashboard() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/employees/form" element={<EmployeeForm />} />
+            <Route path="/branches" element={<Branches />} />
+            <Route path="/branches/form" element={<BranchForm />} />
           </Routes>
         </div>
       </div>

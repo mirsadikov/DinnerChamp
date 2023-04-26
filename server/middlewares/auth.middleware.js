@@ -15,6 +15,21 @@ const authAdmin = (req, res, next) =>
     return next();
   })(req, res, next);
 
+const authBranch = (req, res, next) =>
+  passport.authenticate('branch-jwt', { session: false }, (err, branch) => {
+    if (err) {
+      res.status(500);
+      return next(err);
+    }
+
+    if (!branch) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    req.branch = branch;
+    return next();
+  })(req, res, next);
+
 const authClient = (req, res, next) => 
   passport.authenticate('client-jwt', { session: false }, (err, client) => {
     if (err) {
@@ -30,4 +45,4 @@ const authClient = (req, res, next) =>
     return next();
   })(req, res, next);
 
-export { authAdmin, authClient };
+export { authAdmin, authClient, authBranch };

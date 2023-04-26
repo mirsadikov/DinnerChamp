@@ -111,25 +111,9 @@ export default function SearchModal() {
                       <h3 className="search-modal__card-title">
                         {restaurant.name}
                         <span className="search-modal__card-badge mini-badge">
-                          {restaurant.running ? 'Open' : 'Closed'}
+                          {restaurant.openBranches > 0 ? 'Open' : 'Closed'}
                         </span>
                       </h3>
-                      {restaurant.city ? (
-                        <p className="search-modal__card-city">
-                          <b>City: </b>
-                          <span>{restaurant.city}</span>
-                        </p>
-                      ) : restaurant.phone ? (
-                        <p className="search-modal__card-phone">
-                          <b>Phone: </b>
-                          <span>+{restaurant.phone}</span>
-                        </p>
-                      ) : restaurant.address ? (
-                        <p className="search-modal__card-address">
-                          <b>Address: </b>
-                          <span>{restaurant.address}</span>
-                        </p>
-                      ) : null}
                       {restaurant.description && (
                         <p className="search-modal__card-description">{restaurant.description}</p>
                       )}

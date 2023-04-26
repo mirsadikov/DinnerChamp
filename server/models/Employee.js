@@ -7,7 +7,6 @@ export default function (sequelize, DataTypes) {
       staffId: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       name: {
         type: DataTypes.STRING,

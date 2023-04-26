@@ -3,11 +3,10 @@ import Sequelize, { Op } from 'sequelize';
 import { Order, Restaurant } from '../config/sequelize.js';
 import generateToken from '../utils/tokenGenerator.js';
 import { removeS3, uploadS3 } from '../utils/imgStorage.js';
-import io from '../socket/socket.js';
 
 export async function registerRestaurant(req, res, next) {
   try {
-    const { name, email, phone, password, description } = req.body;
+    const { name, email, password, description } = req.body;
 
     if (!name || !email || !password) {
       res.status(400);
@@ -26,7 +25,6 @@ export async function registerRestaurant(req, res, next) {
     const restaurant = await Restaurant.create({
       name,
       email: email.toLowerCase(),
-      phone,
       password,
       description,
     });
@@ -37,7 +35,6 @@ export async function registerRestaurant(req, res, next) {
       id: restaurant.id,
       name: restaurant.name,
       email: restaurant.email,
-      phone: restaurant.role,
       description: restaurant.description,
       token: `Bearer ${generateToken(payload)}`,
     });
@@ -48,7 +45,7 @@ export async function registerRestaurant(req, res, next) {
 
 export async function loginRestaurant(req, res, next) {
   try {
-    const { email, password, tablet } = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       res.status(400);
@@ -70,10 +67,8 @@ export async function loginRestaurant(req, res, next) {
           id: restaurant.id,
           name: restaurant.name,
           email: restaurant.email,
-          phone: restaurant.role,
           description: restaurant.description,
-          // if from tablet never expire
-          token: `Bearer ${generateToken(payload, tablet ? '-1' : null)}`,
+          token: `Bearer ${generateToken(payload)}`,
         });
       } else {
         res.status(401);
@@ -114,12 +109,23 @@ export async function getAllRestaurants(req, res, next) {
       const { search } = req.query;
       restaurants = await Restaurant.findAll({
         where: {
-          [Op.or]: [
-            { name: { [Op.iLike]: `%${search}%` } },
-            { city: { [Op.iLike]: `%${search}%` } },
+          running: true,
+          [Op.or]: [{ name: { [Op.iLike]: `%${search}%` } }],
+        },
+        attributes: {
+          exclude: ['password'],
+          include: [
+            [
+              Sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM "branches"
+                WHERE "branches"."restaurantId" = "restaurant"."id"
+                 AND "branches"."running" = true
+              )`),
+              'openBranches',
+            ],
           ],
         },
-        attributes: { exclude: ['password'] },
         limit: 10,
       });
     } else {
@@ -141,7 +147,7 @@ export async function updateRestaurant(req, res, next) {
     });
 
     if (restaurant) {
-      const { name, email, phone, description, address, city, running } = req.body;
+      const { name, email, description, running } = req.body;
 
       if (!name || !email) {
         res.status(400);
@@ -150,10 +156,7 @@ export async function updateRestaurant(req, res, next) {
 
       restaurant.name = name || restaurant.name;
       restaurant.email = email || restaurant.email;
-      restaurant.phone = phone === '' ? null : phone || restaurant.phone;
       restaurant.description = description === '' ? null : description || restaurant.description;
-      restaurant.address = address === '' ? null : address || restaurant.address;
-      restaurant.city = city === '' ? null : city || restaurant.city;
       restaurant.running = typeof running === 'boolean' ? running : restaurant.running;
 
       const updatedRestaurant = await restaurant.save();
@@ -314,23 +317,5 @@ export async function getStatistics(req, res, next) {
     res.json({ timeQuery, totalOrders, totalRevenue, totalCustomers, orderByPeriod });
   } catch (error) {
     next(error);
-  }
-}
-
-export async function switchRestaurant(restaurantId, newStatus) {
-  try {
-    const restaurant = await Restaurant.findOne({
-      where: { id: restaurantId },
-      attrubutes: ['running'],
-    });
-
-    if (restaurant) {
-      restaurant.running = newStatus.isOnline;
-      await restaurant.save();
-    }
-
-    return restaurant;
-  } catch (err) {
-    return io.emit('error', err);
   }
 }

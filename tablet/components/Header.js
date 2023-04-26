@@ -11,13 +11,20 @@ const Header = ({ connectionStatus }) => {
 
   const handleRestaurantToggle = () => {
     // dispatch({ type: RESTAURANT_SET_STATUS, payload: !status });
-    socketServcies.emit('restaurant:switch', { isOnline: !status });
+    socketServcies.emit('branch:switch', { isOnline: !status });
   };
 
   const refresh = () => {
     if (connectionStatus === 'Connected') {
       // refresh orders and status
       socketServcies.emit('refresh');
+    }
+  };
+
+  const reset = () => {
+    if (connectionStatus === 'Connected') {
+      // reset count
+      socketServcies.emit('reset');
     }
   };
 
@@ -31,6 +38,10 @@ const Header = ({ connectionStatus }) => {
         ) : (
           <Text style={styles.text}>{connectionStatus}</Text>
         )}
+
+        <TouchableOpacity style={styles.button} onPress={reset} underlayColor="#fff">
+          <Text style={styles.buttonText}>Reset</Text>
+        </TouchableOpacity>
 
         <View style={styles.switch}>
           <Text style={styles.text}>Offline</Text>

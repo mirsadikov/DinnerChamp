@@ -44,21 +44,6 @@
     line-height: 2rem;
   }
 
-  &__city {
-    margin-top: 0.3rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    
-    svg {
-      width: 2rem;
-      height: 2rem;
-      margin-right: 0.3rem;
-      color: var(--color-primary);
-      padding-bottom: 0.1rem;
-    }
-  }
-
   @media screen and (max-width: 768px) {
     margin: 0.5rem;
   }

@@ -6,7 +6,7 @@ import {
   deleteEmployee,
   loginEmployee,
 } from '../controllers/employee.controller.js';
-import { authAdmin } from '../middlewares/auth.middleware.js';
+import { authAdmin, authBranch } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
@@ -14,6 +14,6 @@ router.get('/', authAdmin, getEmployees);
 router.post('/create', authAdmin, createEmployee);
 router.put('/:id', authAdmin, updateEmployee);
 router.delete('/:id', authAdmin, deleteEmployee);
-router.post('/login', authAdmin, loginEmployee);
+router.post('/login', authBranch, loginEmployee);
 
 export default router;
